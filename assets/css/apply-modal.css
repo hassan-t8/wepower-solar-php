@@ -1,0 +1,174 @@
+/* ─── Overlay ─────────────────────────────────────────────────── */
+.apply-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(15,23,42,.55); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  overflow: hidden; /* NEVER scroll the overlay — body scrolls instead */
+}
+
+/* ─── Modal shell ─────────────────────────────────────────────── */
+.apply-modal {
+  position: relative; width: 100%; max-width: 860px; background: #fff;
+  border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-xl);
+  display: grid; grid-template-columns: 0.85fr 1.15fr;
+  grid-template-rows: minmax(0, 1fr); /* let the row respect max-height instead of growing to fit content */
+  max-height: 92vh;
+  align-self: center;
+}
+
+/* ─── Close button ────────────────────────────────────────────── */
+.apply-close {
+  position: absolute; top: 14px; right: 14px; z-index: 5;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(255,255,255,.85); color: var(--gray-700);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; box-shadow: var(--shadow-md);
+  transition: transform .2s var(--ease), background .2s;
+}
+.apply-close:hover { transform: rotate(90deg); background: #fff; }
+
+/* ─── Side panel (desktop only) ──────────────────────────────── */
+.apply-side {
+  position: relative; padding: 40px 32px; color: #fff;
+  background: linear-gradient(150deg, var(--green-700), var(--green-600) 55%, var(--green-500));
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: 0; overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+}
+.apply-side-bg { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+.apply-side-glow {
+  position: absolute; width: 260px; height: 260px; border-radius: 50%;
+  background: radial-gradient(circle, var(--solar), transparent 70%);
+  top: -70px; right: -70px; opacity: .5; filter: blur(6px);
+}
+.apply-side-icon, .apply-side h3, .apply-side p, .apply-side-list { position: relative; z-index: 1; }
+.apply-side-icon { font-size: 2.4rem; color: var(--solar); margin-bottom: 14px; }
+.apply-side h3 { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+.apply-side p { color: rgba(255,255,255,.9); font-size: .93rem; }
+.apply-side-list {
+  margin-top: 22px; display: flex; flex-direction: column;
+  gap: 11px; list-style: none; padding: 0; margin-bottom: 0;
+}
+.apply-side-list li { display: flex; align-items: center; gap: 10px; font-size: .92rem; font-weight: 500; }
+.apply-side-list i { color: var(--green-200); }
+
+/* ─── Body — this is the scrollable area ─────────────────────── */
+.apply-body {
+  padding: 34px 34px 30px;
+  overflow-y: auto;
+  min-height: 0; /* allows grid item to shrink so scroll activates */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.apply-title { font-size: 1.6rem; }
+.apply-sub { color: var(--gray-500); margin: 4px 0 20px; font-size: .93rem; }
+
+.apply-error {
+  background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca;
+  border-radius: 10px; padding: 10px 13px; font-size: .86rem;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+.apply-spinner {
+  width: 16px; height: 16px; border: 2.5px solid rgba(255,255,255,.45);
+  border-top-color: #fff; border-radius: 50%; display: inline-block;
+  animation: apply-spin .7s linear infinite;
+}
+@keyframes apply-spin { to { transform: rotate(360deg); } }
+
+.apply-success {
+  text-align: center; padding: 30px 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.apply-check {
+  width: 84px; height: 84px; border-radius: 50%;
+  background: var(--green-500); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.6rem; margin-bottom: 20px; box-shadow: var(--shadow-green);
+}
+.apply-success h3 { font-size: 1.6rem; margin-bottom: 10px; }
+.apply-success p { color: var(--gray-500); margin-bottom: 24px; max-width: 340px; }
+
+/* ─── Short viewports: compact vertical spacing so content fits ── */
+@media (max-height: 750px) {
+  .apply-overlay { padding: 10px; }
+  .apply-modal { max-height: 96vh; }
+  .apply-side { padding: 26px 32px; }
+  .apply-side-icon { font-size: 2rem; margin-bottom: 8px; }
+  .apply-side h3 { font-size: 1.25rem; margin-bottom: 6px; }
+  .apply-side-list { margin-top: 14px; gap: 8px; }
+  .apply-body { padding: 22px 34px 20px; }
+  .apply-title { font-size: 1.35rem; }
+  .apply-sub { margin: 2px 0 14px; }
+}
+
+/* ─── Small laptop / narrow desktop: shrink side panel gracefully ─ */
+@media (max-width: 1000px) and (min-width: 781px) {
+  .apply-modal { grid-template-columns: 0.75fr 1.25fr; max-width: 760px; }
+  .apply-side { padding: 32px 26px; }
+  .apply-side h3 { font-size: 1.3rem; }
+}
+
+/* ─── Tablet: hide side panel ────────────────────────────────── */
+@media (max-width: 780px) {
+  .apply-modal { grid-template-columns: 1fr; max-width: 520px; }
+  .apply-side { display: none; }
+  .apply-body { padding: 52px 28px 32px; }
+}
+
+/* ─── Mobile: bottom sheet with flex column so body truly scrolls */
+@media (max-width: 600px) {
+  .apply-overlay { padding: 0; align-items: flex-end; }
+  .apply-modal {
+    /* Switch from grid to flex so the body gets a real constrained height */
+    display: flex; flex-direction: column;
+    max-width: 100%; width: 100%;
+    border-radius: 20px 20px 0 0;
+    /* Fixed height is critical — flex children can only scroll if parent has height */
+    height: 88vh; max-height: 88vh;
+    overflow: hidden;
+  }
+  /* Drag handle — standard bottom-sheet affordance */
+  .apply-modal::before {
+    content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 38px; height: 4px; border-radius: 4px; background: var(--gray-300);
+    z-index: 4; pointer-events: none;
+  }
+  .apply-side { display: none; }
+  .apply-close {
+    top: 14px; right: 14px; width: 34px; height: 34px; font-size: .9rem;
+  }
+  .apply-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 26px 10px 10px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+  .apply-body .form-row { grid-template-columns: 1fr; gap: 6px; }
+  .apply-title { font-size: 1.02rem; }
+  .apply-sub { font-size: .74rem; margin: 2px 0 10px; }
+
+  .apply-body .btn-block {
+    margin-top: 10px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+    font-size: .85rem;
+  }
+
+  /* Compact fields — noticeably smaller so more of the form fits on screen */
+  .apply-body .field { margin-bottom: 6px; }
+  .apply-body .field label { font-size: .68rem; margin-bottom: 2px; }
+  .apply-body .field input,
+  .apply-body .field select,
+  .apply-body .field textarea {
+    padding: 6px 9px; font-size: .8rem; border-radius: 7px;
+  }
+  .apply-body .field textarea { min-height: 48px; }
+
+  .apply-success { padding: 20px 6px 4px; }
+  .apply-check { width: 68px; height: 68px; font-size: 2.1rem; margin-bottom: 16px; }
+  .apply-success h3 { font-size: 1.3rem; }
+  .apply-success p { font-size: .9rem; }
+}

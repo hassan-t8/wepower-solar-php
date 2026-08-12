@@ -1,0 +1,28 @@
+# WePower Solar — root .htaccess
+# Security headers (replaces the Node app's helmet() middleware) + basic hardening.
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https: blob:; connect-src 'self'; frame-src 'self' https://www.google.com https://maps.google.com https://www.youtube.com https://www.youtube-nocookie.com"
+</IfModule>
+
+# Never let visitors browse a directory listing
+Options -Indexes
+
+# Block direct access to config/ and includes/ — these are require()'d by
+# pages, never meant to be requested directly over HTTP.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^config/ - [F,L]
+    RewriteRule ^includes/ - [F,L]
+    RewriteRule ^database/ - [F,L]
+    RewriteRule ^vendor/ - [F,L]
+
+    # /sitemap.xml -> sitemap.xml.php (keeps the URL clean for crawlers)
+    RewriteRule ^sitemap\.xml$ sitemap.xml.php [L]
+</IfModule>
+
+# Hide PHP version / server signature where the host allows it
+ServerSignature Off

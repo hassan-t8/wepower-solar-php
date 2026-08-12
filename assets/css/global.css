@@ -1,0 +1,118 @@
+:root {
+  --green-50:#f0fdf4; --green-100:#dcfce7; --green-200:#bbf7d0; --green-400:#4ade80;
+  --green-500:#22c55e; --green-600:#16a34a; --green-700:#15803d; --green-800:#166534;
+  --solar:#f7b733; --solar-2:#fc4a1a;
+  --dark:#0f172a; --dark-2:#1e293b;
+  --gray-50:#f8fafc; --gray-100:#f1f5f9; --gray-200:#e2e8f0; --gray-300:#cbd5e1;
+  --gray-400:#94a3b8; --gray-500:#64748b; --gray-600:#475569; --gray-700:#334155;
+  --gray-800:#1e293b; --gray-900:#0f172a; --white:#ffffff;
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.06),0 2px 4px -2px rgba(0,0,0,.06);
+  --shadow-lg:0 10px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.05);
+  --shadow-xl:0 25px 50px -12px rgba(0,0,0,.18);
+  --shadow-green:0 18px 40px -16px rgba(34,197,94,.5);
+  --radius:14px; --radius-lg:20px; --radius-xl:28px; --radius-pill:999px;
+  --container:1200px;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Poppins','Segoe UI',Roboto,Arial,sans-serif;
+  font-size:16px; line-height:1.65; color:var(--gray-700);
+  background:var(--white); overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+img { max-width:100%; display:block; }
+a { color:inherit; text-decoration:none; transition:color .25s var(--ease); }
+button { font-family:inherit; cursor:pointer; border:none; background:none; }
+ul { list-style:none; }
+h1,h2,h3,h4,h5,h6 { color:var(--dark); font-weight:700; line-height:1.2; letter-spacing:-.015em; }
+h1 { font-size:clamp(2.2rem,5vw,3.7rem); }
+h2 { font-size:clamp(1.8rem,4vw,2.7rem); }
+h3 { font-size:clamp(1.25rem,2.5vw,1.6rem); }
+.display { font-family:'Sora','Poppins',sans-serif; }
+
+.container { max-width:var(--container); margin:0 auto; padding:0 24px; }
+
+/* ---- buttons ---- */
+.btn {
+  display:inline-flex; align-items:center; gap:9px; font-weight:600;
+  padding:13px 26px; border-radius:var(--radius-pill); font-size:.97rem;
+  transition:transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
+  white-space:nowrap;
+}
+.btn:active { transform:scale(.97); }
+.btn-primary { background:linear-gradient(135deg,var(--green-500),var(--green-700)); color:#fff; box-shadow:var(--shadow-green); }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 22px 46px -16px rgba(34,197,94,.65); }
+.btn-solar { background:linear-gradient(135deg,var(--solar),var(--solar-2)); color:#fff; box-shadow:0 16px 36px -16px rgba(252,74,26,.6); }
+.btn-solar:hover { transform:translateY(-2px); }
+.btn-outline { background:transparent; border:1.6px solid var(--green-600); color:var(--green-700); }
+.btn-outline:hover { background:var(--green-50); }
+.btn-white { background:#fff; color:var(--green-700); }
+.btn-ghost-light { background:rgba(255,255,255,.12); color:#fff; border:1.5px solid rgba(255,255,255,.3); backdrop-filter:blur(6px); }
+.btn-ghost-light:hover { background:rgba(255,255,255,.22); }
+.btn-lg { padding:16px 32px; font-size:1.04rem; }
+.btn-sm { padding:9px 18px; font-size:.88rem; }
+.btn-block { width:100%; justify-content:center; }
+
+.tag {
+  display:inline-block; background:var(--green-50); color:var(--green-700);
+  padding:7px 18px; border-radius:var(--radius-pill); font-size:.8rem; font-weight:600;
+  letter-spacing:.6px; text-transform:uppercase; border:1px solid var(--green-200);
+}
+.section { padding:96px 0; }
+.section-head { max-width:720px; margin:0 auto 56px; text-align:center; }
+.section-head p { color:var(--gray-500); margin-top:12px; }
+.muted { color:var(--gray-500); }
+.text-green { color:var(--green-600); }
+
+/* ---- forms (shared by ApplyModal + pages) ---- */
+.field { margin-bottom:16px; }
+.field label { display:block; font-size:.85rem; font-weight:600; color:var(--gray-700); margin-bottom:6px; }
+.field input, .field select, .field textarea {
+  width:100%; padding:12px 14px; border:1.5px solid var(--gray-200); border-radius:12px;
+  font-family:inherit; font-size:.95rem; color:var(--gray-800); background:#fff;
+  transition:border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline:none; border-color:var(--green-500); box-shadow:0 0 0 4px var(--green-100);
+}
+.field textarea { resize:vertical; min-height:90px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:520px){ .form-row { grid-template-columns:1fr; } }
+
+@media (max-width:600px) {
+  .field { margin-bottom:10px; }
+  .field label { font-size:.78rem; margin-bottom:3px; }
+  .field input, .field select, .field textarea {
+    padding:9px 11px; font-size:.88rem; border-radius:10px;
+  }
+  .field textarea { min-height:68px; }
+  .btn-lg { padding:12px 22px; font-size:.93rem; }
+}
+
+/* ---- PHP-port-specific fix ------------------------------------------
+   In the original React app, overlays/success/error panels (ApplyModal,
+   CareersModal, the Contact success popup, the video popup, etc.) were
+   only ever MOUNTED once their state turned true — they didn't exist in
+   the DOM otherwise. This port keeps that markup always in the DOM and
+   toggles the native `hidden` attribute via JS instead. Several of those
+   components' own CSS sets `display:flex`/`display:block` unconditionally
+   (or inside a plain media query), which — despite equal selector
+   specificity — beats the browser's default `[hidden]{display:none}`
+   because author stylesheet rules always take precedence over the
+   user-agent stylesheet for non-!important declarations. This single
+   rule restores `hidden` as the final word everywhere, site-wide. */
+[hidden] { display: none !important; }
+
+/* Generic inline button spinner — used by the shared submitForm() JS helper */
+.btn-spinner {
+  width:16px; height:16px; border:2.5px solid rgba(255,255,255,.45);
+  border-top-color:#fff; border-radius:50%; display:inline-block;
+  animation:btn-spin .7s linear infinite; margin-right:6px;
+}
+@keyframes btn-spin { to { transform:rotate(360deg); } }
+
+::selection { background:var(--green-200); }
+::-webkit-scrollbar { width:10px; }
+::-webkit-scrollbar-thumb { background:var(--gray-300); border-radius:10px; }

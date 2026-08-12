@@ -1,0 +1,66 @@
+.wa-btn {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  z-index: 900;
+  width: 58px; height: 58px;
+  background: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.75rem;
+  box-shadow: 0 4px 22px rgba(37,211,102,.45);
+  text-decoration: none;
+  transition: transform .2s var(--ease), box-shadow .2s;
+}
+.wa-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 32px rgba(37,211,102,.6);
+  color: #fff;
+}
+/* Pulse ring */
+.wa-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #25d366;
+  opacity: .35;
+  animation: wa-pulse 2.4s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes wa-pulse {
+  0%   { transform: scale(1);   opacity: .35; }
+  100% { transform: scale(1.9); opacity: 0;   }
+}
+
+/* Tooltip label */
+.wa-tip {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%; transform: translateY(-50%) translateX(6px);
+  background: #111827;
+  color: #fff;
+  font-size: .8rem; font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity .2s, transform .2s;
+  pointer-events: none;
+}
+.wa-tip::after {
+  content: '';
+  position: absolute;
+  left: 100%; top: 50%; transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #111827;
+}
+.wa-btn:hover .wa-tip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+@media (max-width: 600px) {
+  .wa-btn { bottom: 20px; right: 14px; width: 52px; height: 52px; font-size: 1.55rem; }
+  .wa-tip { display: none; }
+}

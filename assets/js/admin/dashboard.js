@@ -1,0 +1,154 @@
+/**
+ * Admin dashboard — fetches /admin/api/stats.php and renders stat cards,
+ * a Chart.js visitor-trend area chart (replaces Recharts), a top-pages
+ * bar list, and the recent applications table. Port of AdminDashboard.jsx.
+ */
+(function () {
+  const STATUS_COLORS = { new: '#22c55e', read: '#3b82f6', done: '#16a34a', pending: '#f59e0b', confirmed: '#3b82f6', cancelled: '#ef4444' };
+
+  function esc(s) {
+    const d = document.createElement('div');
+    d.textContent = s == null ? '' : String(s);
+    return d.innerHTML;
+  }
+
+  fetch('/admin/api/stats.php', { credentials: 'include' })
+    .then((r) => r.json())
+    .then(renderDashboard)
+    .catch(() => {
+      document.getElementById('admLoading').innerHTML = '<div style="color:#dc2626">Failed to load dashboard data.</div>';
+    });
+
+  function renderDashboard(data) {
+    document.getElementById('admLoading').hidden = true;
+    document.getElementById('admDashboardContent').hidden = false;
+
+    const { stats, dailyVisitors = [], topPages = [], recentApplications = [] } = data;
+
+    // ---- Visitor summary cards ----
+    const visitorCards = [
+      { label: 'Today', value: stats.visitors.today },
+      { label: 'Last 7 Days', value: stats.visitors.last7 },
+      { label: 'Last 30 Days', value: stats.visitors.last30 },
+      { label: 'All Time', value: stats.visitors.total },
+    ];
+    document.getElementById('visitorCards').innerHTML = visitorCards.map((c) => `
+      <div style="background:#fff;border-radius:var(--radius);padding:16px 20px;border:1px solid var(--gray-200)">
+        <div style="font-size:.77rem;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">${esc(c.label)}</div>
+        <div style="font-size:1.7rem;font-weight:700;color:var(--dark)">${c.value.toLocaleString()}</div>
+        <div style="font-size:.78rem;color:var(--gray-400);margin-top:2px">visitors</div>
+      </div>
+    `).join('');
+
+    // ---- Lead stat cards ----
+    const statCards = [
+      { label: 'Applications', value: stats.applications.total, badge: `${stats.applications.new} new`, ico: 'bi-lightning-charge', color: 'green', to: 'applications.php' },
+      { label: 'Contacts', value: stats.contacts.total, badge: `${stats.contacts.new} new`, ico: 'bi-envelope', color: 'blue', to: 'contacts.php' },
+      { label: 'Bookings', value: stats.bookings.total, badge: `${stats.bookings.pending} pending`, ico: 'bi-calendar-check', color: 'amber', to: 'bookings.php' },
+      { label: 'Careers', value: stats.careers.total, badge: `${stats.careers.new} new`, ico: 'bi-briefcase', color: 'rose', to: 'careers.php' },
+    ];
+    document.getElementById('statCards').innerHTML = statCards.map((c) => `
+      <a href="${c.to}" style="text-decoration:none">
+        <div class="adm-stat">
+          <div class="adm-stat-top">
+            <div class="adm-stat-ico ${c.color}"><i class="bi ${c.ico}"></i></div>
+            <span class="adm-stat-badge ${c.color === 'amber' ? 'pend' : 'new'}">${esc(c.badge)}</span>
+          </div>
+          <div class="adm-stat-num">${c.value}</div>
+          <div class="adm-stat-label">${esc(c.label)}</div>
+        </div>
+      </a>
+    `).join('');
+
+    // ---- Visitor trend chart (Chart.js) ----
+    const map = {};
+    dailyVisitors.forEach((d) => { map[d.day] = d.count; });
+    const labels = [];
+    const values = [];
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(Date.now() - i * 86400000);
+      const key = d.toISOString().slice(0, 10);
+      labels.push(d.toLocaleDateString('en-PK', { month: 'short', day: 'numeric' }));
+      values.push(map[key] || 0);
+    }
+    const ctx = document.getElementById('visitorChart').getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 220);
+    gradient.addColorStop(0, 'rgba(34,197,94,.25)');
+    gradient.addColorStop(1, 'rgba(34,197,94,0)');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          data: values, borderColor: '#22c55e', borderWidth: 2.5, backgroundColor: gradient,
+          fill: true, tension: 0.35, pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#22c55e',
+        }],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => ctx.parsed.y + ' visitors' } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#94a3b8' } },
+          y: { beginAtZero: true, ticks: { precision: 0, font: { size: 11 }, color: '#94a3b8' }, grid: { color: '#f1f5f9' } },
+        },
+      },
+    });
+
+    // ---- Top pages ----
+    const topPagesEl = document.getElementById('topPagesList');
+    if (topPages.length === 0) {
+      topPagesEl.innerHTML = '<div class="adm-empty" style="padding:40px 0">No page data yet</div>';
+    } else {
+      const max = topPages[0].count;
+      topPagesEl.innerHTML = topPages.slice(0, 6).map((p) => {
+        const pct = Math.round((p.count / max) * 100);
+        return `
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px">
+              <span style="color:var(--gray-700);font-weight:500">${esc(p.page || '/')}</span>
+              <span style="color:var(--gray-400);font-weight:600">${p.count}</span>
+            </div>
+            <div style="background:var(--gray-100);border-radius:4px;height:6px">
+              <div style="width:${pct}%;height:100%;background:var(--green-500);border-radius:4px"></div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // ---- Recent applications table ----
+    const tbody = document.getElementById('recentApplicationsBody');
+    if (recentApplications.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" class="adm-empty">No applications yet</td></tr>';
+    } else {
+      tbody.innerHTML = recentApplications.map((a) => `
+        <tr>
+          <td style="color:var(--gray-400);font-weight:600">#${a.id}</td>
+          <td style="font-weight:600">${esc(a.name)}</td>
+          <td>${esc(a.service_type || '—')}</td>
+          <td>${esc(a.city || '—')}</td>
+          <td><span class="status-badge status-${esc(a.status)}">${esc(a.status)}</span></td>
+          <td style="color:var(--gray-400);font-size:.82rem">${new Date(a.created_at).toLocaleDateString()}</td>
+        </tr>
+      `).join('');
+    }
+
+    // ---- Quick stats row ----
+    const quick = [
+      { label: 'Load Calculations', value: stats.calculations.total, icon: 'bi-calculator', sub: 'Total submitted' },
+      { label: 'Total Visitors', value: stats.visitors.total, icon: 'bi-eye', sub: 'All time' },
+      { label: "Today's Visitors", value: stats.visitors.today, icon: 'bi-person-lines-fill', sub: 'Unique page views' },
+    ];
+    document.getElementById('quickStatsRow').innerHTML = quick.map((c) => `
+      <div style="background:#fff;border-radius:var(--radius-lg);padding:22px 24px;border:1px solid var(--gray-200);display:flex;gap:16px;align-items:center">
+        <div style="width:46px;height:46px;border-radius:12px;background:var(--green-50);display:flex;align-items:center;justify-content:center;color:var(--green-600);font-size:1.2rem;flex-shrink:0">
+          <i class="bi ${c.icon}"></i>
+        </div>
+        <div>
+          <div style="font-size:1.6rem;font-weight:700;color:var(--dark);line-height:1">${c.value.toLocaleString()}</div>
+          <div style="font-size:.85rem;font-weight:600;color:var(--dark);margin-top:2px">${esc(c.label)}</div>
+          <div style="font-size:.77rem;color:var(--gray-400)">${esc(c.sub)}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+})();

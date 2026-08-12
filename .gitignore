@@ -1,0 +1,15 @@
+# Uploaded user content — don't version control real uploads
+uploads/resumes/*
+uploads/logos/*
+!uploads/resumes/.gitkeep
+!uploads/logos/.gitkeep
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+
+# Local test artifacts
+_*.png
+_*.html
+_*.log

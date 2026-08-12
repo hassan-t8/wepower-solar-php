@@ -1,0 +1,19 @@
+# Uploaded resumes/logos must NEVER be executable as PHP — this is a hardening
+# step the Node version didn't need (static-served files can't execute), but
+# is essential on PHP hosting where an uploaded .php file could otherwise run.
+
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|pht|phar)$">
+    Require all denied
+</FilesMatch>
+
+# Apache 2.2 fallback syntax
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(php|phtml|php3|php4|php5|php7|pht|phar)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>

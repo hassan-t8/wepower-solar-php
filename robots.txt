@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /uploads/
+
+Sitemap: https://wepower.pk/sitemap.xml
