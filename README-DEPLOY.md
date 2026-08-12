@@ -76,6 +76,49 @@ If this is a new domain, point its DNS A record to your Hostinger server IP, or 
 
 ---
 
+## 9. (Optional) Set up CI/CD so future pushes auto-deploy
+
+Steps 1–8 above are one-time setup. After that, you don't need to keep
+manually re-uploading files through File Manager — a GitHub Actions
+workflow (`.github/workflows/deploy.yml`) is already included in this repo
+that FTP-syncs your code to Hostinger automatically on every push to `main`.
+
+**It intentionally never touches `config/config.php` or `uploads/`** — those
+stay exactly as you set them up manually in steps 3–5, so a deploy can never
+wipe your live DB credentials or delete real uploaded resumes/logos.
+
+### Get your Hostinger FTP credentials
+
+hPanel → **Files** → **FTP Accounts** — note down:
+- **FTP server / hostname** (e.g. `ftp.yourdomain.com` or an IP)
+- **Username**
+- **Password**
+- **Server directory** — the path to your site's document root on the FTP
+  server (often `/public_html/` or `/domains/yourdomain.com/public_html/`
+  — check what folder you land in when you connect via FTP)
+
+### Add them as GitHub Secrets
+
+In your GitHub repo: **Settings → Secrets and variables → Actions → New repository secret**. Add all four:
+
+| Secret name | Value |
+|---|---|
+| `FTP_SERVER` | your FTP hostname |
+| `FTP_USERNAME` | your FTP username |
+| `FTP_PASSWORD` | your FTP password |
+| `FTP_SERVER_DIR` | your document root path, e.g. `/public_html/` |
+
+That's it — the next push to `main` (or a manual run from the **Actions** tab) will deploy automatically. Check the **Actions** tab in GitHub to watch it run and see any errors.
+
+### Important: keep doing steps 1–2 manually
+
+CI/CD only syncs *files*. If you ever add new tables/columns or need to
+re-import the schema, that's still a manual phpMyAdmin step — there's no
+automated DB migration here (by design, to avoid ever risking your live
+data on shared hosting).
+
+---
+
 ## Notes on how this project differs from typical PHP hosting setups
 
 - **No `.env` file** — `config/config.php` holds all connection/fallback constants directly (the PHP equivalent), since Hostinger shared hosting has no environment-variable injection like a Node PaaS would.

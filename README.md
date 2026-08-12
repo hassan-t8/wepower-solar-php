@@ -28,9 +28,21 @@ a stack that works on basic shared hosting.
    ```
 5. Visit `http://localhost:8000/index.php`. Admin panel: `http://localhost:8000/admin/login.php` (default: `admin@wepower.pk` / `Admin@123`).
 
+## Status
+
+Fully built and verified end-to-end against a real local MySQL database:
+
+- ✅ All 6 public pages (Home, About, Services, Careers, Load Calculator, Contact)
+- ✅ All 5 public forms (Get a Quote, Contact, Careers + resume upload, Load Calculator, jobs listing) with DB-backed rate limiting and email notifications (PHPMailer)
+- ✅ Full admin panel — auth, dashboard (Chart.js visitor trend), leads management (Applications/Contacts/Bookings/Careers/Calculations, each with search/filter/status/delete/CSV export), Job Postings CRUD, 4-tab Settings (Company/Social/WhatsApp/Logo, SMTP+test, Promo video, Password change)
+- ✅ SEO — per-page meta/OG tags, `sitemap.xml`, `robots.txt`
+- ✅ CI/CD — GitHub Actions auto-deploys to Hostinger via FTPS on every push to `main`
+
+Not yet done: a live deploy to actual Hostinger hosting (everything above was verified locally) — see the deploy guide below.
+
 ## Deploying to production
 
-See [`README-DEPLOY.md`](README-DEPLOY.md) for the full Hostinger deployment walkthrough.
+See [`README-DEPLOY.md`](README-DEPLOY.md) for the full Hostinger deployment walkthrough, including the one-time manual setup steps and how to enable the included CI/CD workflow.
 
 ## Project structure
 
