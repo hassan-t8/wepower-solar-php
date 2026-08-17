@@ -1,0 +1,89 @@
+/* ---- Language switcher ---- */
+.lang-switch { position:relative; margin-left:6px; }
+html[dir='rtl'] .lang-switch { margin-left:0; margin-right:6px; }
+
+.lang-switch-btn {
+  display:flex; align-items:center; gap:6px; font-weight:600; font-size:.9rem;
+  padding:8px 14px; border-radius:var(--radius-pill); color:var(--gray-700);
+  border:1.5px solid var(--gray-200); background:#fff; transition:border-color .2s var(--ease), background .2s var(--ease);
+}
+.lang-switch-btn:hover { border-color:var(--green-400); background:var(--green-50); }
+.lang-switch-caret { font-size:.7rem; transition:transform .2s var(--ease); }
+.lang-switch-caret.open { transform:rotate(180deg); }
+
+.hdr-overlay .lang-switch-btn {
+  background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.35); color:#fff; backdrop-filter:blur(6px);
+}
+.hdr-overlay .lang-switch-btn:hover { background:rgba(255,255,255,.22); }
+
+.lang-switch-menu {
+  position:absolute; top:calc(100% + 8px); right:0; min-width:130px; background:#fff;
+  border-radius:14px; box-shadow:var(--shadow-lg); border:1px solid var(--gray-200);
+  overflow:hidden; z-index:960;
+}
+html[dir='rtl'] .lang-switch-menu { right:auto; left:0; }
+.lang-switch-menu a {
+  display:block; width:100%; text-align:left; padding:11px 16px; font-size:.92rem;
+  color:var(--gray-700); font-weight:500; transition:background .15s var(--ease);
+}
+html[dir='rtl'] .lang-switch-menu a { text-align:right; }
+.lang-switch-menu a:hover { background:var(--green-50); }
+.lang-switch-menu a.active { color:var(--green-700); font-weight:700; background:var(--green-50); }
+
+@media (max-width:960px) {
+  .lang-switch { margin-top:10px; margin-left:0; margin-right:0; }
+  .lang-switch-btn { width:100%; justify-content:center; }
+  .lang-switch-menu { position:static; margin-top:8px; box-shadow:none; border-radius:12px; }
+}
+
+/* ---- First-visit language hint ---- */
+.lang-hint {
+  position:fixed; top:86px; right:24px; z-index:950; max-width:260px;
+  background:#fff; border:1px solid var(--gray-200); border-radius:16px;
+  box-shadow:var(--shadow-xl); padding:16px 18px 14px;
+}
+html[dir='rtl'] .lang-hint { right:auto; left:24px; }
+
+.lang-hint-arrow {
+  position:absolute; top:-8px; right:34px; width:16px; height:16px;
+  background:#fff; border-left:1px solid var(--gray-200); border-top:1px solid var(--gray-200);
+  transform:rotate(45deg);
+}
+html[dir='rtl'] .lang-hint-arrow { right:auto; left:34px; }
+
+.lang-hint-close {
+  position:absolute; top:8px; right:10px; width:22px; height:22px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; color:var(--gray-400); font-size:1rem;
+}
+html[dir='rtl'] .lang-hint-close { right:auto; left:10px; }
+.lang-hint-close:hover { background:var(--gray-100); color:var(--gray-700); }
+
+.lang-hint-en { font-size:.86rem; font-weight:600; color:var(--gray-800); margin:2px 22px 4px 0; }
+html[dir='rtl'] .lang-hint-en { margin:2px 0 4px 22px; }
+.lang-hint-ur {
+  font-family:'Noto Nastaliq Urdu','Poppins',sans-serif; direction:rtl; text-align:right;
+  font-size:.92rem; color:var(--gray-600); margin-bottom:10px; line-height:1.9;
+}
+.lang-hint-btn { width:100%; justify-content:center; }
+
+@media (max-width:600px) {
+  .lang-hint { top:auto; bottom:90px; right:16px; left:16px; max-width:none; }
+  html[dir='rtl'] .lang-hint { left:16px; }
+  .lang-hint-arrow { display:none; }
+}
+
+/* ---- Urdu language + RTL ---- */
+body.lang-ur {
+  font-family:'Noto Nastaliq Urdu','Poppins','Segoe UI',Tahoma,sans-serif;
+  line-height:1.95;
+}
+body.lang-ur .display { font-family:'Noto Nastaliq Urdu','Sora',sans-serif; }
+body.lang-ur h1, body.lang-ur h2, body.lang-ur h3, body.lang-ur h4, body.lang-ur h5, body.lang-ur h6 {
+  letter-spacing:0; line-height:1.7;
+}
+body.lang-ur .tag { letter-spacing:0; text-transform:none; }
+
+html[dir='rtl'] body { text-align:right; }
+html[dir='rtl'] .section-head { text-align:center; }
+/* Numbers, phone numbers & emails always read left-to-right even in Urdu copy */
+html[dir='rtl'] a[href^="tel:"], html[dir='rtl'] a[href^="mailto:"] { direction:ltr; unicode-bidi:embed; }

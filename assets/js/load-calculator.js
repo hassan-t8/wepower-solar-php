@@ -116,7 +116,8 @@
     calcSuccess.hidden = true;
     saveBtn.disabled = true;
     const origHtml = saveBtn.innerHTML;
-    saveBtn.innerHTML = '<span class="btn-spinner"></span> Saving…';
+    const i18n = window.WP_I18N || {};
+    saveBtn.innerHTML = '<span class="btn-spinner"></span> ' + (i18n.saving || 'Saving…');
 
     const c = calc();
     const payload = {
@@ -143,7 +144,7 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Error saving.');
       calcSuccess.hidden = false;
-      showToast('Results saved! Our team will reach out shortly.', 'success');
+      showToast(i18n.savedMsg || 'Results saved! Our team will reach out shortly.', 'success');
     } catch (err) {
       calcError.hidden = false;
       calcError.querySelector('span').textContent = err.message;

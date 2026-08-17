@@ -8,10 +8,10 @@ require_once __DIR__ . '/includes/header.php';
 <section class="pg-hero">
   <div class="container pg-hero-inner">
     <div class="pg-breadcrumb">
-      <a href="/index.php">Home</a><i class="bi bi-chevron-right"></i><span>About Us</span>
+      <a href="/index.php"><?= h(t('common.home')) ?></a><i class="bi bi-chevron-right"></i><span><?= h(t('about.breadcrumb')) ?></span>
     </div>
-    <span class="tag">Who We Are</span>
-    <h1 class="display">Pakistan's Trusted Solar EPC Partner</h1>
+    <span class="tag"><?= h(t('about.heroTag')) ?></span>
+    <h1 class="display"><?= h(t('about.heroTitle')) ?></h1>
     <p><?= h($company['purpose']) ?></p>
   </div>
 </section>
@@ -20,12 +20,12 @@ require_once __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="info-grid" style="align-items:center;gap:56px">
       <div>
-        <span class="tag">Our Story</span>
-        <h2 class="section-title" style="text-align:left"><?= h('Engineering Excellence in Solar') ?></h2>
+        <span class="tag"><?= h(t('about.storyTag')) ?></span>
+        <h2 class="section-title" style="text-align:<?= $DIR === 'rtl' ? 'right' : 'left' ?>"><?= h(t('about.storyTitle')) ?></h2>
         <p class="muted" style="margin-bottom:20px"><?= h($company['who']) ?></p>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <button type="button" class="btn btn-primary" data-open-apply-modal><i class="bi bi-lightning-charge-fill"></i> Get a Free Quote</button>
-          <a href="/contact.php" class="btn btn-outline"><i class="bi bi-telephone"></i> Contact Us</a>
+          <button type="button" class="btn btn-primary" data-open-apply-modal><i class="bi bi-lightning-charge-fill"></i> <?= h(t('common.getFreeQuote')) ?></button>
+          <a href="/contact.php" class="btn btn-outline"><i class="bi bi-telephone"></i> <?= h(t('common.contactUs')) ?></a>
         </div>
       </div>
       <div>
@@ -45,18 +45,18 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section" style="background:var(--gray-50);padding-top:80px;padding-bottom:80px">
   <div class="container">
     <div class="section-head">
-      <span class="tag">Purpose &amp; Direction</span>
-      <h2>Vision, Mission &amp; Values</h2>
+      <span class="tag"><?= h(t('about.purposeTag')) ?></span>
+      <h2><?= h(t('about.purposeTitle')) ?></h2>
     </div>
     <div class="val-cards">
       <div class="val-card">
         <div class="val-card-ico"><i class="bi bi-eye"></i></div>
-        <h4>Our Vision</h4>
+        <h4><?= h(t('about.visionTitle')) ?></h4>
         <p><?= h($company['vision']) ?></p>
       </div>
       <div class="val-card">
         <div class="val-card-ico"><i class="bi bi-bullseye"></i></div>
-        <h4>Our Mission</h4>
+        <h4><?= h(t('about.missionTitle')) ?></h4>
         <p><?= h($company['mission']) ?></p>
       </div>
       <?php foreach ($company['values'] as $v): ?>
@@ -73,8 +73,8 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <span class="tag">Leadership</span>
-      <h2>Meet Our Founder</h2>
+      <span class="tag"><?= h(t('about.leadershipTag')) ?></span>
+      <h2><?= h(t('about.leadershipTitle')) ?></h2>
     </div>
     <div class="ceo-card">
       <div class="ceo-img">
@@ -92,8 +92,8 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section" style="background:var(--gray-50);padding-top:80px;padding-bottom:80px">
   <div class="container">
     <div class="section-head">
-      <span class="tag">Why WePower</span>
-      <h2>Why Clients Choose Us</h2>
+      <span class="tag"><?= h(t('about.whyTag')) ?></span>
+      <h2><?= h(t('about.whyTitle')) ?></h2>
     </div>
     <div class="val-cards">
       <?php foreach ($whyFeatures as $f): ?>
@@ -106,7 +106,7 @@ require_once __DIR__ . '/includes/header.php';
       <?php foreach ($whyChoose as $w): ?>
         <div class="val-card">
           <div class="val-card-ico"><i class="bi bi-check-circle"></i></div>
-          <h4>Proven Track Record</h4>
+          <h4><?= h(t('about.trackRecord')) ?></h4>
           <p><?= h($w) ?></p>
         </div>
       <?php endforeach; ?>
@@ -118,9 +118,9 @@ require_once __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="info-grid" style="align-items:start;gap:56px">
       <div>
-        <span class="tag">Portfolio</span>
-        <h2 class="section-title" style="text-align:left;margin-bottom:8px">Notable Projects</h2>
-        <p class="muted" style="margin-bottom:24px">A selection of our landmark installations across Pakistan's residential, commercial, and government sectors.</p>
+        <span class="tag"><?= h(t('about.portfolioTag')) ?></span>
+        <h2 class="section-title" style="text-align:<?= $DIR === 'rtl' ? 'right' : 'left' ?>;margin-bottom:8px"><?= h(t('about.portfolioTitle')) ?></h2>
+        <p class="muted" style="margin-bottom:24px"><?= h(t('about.portfolioDesc')) ?></p>
         <ul class="notable-list">
           <?php foreach ($notableProjects as $p): ?>
             <li><i class="bi bi-building-check"></i><?= h($p) ?></li>
@@ -128,9 +128,9 @@ require_once __DIR__ . '/includes/header.php';
         </ul>
       </div>
       <div>
-        <span class="tag">What's Next</span>
-        <h2 class="section-title" style="text-align:left;margin-bottom:8px">Our Roadmap</h2>
-        <p class="muted" style="margin-bottom:24px">Where we're taking WePower next — from advanced storage to large-scale commercial projects.</p>
+        <span class="tag"><?= h(t('about.nextTag')) ?></span>
+        <h2 class="section-title" style="text-align:<?= $DIR === 'rtl' ? 'right' : 'left' ?>;margin-bottom:8px"><?= h(t('about.nextTitle')) ?></h2>
+        <p class="muted" style="margin-bottom:24px"><?= h(t('about.nextDesc')) ?></p>
         <div style="display:flex;flex-direction:column;gap:16px">
           <?php foreach ($roadmap as $r): ?>
             <div style="display:flex;gap:16px;align-items:start;padding:16px 20px;background:var(--gray-50);border-radius:var(--radius);border:1px solid var(--gray-200)">
@@ -151,11 +151,11 @@ require_once __DIR__ . '/includes/header.php';
 
 <section style="background:linear-gradient(135deg,var(--green-700),var(--green-600));padding:80px 0">
   <div class="container" style="text-align:center">
-    <h2 style="color:#fff;margin-bottom:12px">Ready to Go Solar?</h2>
-    <p style="color:rgba(255,255,255,.85);margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto">Free site survey and a tailored proposal from our experts. No obligation.</p>
+    <h2 style="color:#fff;margin-bottom:12px"><?= h(t('about.ctaTitle')) ?></h2>
+    <p style="color:rgba(255,255,255,.85);margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto"><?= h(t('about.ctaSub')) ?></p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-      <button type="button" class="btn btn-white btn-lg" data-open-apply-modal><i class="bi bi-send"></i> Apply Now</button>
-      <a href="/contact.php" class="btn btn-ghost-light btn-lg"><i class="bi bi-telephone"></i> Talk to Us</a>
+      <button type="button" class="btn btn-white btn-lg" data-open-apply-modal><i class="bi bi-send"></i> <?= h(t('common.applyNow')) ?></button>
+      <a href="/contact.php" class="btn btn-ghost-light btn-lg"><i class="bi bi-telephone"></i> <?= h(t('common.talkToUs')) ?></a>
     </div>
   </div>
 </section>

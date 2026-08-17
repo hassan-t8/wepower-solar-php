@@ -13,63 +13,63 @@
       <div class="cm-side-glow"></div>
       <div class="cm-side-icon"><i class="bi bi-briefcase-fill"></i></div>
       <div id="cmSideJob" hidden>
-        <h3>Apply for Position</h3>
+        <h3><?= h(t('careersModal.applyForPosition')) ?></h3>
         <p class="cm-side-role" id="cmSideRole"></p>
         <div class="cm-side-meta" id="cmSideMeta"></div>
       </div>
       <div id="cmSideGeneral">
-        <h3>Join WePower</h3>
-        <p>Submit your application and become part of Pakistan's solar revolution.</p>
+        <h3><?= h(t('careersModal.joinTitle')) ?></h3>
+        <p><?= h(t('careersModal.joinDesc')) ?></p>
       </div>
       <ul class="cm-side-list">
-        <li><i class="bi bi-check-circle-fill"></i>Fast review process</li>
-        <li><i class="bi bi-check-circle-fill"></i>Competitive packages</li>
-        <li><i class="bi bi-check-circle-fill"></i>Growth opportunities</li>
+        <?php foreach (t('careersModal.sideList') as $item): ?>
+          <li><i class="bi bi-check-circle-fill"></i><?= h($item) ?></li>
+        <?php endforeach; ?>
       </ul>
     </div>
 
     <div class="cm-body">
       <div id="cmFormWrap">
-        <h2 class="cm-title">Submit Application</h2>
-        <p class="cm-sub">Fill in your details below — all fields marked * are required.</p>
+        <h2 class="cm-title"><?= h(t('careersModal.title')) ?></h2>
+        <p class="cm-sub"><?= h(t('careersModal.sub')) ?></p>
         <form id="careersForm">
           <div class="form-row">
-            <div class="field"><label>Full Name *</label><input type="text" name="full_name" required placeholder="Your full name"></div>
-            <div class="field"><label>Phone *</label><input type="text" name="phone" required placeholder="03xx-xxxxxxx"></div>
+            <div class="field"><label><?= h(t('careersModal.fullName')) ?></label><input type="text" name="full_name" required placeholder="<?= h(t('careersModal.fullNamePh')) ?>"></div>
+            <div class="field"><label><?= h(t('careersModal.phone')) ?></label><input type="text" name="phone" required placeholder="<?= h(t('careersModal.phonePh')) ?>"></div>
           </div>
           <div class="form-row">
-            <div class="field"><label>Email *</label><input type="email" name="email" required placeholder="you@email.com"></div>
+            <div class="field"><label><?= h(t('careersModal.email')) ?></label><input type="email" name="email" required placeholder="<?= h(t('careersModal.emailPh')) ?>"></div>
             <div class="field">
-              <label>Position *</label>
+              <label><?= h(t('careersModal.position')) ?></label>
               <select name="position" id="cmPositionSelect" required>
-                <option value="">Select a position</option>
+                <option value=""><?= h(t('careersModal.selectPosition')) ?></option>
                 <?php foreach ($jobs as $j): ?>
                   <option value="<?= h($j['title']) ?>"><?= h($j['title']) ?></option>
                 <?php endforeach; ?>
-                <option value="General Application">General Application</option>
+                <option value="General Application"><?= h(t('careersModal.generalApplication')) ?></option>
               </select>
             </div>
           </div>
           <div class="form-row">
-            <div class="field"><label>Years of Experience</label><input type="number" name="experience_years" min="0" max="40" placeholder="e.g. 3"></div>
-            <div class="field"><label>Education / Qualification</label><input type="text" name="education" placeholder="e.g. BE Electrical, NUST"></div>
+            <div class="field"><label><?= h(t('careersModal.experience')) ?></label><input type="number" name="experience_years" min="0" max="40" placeholder="<?= h(t('careersModal.experiencePh')) ?>"></div>
+            <div class="field"><label><?= h(t('careersModal.education')) ?></label><input type="text" name="education" placeholder="<?= h(t('careersModal.educationPh')) ?>"></div>
           </div>
           <div class="field">
-            <label>Resume / CV <span class="field-hint">(PDF, DOC, DOCX — max 5MB)</span></label>
+            <label><?= h(t('careersModal.resume')) ?> <span class="field-hint"><?= h(t('careersModal.resumeHint')) ?></span></label>
             <input type="file" name="resume" accept=".pdf,.doc,.docx">
           </div>
           <div class="cm-error" id="careersError" hidden><i class="bi bi-exclamation-triangle"></i> <span></span></div>
           <button type="submit" class="btn btn-primary btn-block btn-lg">
-            <i class="bi bi-send"></i> Submit Application
+            <i class="bi bi-send"></i> <?= h(t('careersModal.submitApplication')) ?>
           </button>
         </form>
       </div>
 
       <div class="cm-success" id="cmSuccess" hidden>
         <div class="cm-check"><i class="bi bi-check-lg"></i></div>
-        <h3>Application Submitted!</h3>
-        <p>Thank you! Our HR team will review your application and reach out within 5–7 business days.</p>
-        <button type="button" class="btn btn-outline" id="cmCloseDoneBtn">Close</button>
+        <h3><?= h(t('careersModal.successTitle')) ?></h3>
+        <p><?= h(t('careersModal.successBody')) ?></p>
+        <button type="button" class="btn btn-outline" id="cmCloseDoneBtn"><?= h(t('common.close')) ?></button>
       </div>
     </div>
   </div>

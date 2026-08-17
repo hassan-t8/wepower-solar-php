@@ -12,11 +12,11 @@ $phones = implode(' / ', $brand['phones']);
 <section class="pg-hero">
   <div class="container pg-hero-inner">
     <div class="pg-breadcrumb">
-      <a href="/index.php">Home</a><i class="bi bi-chevron-right"></i><span>Contact</span>
+      <a href="/index.php"><?= h(t('common.home')) ?></a><i class="bi bi-chevron-right"></i><span><?= h(t('contact.breadcrumb')) ?></span>
     </div>
-    <span class="tag">Get in Touch</span>
-    <h1 class="display">Let's Talk Solar</h1>
-    <p>Have a question or ready to get a quote? Our team replies within 24 hours.</p>
+    <span class="tag"><?= h(t('contact.heroTag')) ?></span>
+    <h1 class="display"><?= h(t('contact.heroTitle')) ?></h1>
+    <p><?= h(t('contact.heroLead')) ?></p>
   </div>
 </section>
 
@@ -25,12 +25,12 @@ $phones = implode(' / ', $brand['phones']);
     <div class="info-grid contact-grid">
 
       <div class="contact-info-col">
-        <h3 style="margin-bottom:24px">Contact Information</h3>
+        <h3 style="margin-bottom:24px"><?= h(t('contact.infoTitle')) ?></h3>
 
         <div style="display:flex;gap:16px;align-items:start;margin-bottom:28px">
           <div style="width:46px;height:46px;border-radius:14px;background:var(--green-50);display:flex;align-items:center;justify-content:center;color:var(--green-600);font-size:1.15rem;flex-shrink:0;border:1px solid var(--green-200)"><i class="bi bi-geo-alt-fill"></i></div>
           <div>
-            <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Office Address</div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px"><?= h(t('contact.officeAddress')) ?></div>
             <div style="color:var(--gray-800);font-weight:500;line-height:1.5"><?= h($brand['address']) ?></div>
           </div>
         </div>
@@ -38,7 +38,7 @@ $phones = implode(' / ', $brand['phones']);
         <div style="display:flex;gap:16px;align-items:start;margin-bottom:28px">
           <div style="width:46px;height:46px;border-radius:14px;background:var(--green-50);display:flex;align-items:center;justify-content:center;color:var(--green-600);font-size:1.15rem;flex-shrink:0;border:1px solid var(--green-200)"><i class="bi bi-telephone-fill"></i></div>
           <div>
-            <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Phone</div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px"><?= h(t('contact.phone')) ?></div>
             <div style="color:var(--gray-800);font-weight:500;line-height:1.5"><?= h($phones) ?></div>
           </div>
         </div>
@@ -46,7 +46,7 @@ $phones = implode(' / ', $brand['phones']);
         <div style="display:flex;gap:16px;align-items:start;margin-bottom:28px">
           <div style="width:46px;height:46px;border-radius:14px;background:var(--green-50);display:flex;align-items:center;justify-content:center;color:var(--green-600);font-size:1.15rem;flex-shrink:0;border:1px solid var(--green-200)"><i class="bi bi-envelope-fill"></i></div>
           <div>
-            <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Email</div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px"><?= h(t('contact.email')) ?></div>
             <div style="color:var(--gray-800);font-weight:500;line-height:1.5"><a href="mailto:<?= h($contactEmail) ?>" style="color:inherit"><?= h($contactEmail) ?></a></div>
           </div>
         </div>
@@ -54,16 +54,16 @@ $phones = implode(' / ', $brand['phones']);
         <div style="display:flex;gap:16px;align-items:start;margin-bottom:28px">
           <div style="width:46px;height:46px;border-radius:14px;background:var(--green-50);display:flex;align-items:center;justify-content:center;color:var(--green-600);font-size:1.15rem;flex-shrink:0;border:1px solid var(--green-200)"><i class="bi bi-instagram"></i></div>
           <div>
-            <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Instagram</div>
+            <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px"><?= h(t('contact.instagram')) ?></div>
             <div style="color:var(--gray-800);font-weight:500;line-height:1.5"><?= h($brand['instagram']) ?></div>
           </div>
         </div>
 
         <div class="contact-hours" style="background:var(--green-50);border:1px solid var(--green-200);border-radius:var(--radius-lg);padding:22px 24px;margin-top:8px">
-          <h4 style="color:var(--green-700);margin-bottom:12px;font-size:1rem"><i class="bi bi-clock" style="margin-right:8px"></i>Working Hours</h4>
+          <h4 style="color:var(--green-700);margin-bottom:12px;font-size:1rem"><i class="bi bi-clock" style="margin-right:8px"></i><?= h(t('contact.hoursTitle')) ?></h4>
           <div style="color:var(--gray-700);font-size:.9rem;line-height:2">
-            <div>Monday – Saturday: <strong>9:00 AM – 6:00 PM</strong></div>
-            <div>Sunday: <strong>By Appointment</strong></div>
+            <div><?= h(t('contact.hoursWeek')) ?> <strong><?= h(t('contact.hoursWeekVal')) ?></strong></div>
+            <div><?= h(t('contact.hoursSun')) ?> <strong><?= h(t('contact.hoursSunVal')) ?></strong></div>
           </div>
         </div>
       </div>
@@ -72,19 +72,19 @@ $phones = implode(' / ', $brand['phones']);
         <div class="contact-card">
           <div id="contactFormWrap">
             <form id="contactForm">
-              <h3 style="margin-bottom:6px">Send a Message</h3>
-              <p class="muted" style="margin-bottom:24px;font-size:.9rem">Fill in the form and we'll get back to you shortly.</p>
+              <h3 style="margin-bottom:6px"><?= h(t('contact.formTitle')) ?></h3>
+              <p class="muted" style="margin-bottom:24px;font-size:.9rem"><?= h(t('contact.formSub')) ?></p>
               <div class="form-row">
-                <div class="field"><label>Full Name *</label><input type="text" name="name" required placeholder="Your name"></div>
-                <div class="field"><label>Phone</label><input type="text" name="phone" placeholder="03xx-xxxxxxx"></div>
+                <div class="field"><label><?= h(t('contact.fullName')) ?></label><input type="text" name="name" required placeholder="<?= h(t('contact.fullNamePh')) ?>"></div>
+                <div class="field"><label><?= h(t('contact.phoneLabel')) ?></label><input type="text" name="phone" placeholder="03xx-xxxxxxx"></div>
               </div>
-              <div class="field"><label>Email *</label><input type="email" name="email" required placeholder="you@email.com"></div>
-              <div class="field"><label>Message *</label><textarea name="message" required placeholder="Tell us about your project or inquiry…" style="min-height:90px"></textarea></div>
+              <div class="field"><label><?= h(t('contact.emailReq')) ?></label><input type="email" name="email" required placeholder="you@email.com"></div>
+              <div class="field"><label><?= h(t('contact.messageReq')) ?></label><textarea name="message" required placeholder="<?= h(t('contact.messagePh')) ?>" style="min-height:90px"></textarea></div>
 
               <div class="form-error" id="contactError" hidden><span></span></div>
 
               <button type="submit" class="btn btn-primary btn-block btn-lg">
-                <i class="bi bi-send"></i> Send Message
+                <i class="bi bi-send"></i> <?= h(t('contact.sendMessage')) ?>
               </button>
             </form>
           </div>
@@ -93,18 +93,18 @@ $phones = implode(' / ', $brand['phones']);
           <div class="csm-overlay" id="contactSuccessPopup" hidden>
             <div class="csm-popup">
               <div class="csm-check"><i class="bi bi-check-lg"></i></div>
-              <h3>Message Sent!</h3>
-              <p>Thank you for reaching out.<br>Our team will reply within 24 hours.</p>
-              <button type="button" class="btn btn-primary btn-block" id="contactBackBtn"><i class="bi bi-arrow-left"></i> Back to Contact</button>
+              <h3><?= h(t('contact.sentTitle')) ?></h3>
+              <p><?= h(t('contact.sentBody1')) ?><br><?= h(t('contact.sentBody2')) ?></p>
+              <button type="button" class="btn btn-primary btn-block" id="contactBackBtn"><i class="bi bi-arrow-left"></i> <?= h(t('contact.backToContact')) ?></button>
             </div>
           </div>
 
           <!-- Inline: shown on desktop only (CSS hides on mobile) -->
           <div class="csm-inline" id="contactSuccessInline" hidden>
             <div style="width:72px;height:72px;border-radius:50%;background:var(--green-500);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 20px"><i class="bi bi-check-lg"></i></div>
-            <h3 style="margin-bottom:10px">Message Sent!</h3>
-            <p class="muted" style="margin-bottom:24px">Thank you for reaching out. Our team will reply within 24 hours.</p>
-            <button type="button" class="btn btn-outline btn-block contact-success-btn" id="contactAnotherBtn">Send Another Message</button>
+            <h3 style="margin-bottom:10px"><?= h(t('contact.sentTitle')) ?></h3>
+            <p class="muted" style="margin-bottom:24px"><?= h(t('contact.sentBody1')) ?> <?= h(t('contact.sentBody2')) ?></p>
+            <button type="button" class="btn btn-outline btn-block contact-success-btn" id="contactAnotherBtn"><?= h(t('contact.sendAnother')) ?></button>
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@ $phones = implode(' / ', $brand['phones']);
   </div>
 </section>
 
-<?php $faqSubtext = 'Quick answers to the most common solar questions.'; include __DIR__ . '/includes/faq-section.php'; ?>
+<?php $faqSubtext = t('contact.faqSub'); include __DIR__ . '/includes/faq-section.php'; ?>
 
 <section style="padding-bottom:80px">
   <div class="container">

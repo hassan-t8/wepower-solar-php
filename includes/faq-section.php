@@ -5,13 +5,13 @@
  * centralized here instead of being duplicated per-page like the original.
  * Optional $faqSubtext overrides the default subheading text.
  */
-$faqSubtext = $faqSubtext ?? 'Quick answers about solar in Pakistan.';
+$faqSubtext = $faqSubtext ?? t('home.faqSub');
 ?>
 <section class="section" style="background:var(--gray-50);padding-top:80px;padding-bottom:80px">
   <div class="container" style="max-width:820px">
     <div class="section-head" style="margin-bottom:48px">
       <span class="tag">FAQ</span>
-      <h2>Frequently Asked Questions</h2>
+      <h2><?= h(t('faq.title')) ?></h2>
       <p><?= h($faqSubtext) ?></p>
     </div>
     <div class="faq-list">

@@ -13,68 +13,68 @@
     <div class="apply-side">
       <div class="apply-side-bg"><div class="apply-side-glow"></div></div>
       <i class="bi bi-sun-fill apply-side-icon"></i>
-      <h3>Go Solar with WePower</h3>
-      <p>Free site survey &amp; a tailored proposal — no obligation. Our experts reply within 24 hours.</p>
+      <h3><?= h(t('apply.sideTitle')) ?></h3>
+      <p><?= h(t('apply.sideDesc')) ?></p>
       <ul class="apply-side-list">
-        <li><i class="bi bi-check-circle-fill"></i> Free load assessment</li>
-        <li><i class="bi bi-check-circle-fill"></i> Transparent pricing</li>
-        <li><i class="bi bi-check-circle-fill"></i> 2 years free O&amp;M</li>
+        <?php foreach (t('apply.sideList') as $item): ?>
+          <li><i class="bi bi-check-circle-fill"></i> <?= h($item) ?></li>
+        <?php endforeach; ?>
       </ul>
     </div>
 
     <div class="apply-body">
       <div id="applyFormWrap">
-        <h3 class="apply-title">Apply Now</h3>
-        <p class="apply-sub">Tell us about your project and we'll get you a quote.</p>
+        <h3 class="apply-title"><?= h(t('apply.title')) ?></h3>
+        <p class="apply-sub"><?= h(t('apply.sub')) ?></p>
 
         <form id="applyForm">
           <div class="form-row">
-            <div class="field"><label>Full Name *</label><input type="text" name="name" required placeholder="Your name"></div>
-            <div class="field"><label>Phone *</label><input type="text" name="phone" required placeholder="03xx-xxxxxxx"></div>
+            <div class="field"><label><?= h(t('apply.fullName')) ?></label><input type="text" name="name" required placeholder="<?= h(t('apply.fullNamePh')) ?>"></div>
+            <div class="field"><label><?= h(t('apply.phone')) ?></label><input type="text" name="phone" required placeholder="<?= h(t('apply.phonePh')) ?>"></div>
           </div>
           <div class="form-row">
-            <div class="field"><label>Email *</label><input type="email" name="email" required placeholder="you@email.com"></div>
-            <div class="field"><label>City</label><input type="text" name="city" placeholder="e.g. Rawalpindi"></div>
+            <div class="field"><label><?= h(t('apply.email')) ?></label><input type="email" name="email" required placeholder="<?= h(t('apply.emailPh')) ?>"></div>
+            <div class="field"><label><?= h(t('apply.city')) ?></label><input type="text" name="city" placeholder="<?= h(t('apply.cityPh')) ?>"></div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Service</label>
+              <label><?= h(t('apply.service')) ?></label>
               <select name="service_type" id="applyServiceSelect">
-                <option value="">Select a service</option>
+                <option value=""><?= h(t('apply.selectService')) ?></option>
                 <?php foreach ($services as $s): ?>
                   <option value="<?= h($s['title']) ?>"><?= h($s['title']) ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
             <div class="field">
-              <label>Property Type</label>
+              <label><?= h(t('apply.propertyType')) ?></label>
               <select name="property_type">
-                <option value="">Select</option>
-                <option>Home</option>
-                <option>Commercial</option>
-                <option>Industrial</option>
-                <option>Agricultural</option>
+                <option value=""><?= h(t('apply.selectOption')) ?></option>
+                <option><?= h(t('apply.propHome')) ?></option>
+                <option><?= h(t('apply.propCommercial')) ?></option>
+                <option><?= h(t('apply.propIndustrial')) ?></option>
+                <option><?= h(t('apply.propAgri')) ?></option>
               </select>
             </div>
           </div>
           <div class="field">
-            <label>Notes</label>
-            <textarea name="notes" placeholder="Roof size, monthly bill, anything helpful…"></textarea>
+            <label><?= h(t('apply.notes')) ?></label>
+            <textarea name="notes" placeholder="<?= h(t('apply.notesPh')) ?>"></textarea>
           </div>
 
           <div class="apply-error" id="applyError" hidden><i class="bi bi-exclamation-triangle"></i> <span></span></div>
 
           <button type="submit" class="btn btn-primary btn-block btn-lg" id="applySubmitBtn">
-            <i class="bi bi-send"></i> Submit Request
+            <i class="bi bi-send"></i> <?= h(t('apply.submitRequest')) ?>
           </button>
         </form>
       </div>
 
       <div class="apply-success" id="applySuccess" hidden>
         <div class="apply-check"><i class="bi bi-check-lg"></i></div>
-        <h3>Request Received!</h3>
-        <p id="applySuccessMsg">Thank you. Our solar team will reach out shortly to confirm your free consultation.</p>
-        <button type="button" class="btn btn-primary" id="applyDoneBtn">Done</button>
+        <h3><?= h(t('apply.successTitle')) ?></h3>
+        <p id="applySuccessMsg"><?= h(t('apply.successBody')) ?></p>
+        <button type="button" class="btn btn-primary" id="applyDoneBtn"><?= h(t('common.done')) ?></button>
       </div>
     </div>
   </div>

@@ -13,18 +13,15 @@ require_once __DIR__ . '/includes/header.php';
   <div class="t1-orb"></div>
   <div class="container t1-hero-grid">
     <div class="t1-hero-content">
-      <span class="tag">Solar EPC Specialists · Pakistan</span>
-      <h1 class="display">Empower Yourself with <span class="t1-grad">Solar Energy</span></h1>
-      <p class="t1-lead">
-        Reliable, high-performance solar solutions across residential, commercial, industrial,
-        and government sectors — engineered for performance, safety, and long-term value.
-      </p>
+      <span class="tag"><?= h(t('home.badge')) ?></span>
+      <h1 class="display"><?= h(t('home.heroTitlePre')) ?> <span class="t1-grad"><?= h(t('home.heroTitleGrad')) ?></span></h1>
+      <p class="t1-lead"><?= h(t('home.heroLead')) ?></p>
       <div class="t1-actions">
         <button type="button" class="btn btn-primary btn-lg" data-open-apply-modal>
-          <i class="bi bi-lightning-charge-fill"></i> Get a Free Quote
+          <i class="bi bi-lightning-charge-fill"></i> <?= h(t('common.getFreeQuote')) ?>
         </button>
         <a href="/load-calculator.php" class="btn btn-outline btn-lg">
-          <i class="bi bi-calculator"></i> Calculate Load
+          <i class="bi bi-calculator"></i> <?= h(t('common.calculateLoad')) ?>
         </a>
       </div>
       <div class="t1-hero-stats">
@@ -41,11 +38,11 @@ require_once __DIR__ . '/includes/header.php';
       <img src="/assets/images/hero.png" alt="Solar installation" class="t1-hero-img">
       <div class="t1-float t1-float-1">
         <div class="t1-float-num"><span class="js-counter" data-value="92" data-suffix="%">0%</span></div>
-        <div class="t1-float-label">Avg. bill savings</div>
+        <div class="t1-float-label"><?= h(t('home.floatSavings')) ?></div>
       </div>
       <div class="t1-float t1-float-2">
         <i class="bi bi-patch-check-fill"></i>
-        <div><strong>Net-Zero Bills</strong><span>1000+ homes powered</span></div>
+        <div><strong><?= h(t('home.floatBillsTitle')) ?></strong><span><?= h(t('home.floatBillsSub')) ?></span></div>
       </div>
     </div>
   </div>
@@ -54,13 +51,9 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section">
   <div class="container t1-why">
     <div>
-      <span class="tag">Who We Are</span>
-      <h2 class="section-title">Pakistan's Trusted Solar EPC Partner</h2>
-      <p class="muted">
-        A professional solar EPC company delivering reliable, high-performance renewable energy
-        solutions — end-to-end execution from design and procurement to installation, testing,
-        and long-term support.
-      </p>
+      <span class="tag"><?= h(t('home.whoTag')) ?></span>
+      <h2 class="section-title"><?= h(t('home.whoTitle')) ?></h2>
+      <p class="muted"><?= h(t('home.whoDesc')) ?></p>
       <div class="t1-feats">
         <?php foreach ($whyFeatures as $f): ?>
           <div class="t1-feat">
@@ -69,11 +62,11 @@ require_once __DIR__ . '/includes/header.php';
           </div>
         <?php endforeach; ?>
       </div>
-      <a href="/about.php" class="btn btn-primary">Learn More About Us <i class="bi bi-arrow-right"></i></a>
+      <a href="/about.php" class="btn btn-primary"><?= h(t('common.learnMore')) ?> <i class="bi bi-arrow-right"></i></a>
     </div>
     <div class="t1-why-img">
       <img src="/assets/images/who-we-are-solar.png" alt="Home solar">
-      <div class="t1-why-badge"><i class="bi bi-sun-fill"></i> Empowering Pakistan, one rooftop at a time</div>
+      <div class="t1-why-badge"><i class="bi bi-sun-fill"></i> <?= h(t('home.whoImgCaption')) ?></div>
     </div>
   </div>
 </section>
@@ -81,9 +74,9 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section t1-services-sec">
   <div class="container">
     <div class="section-head">
-      <span class="tag">Our Services</span>
-      <h2>Complete Solar Solutions, End-to-End</h2>
-      <p>From site survey to long-term O&amp;M, we cover every step of your solar journey.</p>
+      <span class="tag"><?= h(t('home.servicesTag')) ?></span>
+      <h2><?= h(t('home.servicesTitle')) ?></h2>
+      <p><?= h(t('home.servicesSub')) ?></p>
     </div>
     <div class="t1-cards">
       <?php foreach ($services as $s): ?>
@@ -95,7 +88,7 @@ require_once __DIR__ . '/includes/header.php';
             <h3><?= h($s['title']) ?></h3>
             <p><?= h($s['desc']) ?></p>
             <button type="button" class="t1-apply" data-open-apply-modal data-service="<?= h($s['title']) ?>">
-              Apply Now <i class="bi bi-arrow-right"></i>
+              <?= h(t('common.applyNow')) ?> <i class="bi bi-arrow-right"></i>
             </button>
           </div>
         </div>
@@ -118,8 +111,8 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <span class="tag">Our Process</span>
-      <h2>End-to-End Execution, Done Right</h2>
+      <span class="tag"><?= h(t('home.processTag')) ?></span>
+      <h2><?= h(t('home.processTitle')) ?></h2>
     </div>
     <div class="t1-process">
       <?php foreach ($process as $p): ?>
@@ -135,8 +128,8 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section t1-services-sec">
   <div class="container">
     <div class="section-head">
-      <span class="tag">Products &amp; Technology</span>
-      <h2>Reliable, Proven Solar Technologies</h2>
+      <span class="tag"><?= h(t('home.productsTag')) ?></span>
+      <h2><?= h(t('home.productsTitle')) ?></h2>
     </div>
     <div class="t1-products">
       <?php foreach ($products as $p): ?>
@@ -154,11 +147,11 @@ require_once __DIR__ . '/includes/header.php';
 <section class="t1-cta">
   <div class="container">
     <div class="t1-cta-box">
-      <h2>Ready to Cut Your Electricity Bill to Zero?</h2>
-      <p>Get a free site survey and a tailored proposal from our solar experts. No obligation.</p>
+      <h2><?= h(t('home.ctaTitle')) ?></h2>
+      <p><?= h(t('home.ctaSub')) ?></p>
       <div class="t1-actions" style="justify-content:center">
-        <button type="button" class="btn btn-white btn-lg" data-open-apply-modal><i class="bi bi-send"></i> Apply Now</button>
-        <a href="/contact.php" class="btn btn-ghost-light btn-lg"><i class="bi bi-telephone"></i> Talk to an Expert</a>
+        <button type="button" class="btn btn-white btn-lg" data-open-apply-modal><i class="bi bi-send"></i> <?= h(t('common.applyNow')) ?></button>
+        <a href="/contact.php" class="btn btn-ghost-light btn-lg"><i class="bi bi-telephone"></i> <?= h(t('common.talkToExpert')) ?></a>
       </div>
     </div>
   </div>

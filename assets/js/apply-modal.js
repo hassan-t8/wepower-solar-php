@@ -48,8 +48,10 @@
     submitForm(form, '/api/apply.php', {
       isMultipart: false,
       onSuccess(data) {
+        const i18n = window.WP_I18N || {};
         const name = form.querySelector('[name="name"]').value;
-        successMsg.textContent = 'Thank you, ' + (name || 'there') + '. Our solar team will reach out shortly to confirm your free consultation.';
+        const template = i18n.applySuccessBody || 'Thank you, {name}. Our solar team will reach out shortly to confirm your free consultation.';
+        successMsg.textContent = template.replace('{name}', name || i18n.applyThereFallback || 'there');
         formWrap.hidden = true;
         successPane.hidden = false;
       },

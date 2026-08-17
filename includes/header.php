@@ -12,6 +12,7 @@
 require_once __DIR__ . '/settings.php';
 require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/../config/site.php';
+require_once __DIR__ . '/lang.php'; // sets $LANG_CODE/$DIR, defines t(), applies Urdu content overrides
 
 $pageTitle       = $pageTitle       ?? 'WePower Solar Solutions — Empower Yourself with Solar Energy';
 $pageDescription = $pageDescription ?? 'Pakistan\'s trusted solar EPC partner — residential, commercial & industrial solar installation, net metering, and O&M services.';
@@ -30,7 +31,7 @@ $companyName = setting('company_name', $brand['name']);
 trackVisit($_SERVER['REQUEST_URI'] ?? '/');
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= h($LANG_CODE) ?>" dir="<?= h($DIR) ?>">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,7 +49,7 @@ trackVisit($_SERVER['REQUEST_URI'] ?? '/');
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <link rel="stylesheet" href="/assets/css/global.css">
@@ -59,11 +60,12 @@ trackVisit($_SERVER['REQUEST_URI'] ?? '/');
 <link rel="stylesheet" href="/assets/css/toast.css">
 <link rel="stylesheet" href="/assets/css/whatsapp-button.css">
 <link rel="stylesheet" href="/assets/css/video-popup.css">
+<link rel="stylesheet" href="/assets/css/lang.css">
 <?php foreach ($pageStyles ?? [] as $style): ?>
 <link rel="stylesheet" href="/assets/css/<?= h($style) ?>">
 <?php endforeach; ?>
 </head>
-<body class="<?= h($bodyClass) ?>">
+<body class="<?= h($bodyClass) ?><?= $LANG_CODE === 'ur' ? ' lang-ur' : '' ?>">
 
 <header class="hdr hdr-<?= h($headerVariant) ?>" id="siteHeader">
   <div class="container hdr-inner">
@@ -80,12 +82,32 @@ trackVisit($_SERVER['REQUEST_URI'] ?? '/');
         ?>
         <a href="<?= h($n['to']) ?>" class="<?= $isActive ? 'active' : '' ?>"><?= h($n['label']) ?></a>
       <?php endforeach; ?>
-      <button type="button" class="btn btn-primary btn-sm hdr-cta" data-open-apply-modal>Get a Quote</button>
+      <button type="button" class="btn btn-primary btn-sm hdr-cta" data-open-apply-modal><?= h(t('common.getQuote')) ?></button>
+
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-switch-btn" id="langSwitchBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="<?= h(t('langSwitcher.label')) ?>">
+          <i class="bi bi-translate"></i>
+          <span><?= $LANG_CODE === 'ur' ? 'اردو' : 'EN' ?></span>
+          <i class="bi bi-chevron-down lang-switch-caret"></i>
+        </button>
+        <div class="lang-switch-menu" id="langSwitchMenu" role="listbox" hidden>
+          <a href="?lang=en" role="option" aria-selected="<?= $LANG_CODE === 'en' ? 'true' : 'false' ?>" class="<?= $LANG_CODE === 'en' ? 'active' : '' ?>">English</a>
+          <a href="?lang=ur" role="option" aria-selected="<?= $LANG_CODE === 'ur' ? 'true' : 'false' ?>" class="<?= $LANG_CODE === 'ur' ? 'active' : '' ?>">اردو</a>
+        </div>
+      </div>
     </nav>
 
     <button class="hdr-toggle" id="hdrToggle" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
+  </div>
+
+  <div class="lang-hint" id="langHint" hidden>
+    <div class="lang-hint-arrow"></div>
+    <button type="button" class="lang-hint-close" id="langHintClose" aria-label="Dismiss"><i class="bi bi-x"></i></button>
+    <p class="lang-hint-en"><?= h(t('langHint.en')) ?></p>
+    <p class="lang-hint-ur"><?= h(t('langHint.ur')) ?></p>
+    <button type="button" class="btn btn-primary btn-sm lang-hint-btn" id="langHintBtn"><?= h(t('langHint.dismiss')) ?></button>
   </div>
 </header>
 

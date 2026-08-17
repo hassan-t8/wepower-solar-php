@@ -68,7 +68,7 @@
     e.preventDefault();
     if (!form.full_name.value || !form.email.value || !form.phone.value || !form.position.value) {
       errorBox.hidden = false;
-      errorBox.querySelector('span').textContent = 'Name, email, phone and position are required.';
+      errorBox.querySelector('span').textContent = (window.WP_I18N && window.WP_I18N.careersRequiredErr) || 'Name, email, phone and position are required.';
       return;
     }
     submitForm(form, '/api/careers.php', {
