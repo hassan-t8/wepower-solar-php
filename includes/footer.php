@@ -20,8 +20,32 @@ $whatsappMsg = setting('whatsapp_message');
 $promoUrl   = setting('promo_video_url');
 $promoOn    = setting('promo_video_enabled') === 'true';
 $year       = date('Y');
+
+// JSON-LD Organization schema — helps Google understand this is a real
+// business (name, logo, address, phone, social profiles) for local search
+// and rich results. Rendered once per page (every public page includes
+// this file), which is enough — it doesn't need to vary per route.
+$schemaSameAs = array_values(array_filter([$liUrl, $fbUrl, $igUrl, $ytUrl]));
+$schema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'Organization',
+    'name' => $companyName,
+    'url' => $siteUrl,
+    'logo' => $siteUrl . $logo,
+    'image' => $siteUrl . $logo,
+    'telephone' => $phone1,
+    'address' => [
+        '@type' => 'PostalAddress',
+        'streetAddress' => $address,
+        'addressCountry' => 'PK',
+    ],
+];
+if ($email) $schema['email'] = $email;
+if ($schemaSameAs) $schema['sameAs'] = $schemaSameAs;
 ?>
 </main>
+
+<script type="application/ld+json"><?= json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
 
 <footer class="ftr">
   <div class="container ftr-grid">
