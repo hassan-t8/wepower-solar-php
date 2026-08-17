@@ -20,8 +20,18 @@ $bodyClass       = $bodyClass       ?? '';
 $headerVariant   = $headerVariant   ?? 'light'; // light | solid
 $pageScripts     = $pageScripts     ?? [];
 
-$siteUrl   = rtrim(SITE_URL, '/');
-$canonical = $canonical ?? ($siteUrl . ($_SERVER['REQUEST_URI'] ?? '/'));
+$siteUrl = rtrim(SITE_URL, '/');
+
+// Canonical is path-only (query string dropped) EXCEPT for ?lang=ur, which
+// gets its own self-referencing canonical + hreflang cluster below — so the
+// two language variants are declared as alternates of each other instead of
+// looking like near-duplicate content, or Urdu's ?lang= diluting the
+// canonical English URL's authority.
+$requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+$canonicalPath = $requestPath . ($LANG_CODE === 'ur' ? '?lang=ur' : '');
+$canonical = $canonical ?? ($siteUrl . $canonicalPath);
+$hreflangEn = $siteUrl . $requestPath;
+$hreflangUr = $siteUrl . $requestPath . '?lang=ur';
 
 $logo       = setting('company_logo', $brand['logo']);
 $companyName = setting('company_name', $brand['name']);
@@ -39,12 +49,19 @@ trackVisit($_SERVER['REQUEST_URI'] ?? '/');
 <meta name="description" content="<?= h($pageDescription) ?>">
 <link rel="canonical" href="<?= h($canonical) ?>">
 
+<!-- Language alternates — tells Google the EN/UR pages are the same content, not duplicates -->
+<link rel="alternate" hreflang="en" href="<?= h($hreflangEn) ?>">
+<link rel="alternate" hreflang="ur" href="<?= h($hreflangUr) ?>">
+<link rel="alternate" hreflang="x-default" href="<?= h($hreflangEn) ?>">
+
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="<?= h($pageTitle) ?>">
 <meta property="og:description" content="<?= h($pageDescription) ?>">
 <meta property="og:image" content="<?= h($siteUrl . $logo) ?>">
 <meta property="og:url" content="<?= h($canonical) ?>">
+<meta property="og:locale" content="<?= $LANG_CODE === 'ur' ? 'ur_PK' : 'en_US' ?>">
+<meta property="og:locale:alternate" content="<?= $LANG_CODE === 'ur' ? 'en_US' : 'ur_PK' ?>">
 
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
