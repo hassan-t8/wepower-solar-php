@@ -1,37 +1,27 @@
 name: Deploy to Hostinger
 
-# Runs on every push to main — syncs the repo to your Hostinger hosting via FTPS.
-# Excludes config/config.php and uploads/ so live DB credentials and real
-# uploaded files (resumes/logos) are never touched by an automated deploy.
+# Runs on every push to main — SSHes into Hostinger and runs ~/deploy-wepower.sh,
+# which pulls main and syncs it into the live site. The script never touches
+# config/config.php or uploads/, so live DB credentials and real uploaded
+# files (resumes/logos) are never overwritten by an automated deploy.
 
 on:
   push:
     branches: [main]
   workflow_dispatch: {} # lets you also trigger a deploy manually from the Actions tab
 
+concurrency: deploy
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          local-dir: ./
-          server-dir: ${{ secrets.FTP_SERVER_DIR }} # e.g. /public_html/ or /domains/yourdomain.com/public_html/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/config/config.php
-            **/uploads/**
-            **/database/**
-            **/*.md
-            **/node_modules/**
+      - name: Deploy over SSH
+        env:
+          SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p 65002 194.36.184.188 >> ~/.ssh/known_hosts
+          ssh -p 65002 u467613868@194.36.184.188 'bash ~/deploy-wepower.sh'
