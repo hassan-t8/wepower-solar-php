@@ -8,11 +8,11 @@ require_once __DIR__ . '/includes/header.php';
 <section class="pg-hero">
   <div class="container pg-hero-inner">
     <div class="pg-breadcrumb">
-      <a href="/index.php">Home</a><i class="bi bi-chevron-right"></i><span>Services</span>
+      <a href="/index.php"><?= h(t('common.home')) ?></a><i class="bi bi-chevron-right"></i><span><?= h(t('services.breadcrumb')) ?></span>
     </div>
-    <span class="tag">Our Services</span>
-    <h1 class="display">Complete Solar Solutions, End-to-End</h1>
-    <p>From site survey to long-term O&amp;M — we cover every step of your solar journey with an expert in-house team.</p>
+    <span class="tag"><?= h(t('services.heroTag')) ?></span>
+    <h1 class="display"><?= h(t('services.heroTitle')) ?></h1>
+    <p><?= h(t('services.heroLead')) ?></p>
   </div>
 </section>
 
@@ -35,7 +35,7 @@ require_once __DIR__ . '/includes/header.php';
             </ul>
           <?php endif; ?>
           <button type="button" class="btn btn-primary" data-open-apply-modal data-service="<?= h($s['title']) ?>">
-            <i class="bi bi-send"></i> Apply for <?= h($s['title']) ?>
+            <i class="bi bi-send"></i> <?= h(t('services.applyFor')) ?> <?= h($s['title']) ?>
           </button>
         </div>
       </div>
@@ -46,9 +46,9 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section" style="background:var(--gray-50);padding-top:80px;padding-bottom:80px">
   <div class="container">
     <div class="section-head">
-      <span class="tag">Our Process</span>
-      <h2>End-to-End Execution, Done Right</h2>
-      <p>Eight steps from your first call to long-term support.</p>
+      <span class="tag"><?= h(t('services.processTag')) ?></span>
+      <h2><?= h(t('services.processTitle')) ?></h2>
+      <p><?= h(t('services.processSub')) ?></p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px">
       <?php foreach ($process as $p): ?>
@@ -67,8 +67,8 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <span class="tag">Products &amp; Technology</span>
-      <h2>Reliable, Proven Solar Technologies</h2>
+      <span class="tag"><?= h(t('services.productsTag')) ?></span>
+      <h2><?= h(t('services.productsTitle')) ?></h2>
     </div>
     <div class="val-cards">
       <?php foreach ($products as $p): ?>
@@ -84,10 +84,10 @@ require_once __DIR__ . '/includes/header.php';
 
 <section style="background:linear-gradient(135deg,var(--dark),var(--dark-2));padding:80px 0">
   <div class="container" style="text-align:center">
-    <h2 style="color:#fff;margin-bottom:12px">Start Your Solar Journey Today</h2>
-    <p style="color:rgba(255,255,255,.75);max-width:500px;margin:0 auto 32px">Get a free site survey and zero-obligation proposal. Our team responds within 24 hours.</p>
+    <h2 style="color:#fff;margin-bottom:12px"><?= h(t('services.ctaTitle')) ?></h2>
+    <p style="color:rgba(255,255,255,.75);max-width:500px;margin:0 auto 32px"><?= h(t('services.ctaSub')) ?></p>
     <button type="button" class="btn btn-primary btn-lg" data-open-apply-modal>
-      <i class="bi bi-lightning-charge-fill"></i> Get a Free Quote
+      <i class="bi bi-lightning-charge-fill"></i> <?= h(t('common.getFreeQuote')) ?>
     </button>
   </div>
 </section>
