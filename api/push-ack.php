@@ -1,6 +1,6 @@
 <?php
 /**
- * Push delivery receipt. The admin service worker (/admin/sw.js) calls this
+ * Push delivery receipt. The admin service worker (/admin/sw.php → sw.js) calls this
  * whenever a push message reaches a browser, so "was it delivered?" can be
  * told apart from "did Windows/the OS show it?". Only the latest receipt is
  * kept (one setting value), shown in Admin → Notifications.

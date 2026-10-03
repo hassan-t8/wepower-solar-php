@@ -12,6 +12,8 @@
 (function () {
   const cfg = window.ADM_PUSH || { configured: false, canRegister: false, firebase: {} };
   const FIREBASE_VERSION = '12.19.0';
+  // Served by PHP with no-cache headers (the CDN caches static .js for days).
+  const SW_URL = '/admin/sw.php';
   let firebaseLoaded = null;
 
   function loadScript(src) {
@@ -41,7 +43,7 @@
     if (!supported()) throw new Error('This browser does not support push. On iPhone, add the site to your Home Screen first.');
     if (Notification.permission !== 'granted') throw new Error('Notifications are not allowed in this browser.');
     const [reg] = await Promise.all([
-      navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' }).then(() => navigator.serviceWorker.ready),
+      navigator.serviceWorker.register(SW_URL, { scope: '/admin/' }).then(() => navigator.serviceWorker.ready),
       loadFirebase(),
     ]);
     const fb = cfg.firebase;
@@ -70,9 +72,16 @@
     try { await register(); } catch (e) { /* silent: the Notifications page shows errors on demand */ }
   }
 
-  // Pick up a new /admin/sw.js promptly after each deploy.
+  // Keep this browser on the current service worker: move old registrations
+  // (cached /admin/sw.js) to the uncached URL, otherwise just check for updates.
+  // The push subscription belongs to the scope, so the device token is kept.
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistration('/admin/').then((r) => r && r.update()).catch(() => {});
+    navigator.serviceWorker.getRegistration('/admin/').then((r) => {
+      if (!r) return;
+      const w = r.active || r.waiting || r.installing;
+      if (w && !w.scriptURL.includes(SW_URL)) return navigator.serviceWorker.register(SW_URL, { scope: '/admin/' });
+      return r.update();
+    }).catch(() => {});
   }
 
   window.AdmPush = { configured: cfg.configured, canRegister: cfg.canRegister, supported, register, autoRegister };
