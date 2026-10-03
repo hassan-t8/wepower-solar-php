@@ -200,22 +200,64 @@
     if (modal) { modal.remove(); modal = null; }
   }
 
-  async function allow() {
-    const result = await Notification.requestPermission();
-    removeUi();
-    if (result === 'granted') {
-      try { localStorage.setItem('admDesktopNotif', 'on'); } catch (e) { /* ignore */ }
-      if (window.AdmPush && window.AdmPush.canRegister) {
-        showToast('Notifications allowed — setting up push on this device…', 'success');
-        window.AdmPush.register()
-          .then(() => showToast('Push notifications are on for this device.', 'success'))
-          .catch((err) => showToast(err.message, 'error'));
-      } else {
-        showToast('Notifications allowed. You’ll get alerts for new activity.', 'success');
-      }
+  const isEdge = /Edg\//.test(navigator.userAgent);
+  const waitingHelp = isEdge
+    ? 'Edge shows a small <i class="bi bi-bell"></i> icon at the right end of the address bar — click it and choose <strong>Allow</strong>.'
+    : 'A box should appear near the address bar — choose <strong>Allow</strong>. Only see a small <i class="bi bi-bell"></i> icon in the address bar? Click it and choose <strong>Allow</strong>.';
+
+  // Works with both the promise and the old callback form of requestPermission.
+  function requestPermission() {
+    return new Promise((resolve) => {
+      const r = Notification.requestPermission(resolve);
+      if (r && typeof r.then === 'function') r.then(resolve, () => resolve(Notification.permission));
+    });
+  }
+
+  let finished = false;
+  function onGranted() {
+    try { localStorage.setItem('admDesktopNotif', 'on'); } catch (e) { /* ignore */ }
+    if (window.AdmPush && window.AdmPush.canRegister) {
+      showToast('Notifications allowed — setting up push on this device…', 'success');
+      window.AdmPush.register()
+        .then(() => showToast('Push notifications are on for this device.', 'success'))
+        .catch((err) => showToast(err.message, 'error'));
     } else {
-      render();
+      showToast('Notifications allowed. You\u2019ll get alerts for new activity.', 'success');
     }
+  }
+  function finish(result) {
+    if (finished) return;
+    if (result === 'granted') { finished = true; removeUi(); onGranted(); return; }
+    if (result === 'denied') { finished = true; render(); }
+    // 'default' (prompt dismissed): keep the waiting banner so they can try again
+  }
+
+  // Edge (and Chrome with "quiet" prompts) show only an address-bar icon instead of a
+  // dialog, and the browser's answer may never come back to the page. So close our
+  // popup immediately, show where to click, and also watch the permission itself.
+  async function allow() {
+    removeUi();
+    showWaiting();
+    finish(await requestPermission());
+  }
+
+  if (navigator.permissions && navigator.permissions.query) {
+    navigator.permissions.query({ name: 'notifications' }).then((status) => {
+      status.onchange = () => finish(Notification.permission);
+    }).catch(() => { /* not supported for notifications in this browser */ });
+  }
+
+  function showWaiting() {
+    banner = document.createElement('div');
+    banner.className = 'adm-perm-banner waiting';
+    banner.innerHTML = `<i class="bi bi-hourglass-split"></i>
+      <div><strong>Waiting for your browser…</strong><span>${waitingHelp}</span></div>
+      <button type="button" class="btn btn-outline btn-sm adm-perm-allow"><i class="bi bi-arrow-repeat"></i> Ask again</button>
+      <button type="button" class="adm-perm-x" aria-label="Hide"><i class="bi bi-x-lg"></i></button>`;
+    content.prepend(banner);
+    banner.querySelector('.adm-perm-allow').addEventListener('click', allow);
+    banner.querySelector('.adm-perm-x').addEventListener('click', () => { banner.remove(); banner = null; });
+    banner.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 
   function showBanner(blocked) {

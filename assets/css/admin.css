@@ -551,3 +551,6 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
   .adm-chart-kpis { width:100%; justify-content:space-between; gap:8px; }
   .adm-chart-kpis div { align-items:flex-start; }
 }
+.adm-perm-banner.waiting { background:#eff6ff; border-color:#bfdbfe; }
+.adm-perm-banner.waiting > i { color:#2563eb; }
+.adm-perm-banner span .bi { font-size:.85em; }
