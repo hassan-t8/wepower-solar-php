@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/admin-header.php';
 
 $listTitle = 'Applications';
 $listSubtitle = 'Solar quote & service applications from your website.';
-$listSearchPlaceholder = 'Search name, email…';
+$listSearchPlaceholder = 'Search name, phone, email, city…';
 $listHeaderCols = ['Name', 'Phone', 'Email', 'Service', 'City', 'Property'];
 require __DIR__ . '/includes/list-page.php';
 ?>

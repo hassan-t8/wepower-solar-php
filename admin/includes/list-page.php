@@ -15,7 +15,12 @@ $listNoStatus = $listNoStatus ?? false;
   <div class="adm-table-header">
     <div class="adm-table-title"><?= h($listTitle) ?> <span id="listCount" style="color:var(--gray-400);font-weight:400;font-size:.85rem"></span></div>
     <div class="adm-table-actions">
-      <input class="adm-search" id="listSearch" placeholder="<?= h($listSearchPlaceholder ?? 'Search…') ?>">
+      <div class="adm-search-wrap">
+        <i class="bi bi-search"></i>
+        <input class="adm-search" id="listSearch" type="search" autocomplete="off" autocapitalize="off" spellcheck="false"
+               enterkeyhint="search" placeholder="<?= h($listSearchPlaceholder ?? 'Search…') ?>" aria-label="Search">
+        <button type="button" class="adm-search-clear" id="listSearchClear" aria-label="Clear search" hidden><i class="bi bi-x-circle-fill"></i></button>
+      </div>
       <select class="adm-filter" id="listFilter"></select>
       <button class="adm-export-btn" id="listExportBtn"><i class="bi bi-download"></i> CSV</button>
     </div>

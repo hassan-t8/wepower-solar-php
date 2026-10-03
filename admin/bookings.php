@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/admin-header.php';
 
 $listTitle = 'Bookings';
 $listSubtitle = 'Consultation and site survey booking requests.';
-$listSearchPlaceholder = 'Search name, phone…';
+$listSearchPlaceholder = 'Search name, phone, email, city…';
 $listHeaderCols = ['Name', 'Phone', 'Service', 'City', 'Preferred Date'];
 require __DIR__ . '/includes/list-page.php';
 ?>

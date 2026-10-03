@@ -139,6 +139,8 @@
     if (!stopped) timer = setTimeout(poll, document.hidden ? 60000 : 10000);
   }
   document.addEventListener('visibilitychange', () => { if (!document.hidden) { clearTimeout(timer); poll(); } });
+  // Lets pages refresh badges right after a change (e.g. a record marked read).
+  window.admPollNow = () => { clearTimeout(timer); poll(); };
 
   function setPanel(open) {
     panel.hidden = !open;

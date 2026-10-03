@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/admin-header.php';
 
 $listTitle = 'Career Applications';
 $listSubtitle = 'Job applications submitted via the Careers page.';
-$listSearchPlaceholder = 'Search name, email, position…';
+$listSearchPlaceholder = 'Search name, phone, position…';
 $listHeaderCols = ['Name', 'Phone', 'Position', 'Experience', 'Education', 'Resume'];
 require __DIR__ . '/includes/list-page.php';
 ?>

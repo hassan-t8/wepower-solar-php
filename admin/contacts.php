@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/admin-header.php';
 
 $listTitle = 'Contacts';
 $listSubtitle = 'Messages submitted via the website contact form.';
-$listSearchPlaceholder = 'Search name, email, subject…';
+$listSearchPlaceholder = 'Search name, email, message…';
 $listHeaderCols = ['Name', 'Email', 'Phone', 'Subject'];
 require __DIR__ . '/includes/list-page.php';
 ?>

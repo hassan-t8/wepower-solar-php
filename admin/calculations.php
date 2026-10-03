@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/admin-header.php';
 
 $listTitle = 'Load Calculations';
 $listSubtitle = 'Solar load calculations submitted via the calculator page.';
-$listSearchPlaceholder = 'Search name, email, city…';
+$listSearchPlaceholder = 'Search name, phone, email, city…';
 $listHeaderCols = ['Name', 'Phone', 'City', 'Property', 'Total Load (W)', 'Rec. KVA', 'Est. Bill (Rs.)'];
 $listNoStatus = true;
 require __DIR__ . '/includes/list-page.php';
