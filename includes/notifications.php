@@ -96,6 +96,7 @@ function notifyAdmins(string $type, string $title, string $body = '', ?int $refI
     try {
         ensureNotificationSchema();
         $url = NOTIFY_TYPES[$type][3] ?? '/admin/dashboard.php';
+        if ($refId && $type !== 'visitors') $url .= '?open=' . $refId; // opens that record's detail view
         $id = insertGetId(
             'INSERT INTO admin_notifications (type, title, body, url, ref_id) VALUES (?, ?, ?, ?, ?)',
             [$type, mb_substr($title, 0, 200), mb_substr($body, 0, 500), $url, $refId]
@@ -116,8 +117,9 @@ function maybeNotifyDailyVisitors(): void
         $today = date('Y-m-d');
         if (getSetting('visitor_summary_date') === $today) return;
         setSetting('visitor_summary_date', $today);
-        $count = countRows('SELECT COUNT(*) c FROM visitors WHERE DATE(visited_at) = (CURDATE() - INTERVAL 1 DAY)');
-        $unique = countRows('SELECT COUNT(DISTINCT ip) c FROM visitors WHERE DATE(visited_at) = (CURDATE() - INTERVAL 1 DAY)');
+        $range = [utcDayStart('yesterday'), utcDayStart('today')];
+        $count = countRows('SELECT COUNT(*) c FROM visitors WHERE visited_at >= ? AND visited_at < ?', $range);
+        $unique = countRows('SELECT COUNT(DISTINCT ip) c FROM visitors WHERE visited_at >= ? AND visited_at < ?', $range);
         notifyAdmins('visitors', "Yesterday: $count page views", "$unique unique visitors on " . date('D, j M', strtotime('-1 day')) . '.');
     } catch (Throwable $e) {
         error_log('[maybeNotifyDailyVisitors] ' . $e->getMessage());

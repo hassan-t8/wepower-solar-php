@@ -79,7 +79,8 @@
     const values = [];
     for (let i = 13; i >= 0; i--) {
       const d = new Date(Date.now() - i * 86400000);
-      const key = d.toISOString().slice(0, 10);
+      // local calendar date (the server groups visits by local day too)
+      const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
       labels.push(d.toLocaleDateString('en-PK', { month: 'short', day: 'numeric' }));
       values.push(map[key] || 0);
     }
@@ -162,16 +163,25 @@
     if (recentApplications.length === 0) {
       tbody.innerHTML = '<tr><td colspan="6" class="adm-empty">No applications yet</td></tr>';
     } else {
-      tbody.innerHTML = recentApplications.map((a) => `
-        <tr>
-          <td style="color:var(--gray-400);font-weight:600">#${a.id}</td>
+      // Each row opens that application's detail view on the Applications page.
+      tbody.innerHTML = recentApplications.map((a) => {
+        const d = new Date(String(a.created_at).replace(' ', 'T') + 'Z'); // DB times are UTC
+        const href = 'applications.php?open=' + encodeURIComponent(a.id);
+        return `
+        <tr class="adm-row-link" data-href="${href}" tabindex="0" title="Open application #${esc(a.id)}">
+          <td style="color:var(--gray-400);font-weight:600">#${esc(a.id)}</td>
           <td style="font-weight:600">${esc(a.name)}</td>
           <td>${esc(a.service_type || '—')}</td>
           <td>${esc(a.city || '—')}</td>
           <td><span class="status-badge status-${esc(a.status)}">${esc(a.status)}</span></td>
-          <td style="color:var(--gray-400);font-size:.82rem">${new Date(String(a.created_at).replace(' ', 'T')).toLocaleDateString()}</td>
-        </tr>
-      `).join('');
+          <td class="adm-date-cell">${isNaN(d) ? '—' : `<span>${d.toLocaleDateString()}</span><small>${d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</small>`}</td>
+        </tr>`;
+      }).join('');
+      tbody.querySelectorAll('.adm-row-link').forEach((tr) => {
+        const go = () => { window.location.href = tr.dataset.href; };
+        tr.addEventListener('click', go);
+        tr.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+      });
     }
 
     // ---- Quick stats row ----

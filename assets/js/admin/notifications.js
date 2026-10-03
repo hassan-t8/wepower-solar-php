@@ -153,7 +153,8 @@
 
   // ---- Relative times in the activity list ----
   document.querySelectorAll('[data-time]').forEach((el) => {
-    const d = new Date(el.dataset.time.replace(' ', 'T'));
+    const v = el.dataset.time;
+    const d = new Date(typeof v === 'string' && /^\d{4}-\d\d-\d\d \d\d:\d\d/.test(v) ? v.replace(' ', 'T') + 'Z' : v); // DB times are UTC
     el.textContent = isNaN(d) ? '' : d.toLocaleString();
   });
 })();

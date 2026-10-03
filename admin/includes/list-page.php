@@ -29,10 +29,10 @@ $listNoStatus = $listNoStatus ?? false;
     <table class="adm-table">
       <thead>
         <tr>
-          <th>#</th>
+          <th>#</th><th>Date</th>
           <?php foreach ($listHeaderCols as $c): ?><th><?= h($c) ?></th><?php endforeach; ?>
           <?php if (!$listNoStatus): ?><th>Status</th><?php endif; ?>
-          <th>Date</th><th>Actions</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody id="listBody"></tbody>

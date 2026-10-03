@@ -556,3 +556,11 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
 .adm-perm-banner span .bi { font-size:.85em; }
 .ntf-lastpush { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.84rem; color:var(--gray-600); margin:-6px 0 16px; }
 .ntf-lastpush > i { color:var(--green-600); }
+
+/* Date + time cell in admin tables */
+.adm-date-cell { white-space:nowrap; line-height:1.3; }
+.adm-date-cell span { display:block; color:var(--gray-600); font-size:.82rem; }
+.adm-date-cell small { display:block; color:var(--gray-400); font-size:.74rem; }
+/* Clickable table rows (dashboard recent applications) */
+.adm-row-link { cursor:pointer; transition:background .15s; }
+.adm-row-link:hover, .adm-row-link:focus-visible { background:var(--green-50); outline:none; }

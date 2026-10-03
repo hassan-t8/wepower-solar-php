@@ -71,7 +71,7 @@
     return d.innerHTML;
   }
   function timeAgo(v) {
-    const d = new Date(String(v).replace(' ', 'T'));
+    const d = new Date(typeof v === 'string' && /^\d{4}-\d\d-\d\d \d\d:\d\d/.test(v) ? v.replace(' ', 'T') + 'Z' : v); // DB times are UTC
     if (isNaN(d)) return '';
     const s = Math.max(0, (Date.now() - d.getTime()) / 1000);
     if (s < 60) return 'just now';

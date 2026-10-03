@@ -9,7 +9,7 @@ requireAdminApi();
 $stats = [
     'visitors' => [
         'total' => countRows('SELECT COUNT(*) c FROM visitors'),
-        'today' => countRows('SELECT COUNT(*) c FROM visitors WHERE visited_at >= CURDATE()'),
+        'today' => countRows('SELECT COUNT(*) c FROM visitors WHERE visited_at >= ?', [utcDayStart('today')]),
         'last7' => countRows('SELECT COUNT(*) c FROM visitors WHERE visited_at >= (NOW() - INTERVAL 7 DAY)'),
         'last30' => countRows('SELECT COUNT(*) c FROM visitors WHERE visited_at >= (NOW() - INTERVAL 30 DAY)'),
     ],
@@ -33,9 +33,10 @@ $stats = [
 ];
 
 $dailyVisitors = fetchAll(
-    "SELECT DATE(visited_at) as day, COUNT(*) as count FROM visitors
-     WHERE visited_at >= (NOW() - INTERVAL 14 DAY)
-     GROUP BY DATE(visited_at) ORDER BY day ASC"
+    'SELECT ' . localDateSql('visited_at') . ' AS day, COUNT(*) AS count FROM visitors
+     WHERE visited_at >= ?
+     GROUP BY day ORDER BY day ASC',
+    [utcDayStart('-13 days')]
 );
 
 $topPages = fetchAll(

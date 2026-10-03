@@ -41,9 +41,10 @@ function initAdminList(config) {
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
   // Ids may arrive as numbers or strings depending on the PDO driver — compare as strings.
   const sameId = (a, b) => String(a) === String(b);
-  // MySQL returns "YYYY-MM-DD HH:MM:SS"; Safari can't parse the space form, so use ISO "T".
+  // MySQL returns UTC "YYYY-MM-DD HH:MM:SS"; read it as UTC (ISO "T…Z", which Safari also
+  // understands) so the browser shows local time.
   function parseDate(v) {
-    const d = new Date(typeof v === 'string' ? v.replace(' ', 'T') : v);
+    const d = new Date(typeof v === 'string' && /^\d{4}-\d\d-\d\d \d\d:\d\d/.test(v) ? v.replace(' ', 'T') + 'Z' : v);
     return isNaN(d) ? null : d;
   }
   function fmtDate(v, withTime) {
@@ -185,10 +186,13 @@ function initAdminList(config) {
     tbody.innerHTML = list.map((row) => {
       const cells = config.columns.map((col) => `<td>${col.render(row, esc)}</td>`).join('');
       const statusCell = config.statuses ? `<td>${statusSelectHtml(row)}</td>` : '';
-      const dateCell = `<td style="color:var(--gray-400);font-size:.82rem;white-space:nowrap">${fmtDate(row.created_at, false)}</td>`;
+      const d = parseDate(row.created_at);
+      const dateCell = `<td class="adm-date-cell">${d
+        ? `<span>${d.toLocaleDateString()}</span><small>${d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</small>`
+        : '—'}</td>`;
       return `<tr data-row-id="${esc(row.id)}">
         <td style="color:var(--gray-400);font-weight:600">#${row.id}</td>
-        ${cells}${statusCell}${dateCell}
+        ${dateCell}${cells}${statusCell}
         <td><div style="display:flex;gap:6px">
           <button class="adm-action-btn view" title="View" onclick='__admView_${config.type}(${row.id})'><i class="bi bi-eye"></i></button>
           <button class="adm-action-btn del" title="Delete" onclick="__admDel_${config.type}(${row.id})"><i class="bi bi-trash"></i></button>
@@ -353,5 +357,12 @@ function initAdminList(config) {
     if (e.detail.types.includes(LIVE_TYPE)) load(true);
   });
 
-  load(false);
+  // Deep link: <page>.php?open=<id> (dashboard rows, bell items, push notifications)
+  const openId = new URLSearchParams(window.location.search).get('open');
+  load(false).then(() => {
+    if (!openId) return;
+    if (rows.some((r) => sameId(r.id, openId))) openModal(openId);
+    else if (window.showToast) showToast('That record no longer exists.', 'info');
+    history.replaceState(null, '', window.location.pathname); // don't reopen on refresh
+  });
 }

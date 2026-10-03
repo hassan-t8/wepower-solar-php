@@ -18,6 +18,9 @@ function db(): PDO
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
+            // All stored timestamps are UTC (the live MySQL server runs in UTC). Pin it so
+            // every environment agrees; the admin browser converts to local time for display.
+            $pdo->exec("SET time_zone = '+00:00'");
         } catch (PDOException $e) {
             http_response_code(500);
             if (APP_ENV !== 'production') {
@@ -27,6 +30,20 @@ function db(): PDO
         }
     }
     return $pdo;
+}
+
+/** UTC 'Y-m-d H:i:s' for the start of a local (PHP timezone) day, e.g. 'today', '-6 days'. */
+function utcDayStart(string $relative = 'today'): string
+{
+    $d = new DateTime($relative); // local timezone (config: Asia/Karachi)
+    $d->setTime(0, 0);
+    return $d->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+}
+
+/** SQL expression: the local calendar date of a UTC DATETIME column. */
+function localDateSql(string $column): string
+{
+    return "DATE(CONVERT_TZ($column, '+00:00', '" . date('P') . "'))";
 }
 
 /** Run a query and return the first row (or null). */
