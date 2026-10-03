@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') jsonResponse(['error' => 'Method not 
 
 $input = json_decode(file_get_contents('php://input'), true) ?? [];
 setSetting('push_last_received', json_encode([
-    'at' => date('Y-m-d H:i:s'),
+    'at' => gmdate('Y-m-d H:i:s'), // UTC, like every other stored time
     'title' => mb_substr(clean($input['title'] ?? ''), 0, 80),
     'shown' => !empty($input['shown']),
     'error' => mb_substr(clean($input['error'] ?? ''), 0, 160),
