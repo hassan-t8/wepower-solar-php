@@ -13,8 +13,13 @@ self.addEventListener('push', (event) => {
     try {
       const msg = event.data ? event.data.json() : null;
       // Firebase Cloud Messaging wraps data messages as {data: {...}, from, fcmMessageId}
-      data = msg ? (msg.data || msg.notification || msg) : null;
-      if (data && !data.title) data = null;
+      if (msg) {
+        const d = msg.data || {};
+        const n = msg.notification || {};
+        // Our server sends data messages; Firebase console test messages use "notification".
+        const pick = d.title ? d : (n.title ? n : (msg.title ? msg : null));
+        data = pick ? { ...d, ...pick, url: d.url || pick.url || (msg.fcmOptions && msg.fcmOptions.link) } : null;
+      }
     } catch (e) { data = null; }
     if (!data) {
       try {

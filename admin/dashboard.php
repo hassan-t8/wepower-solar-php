@@ -21,9 +21,15 @@ require_once __DIR__ . '/includes/admin-header.php';
 
   <div class="adm-charts">
     <div class="adm-chart-card">
-      <div class="adm-chart-title">Visitor Trend</div>
-      <div class="adm-chart-sub">Daily visitors — last 14 days</div>
-      <canvas id="visitorChart" height="220"></canvas>
+      <div class="adm-chart-head">
+        <div>
+          <div class="adm-chart-title">Visitor Trend</div>
+          <div class="adm-chart-sub">Daily visitors — last 14 days</div>
+        </div>
+        <div class="adm-chart-kpis" id="visitorKpis"></div>
+      </div>
+      <!-- Fixed-height box: Chart.js with maintainAspectRatio:false needs it, otherwise the canvas keeps growing -->
+      <div class="adm-chart-box"><canvas id="visitorChart" aria-label="Daily visitors, last 14 days" role="img"></canvas></div>
     </div>
 
     <div class="adm-chart-card">

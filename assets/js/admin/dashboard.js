@@ -83,26 +83,55 @@
       labels.push(d.toLocaleDateString('en-PK', { month: 'short', day: 'numeric' }));
       values.push(map[key] || 0);
     }
-    const ctx = document.getElementById('visitorChart').getContext('2d');
-    const gradient = ctx.createLinearGradient(0, 0, 0, 220);
-    gradient.addColorStop(0, 'rgba(34,197,94,.25)');
+    const total = values.reduce((a, v) => a + v, 0);
+    const avg = Math.round(total / values.length);
+    const peak = Math.max(...values);
+    document.getElementById('visitorKpis').innerHTML = `
+      <div><strong>${total.toLocaleString()}</strong><span>total</span></div>
+      <div><strong>${avg.toLocaleString()}</strong><span>avg / day</span></div>
+      <div><strong>${peak.toLocaleString()}</strong><span>peak</span></div>`;
+
+    const canvas = document.getElementById('visitorChart');
+    const ctx = canvas.getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.parentElement.clientHeight || 260);
+    gradient.addColorStop(0, 'rgba(34,197,94,.28)');
     gradient.addColorStop(1, 'rgba(34,197,94,0)');
+    const narrow = window.innerWidth < 600;
     if (chart) chart.destroy();
     chart = new Chart(ctx, {
       type: 'line',
       data: {
         labels,
         datasets: [{
-          data: values, borderColor: '#22c55e', borderWidth: 2.5, backgroundColor: gradient,
-          fill: true, tension: 0.35, pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#22c55e',
+          data: values, borderColor: '#16a34a', borderWidth: 2.5, backgroundColor: gradient,
+          fill: true, tension: 0.35, cubicInterpolationMode: 'monotone',
+          pointRadius: narrow ? 0 : 3, pointBackgroundColor: '#fff', pointBorderColor: '#16a34a', pointBorderWidth: 2,
+          pointHoverRadius: 6, pointHoverBackgroundColor: '#16a34a', pointHoverBorderColor: '#fff',
         }],
       },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => ctx.parsed.y + ' visitors' } } },
+        animation: chart ? false : { duration: 600 }, // no re-animation on live refreshes
+        interaction: { mode: 'index', intersect: false },
+        layout: { padding: { top: 6, right: 4 } },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#0f172a', padding: 10, cornerRadius: 10, displayColors: false,
+            titleFont: { size: 12, weight: '600' }, bodyFont: { size: 13, weight: '700' },
+            callbacks: { label: (c) => c.parsed.y + (c.parsed.y === 1 ? ' visitor' : ' visitors') },
+          },
+        },
         scales: {
-          x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#94a3b8' } },
-          y: { beginAtZero: true, ticks: { precision: 0, font: { size: 11 }, color: '#94a3b8' }, grid: { color: '#f1f5f9' } },
+          x: {
+            grid: { display: false }, border: { display: false },
+            ticks: { font: { size: 11 }, color: '#94a3b8', maxRotation: 0, autoSkip: true, maxTicksLimit: narrow ? 4 : 7 },
+          },
+          y: {
+            beginAtZero: true, border: { display: false },
+            ticks: { precision: 0, font: { size: 11 }, color: '#94a3b8', maxTicksLimit: 5, padding: 8 },
+            grid: { color: '#f1f5f9' },
+          },
         },
       },
     });

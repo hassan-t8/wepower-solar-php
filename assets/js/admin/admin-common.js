@@ -195,7 +195,7 @@
     removeUi();
     if (result === 'granted') {
       try { localStorage.setItem('admDesktopNotif', 'on'); } catch (e) { /* ignore */ }
-      if (window.AdmPush && window.AdmPush.configured) {
+      if (window.AdmPush && window.AdmPush.canRegister) {
         showToast('Notifications allowed — setting up push on this device…', 'success');
         window.AdmPush.register()
           .then(() => showToast('Push notifications are on for this device.', 'success'))

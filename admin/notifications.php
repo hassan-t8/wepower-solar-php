@@ -89,7 +89,7 @@ $recent = fetchAll('SELECT type, title, body, url, created_at FROM admin_notific
 
     <div class="ntf-actions">
       <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-save"></i> Save push settings</button>
-      <button type="button" class="btn btn-outline btn-sm" id="pushSubscribeBtn" <?= $pushConfigured ? '' : 'disabled' ?>>
+      <button type="button" class="btn btn-outline btn-sm" id="pushSubscribeBtn" <?= canRegisterPush() ? '' : 'disabled' ?>>
         <i class="bi bi-phone"></i> Enable push on this device
       </button>
       <button type="button" class="btn btn-outline btn-sm" id="pushTestBtn" <?= $pushConfigured ? '' : 'disabled' ?>>
@@ -97,6 +97,14 @@ $recent = fetchAll('SELECT type, title, body, url, created_at FROM admin_notific
       </button>
     </div>
   </form>
+
+  <div class="ntf-token" id="pushTokenBox" hidden>
+    <label>This device's token <span class="field-hint">— for Firebase console → Messaging → "Send test message"</span></label>
+    <div class="ntf-token-row">
+      <code id="pushTokenText"></code>
+      <button type="button" class="btn btn-outline btn-sm" id="pushTokenCopy"><i class="bi bi-clipboard"></i> Copy</button>
+    </div>
+  </div>
 </div>
 
 <div class="ntf-card">

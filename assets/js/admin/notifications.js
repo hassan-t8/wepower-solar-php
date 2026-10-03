@@ -120,6 +120,24 @@
     }
   });
 
+  // ---- Show this device's token (for testing from the Firebase console) ----
+  const tokenBox = document.getElementById('pushTokenBox');
+  const tokenText = document.getElementById('pushTokenText');
+  function showToken(token) {
+    if (!token) return;
+    tokenText.textContent = token;
+    tokenBox.hidden = false;
+  }
+  try { showToken(localStorage.getItem('admPushToken')); } catch (e) { /* ignore */ }
+  window.addEventListener('adm:push-token', (e) => {
+    showToken(e.detail.token);
+    document.getElementById('pushDeviceCount').textContent = e.detail.devices;
+  });
+  document.getElementById('pushTokenCopy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(tokenText.textContent); showToast('Device token copied.', 'success'); }
+    catch (e) { showToast('Select the token and copy it manually.', 'info'); }
+  });
+
   const testBtn2 = document.getElementById('pushTestBtn');
   testBtn2.addEventListener('click', async () => {
     testBtn2.disabled = true;

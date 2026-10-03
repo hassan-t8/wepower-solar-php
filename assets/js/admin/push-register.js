@@ -6,11 +6,11 @@
  *                         and saves its device token for the logged-in admin.
  *                         Resolves to the device count; throws on failure.
  *   AdmPush.autoRegister() → same, but quietly, at most once per browser
- *                         session, and only when push is configured and
- *                         notifications are already allowed.
+ *                         session, and only when the Firebase web config is
+ *                         present and notifications are already allowed.
  */
 (function () {
-  const cfg = window.ADM_PUSH || { configured: false, firebase: {} };
+  const cfg = window.ADM_PUSH || { configured: false, canRegister: false, firebase: {} };
   const FIREBASE_VERSION = '12.19.0';
   let firebaseLoaded = null;
 
@@ -58,15 +58,17 @@
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || 'Could not save this device.');
     session.set('admPushRegistered', '1');
+    try { localStorage.setItem('admPushToken', token); } catch (e) { /* private mode */ }
+    window.dispatchEvent(new CustomEvent('adm:push-token', { detail: { token, devices: data.devices } }));
     return data.devices;
   }
 
   // Re-registering each session also refreshes tokens that Firebase rotated.
   async function autoRegister() {
-    if (!cfg.configured || !supported() || Notification.permission !== 'granted') return;
+    if (!cfg.canRegister || !supported() || Notification.permission !== 'granted') return;
     if (session.get('admPushRegistered')) return;
     try { await register(); } catch (e) { /* silent: the Notifications page shows errors on demand */ }
   }
 
-  window.AdmPush = { configured: cfg.configured, supported, register, autoRegister };
+  window.AdmPush = { configured: cfg.configured, canRegister: cfg.canRegister, supported, register, autoRegister };
 })();

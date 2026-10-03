@@ -59,7 +59,7 @@ function admLink(array $n, string $active): void {
 <link rel="stylesheet" href="<?= h(asset('/assets/css/toast.css')) ?>">
 <script>
   // Push setup for this browser (push-register.js); public values only.
-  window.ADM_PUSH = <?= json_encode(['configured' => isPushConfigured(), 'firebase' => firebaseWebConfig()], JSON_UNESCAPED_SLASHES) ?>;
+  window.ADM_PUSH = <?= json_encode(['configured' => isPushConfigured(), 'canRegister' => canRegisterPush(), 'firebase' => firebaseWebConfig()], JSON_UNESCAPED_SLASHES) ?>;
 </script>
 </head>
 <body>

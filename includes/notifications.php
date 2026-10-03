@@ -157,6 +157,13 @@ function firebaseWebConfig(): array
     ];
 }
 
+/** Can browsers register for push? Needs only the public web config (not the service account). */
+function canRegisterPush(): bool
+{
+    $c = firebaseWebConfig();
+    return $c['apiKey'] !== '' && $c['projectId'] !== '' && $c['appId'] !== '' && $c['vapidKey'] !== '';
+}
+
 /** Parsed service-account JSON, or null if missing/invalid. */
 function fcmServiceAccount(): ?array
 {

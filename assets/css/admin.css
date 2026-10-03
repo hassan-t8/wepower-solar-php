@@ -526,3 +526,28 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
   .adm-dv-seg { flex:1; text-align:center; padding:8px 6px; }
   .adm-dv-del { margin-left:auto; }
 }
+
+/* Device token box (Notifications page) */
+.ntf-token { margin-top:18px; padding-top:16px; border-top:1px solid var(--gray-100); }
+.ntf-token label { display:block; font-size:.85rem; font-weight:600; color:var(--gray-700); margin-bottom:8px; }
+.ntf-token-row { display:flex; gap:8px; align-items:flex-start; }
+.ntf-token-row code {
+  flex:1; min-width:0; padding:10px 12px; border-radius:10px; background:var(--gray-50); border:1px solid var(--gray-200);
+  font-size:.75rem; line-height:1.5; color:var(--gray-700); word-break:break-all; max-height:96px; overflow:auto;
+}
+
+/* Dashboard visitor chart */
+.adm-chart-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:14px; }
+.adm-chart-head .adm-chart-sub { margin-bottom:0; }
+.adm-chart-kpis { display:flex; gap:18px; }
+.adm-chart-kpis div { display:flex; flex-direction:column; align-items:flex-end; line-height:1.2; }
+.adm-chart-kpis strong { font-size:1.05rem; color:var(--dark); }
+.adm-chart-kpis span { font-size:.7rem; color:var(--gray-400); text-transform:uppercase; letter-spacing:.4px; font-weight:600; }
+.adm-chart-box { position:relative; width:100%; height:260px; }
+.adm-chart-box canvas { position:absolute; inset:0; width:100% !important; height:100% !important; }
+.adm-chart-card { min-width:0; }
+@media (max-width:600px) {
+  .adm-chart-box { height:210px; }
+  .adm-chart-kpis { width:100%; justify-content:space-between; gap:8px; }
+  .adm-chart-kpis div { align-items:flex-start; }
+}
