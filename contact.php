@@ -5,8 +5,14 @@ $headerVariant = 'solid';
 $pageScripts = ['contact-form.js', 'faq.js'];
 require_once __DIR__ . '/includes/header.php';
 
+// Contact details come from Admin → Settings → Company (code values are only a fallback)
 $contactEmail = setting('company_email', 'wepowersolarsolutions@gmail.com');
-$phones = implode(' / ', $brand['phones']);
+$contactAddress = setting('company_address', $brand['address']);
+$contactInstagram = setting('company_instagram', $brand['instagram']);
+$phones = implode(' / ', array_filter([
+    setting('company_phone1', $brand['phones'][0] ?? ''),
+    setting('company_phone2', $brand['phones'][1] ?? ''),
+]));
 ?>
 
 <section class="pg-hero">
@@ -31,7 +37,7 @@ $phones = implode(' / ', $brand['phones']);
           <div style="width:46px;height:46px;border-radius:14px;background:var(--green-50);display:flex;align-items:center;justify-content:center;color:var(--green-600);font-size:1.15rem;flex-shrink:0;border:1px solid var(--green-200)"><i class="bi bi-geo-alt-fill"></i></div>
           <div>
             <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px"><?= h(t('contact.officeAddress')) ?></div>
-            <div style="color:var(--gray-800);font-weight:500;line-height:1.5"><?= h($brand['address']) ?></div>
+            <div style="color:var(--gray-800);font-weight:500;line-height:1.5"><?= h($contactAddress) ?></div>
           </div>
         </div>
 
@@ -55,7 +61,7 @@ $phones = implode(' / ', $brand['phones']);
           <div style="width:46px;height:46px;border-radius:14px;background:var(--green-50);display:flex;align-items:center;justify-content:center;color:var(--green-600);font-size:1.15rem;flex-shrink:0;border:1px solid var(--green-200)"><i class="bi bi-instagram"></i></div>
           <div>
             <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px"><?= h(t('contact.instagram')) ?></div>
-            <div style="color:var(--gray-800);font-weight:500;line-height:1.5"><?= h($brand['instagram']) ?></div>
+            <div style="color:var(--gray-800);font-weight:500;line-height:1.5"><?= h($contactInstagram) ?></div>
           </div>
         </div>
 

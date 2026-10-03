@@ -57,7 +57,7 @@ try {
               You can expect a reply within <strong>24 hours</strong>.
             </p>
             <p style="color:#374151;font-size:15px;line-height:1.7">
-              In the meantime, feel free to explore our services or call us at <strong>' . h($brand['phones'][0]) . '</strong>.
+              In the meantime, feel free to explore our services or call us at <strong>' . h(getSetting('company_phone1') ?: $brand['phones'][0]) . '</strong>.
             </p>')
     );
 
