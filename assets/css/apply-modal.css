@@ -173,7 +173,7 @@
   .apply-body .field textarea {
     padding: 8px 10px; font-size: 16px; border-radius: 9px;
   }
-  .apply-body .phone-cc { border-radius: 9px; }
+  .apply-body .phone-group { border-radius: 9px; }
   .apply-body .field textarea { min-height: 60px; }
 
   .apply-success { padding: 20px 6px 4px; }

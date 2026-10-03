@@ -9,7 +9,7 @@ $listSearchPlaceholder = 'Search name, phone…';
 $listHeaderCols = ['Name', 'Phone', 'Service', 'City', 'Preferred Date'];
 require __DIR__ . '/includes/list-page.php';
 ?>
-<script src="/assets/js/admin/list-table.js"></script>
+<script src="<?= h(asset('/assets/js/admin/list-table.js')) ?>"></script>
 <script>
 initAdminList({
   type: 'bookings',

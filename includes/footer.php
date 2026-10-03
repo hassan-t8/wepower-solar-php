@@ -135,14 +135,14 @@ if ($promoOn && $promoUrl && preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/
 <?php endforeach; ?>
   };
 </script>
-<script src="/assets/js/toast.js"></script>
-<script src="/assets/js/main.js"></script>
-<script src="/assets/js/form-validation.js"></script>
-<script src="/assets/js/apply-modal.js"></script>
-<script src="/assets/js/lang-switcher.js"></script>
-<script src="/assets/js/lang-hint.js"></script>
+<script src="<?= h(asset('/assets/js/toast.js')) ?>"></script>
+<script src="<?= h(asset('/assets/js/main.js')) ?>"></script>
+<script src="<?= h(asset('/assets/js/form-validation.js')) ?>"></script>
+<script src="<?= h(asset('/assets/js/apply-modal.js')) ?>"></script>
+<script src="<?= h(asset('/assets/js/lang-switcher.js')) ?>"></script>
+<script src="<?= h(asset('/assets/js/lang-hint.js')) ?>"></script>
 <?php foreach ($pageScripts as $script): ?>
-<script src="/assets/js/<?= h($script) ?>"></script>
+<script src="<?= h(asset('/assets/js/' . $script)) ?>"></script>
 <?php endforeach; ?>
 </body>
 </html>

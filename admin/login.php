@@ -11,8 +11,8 @@ if (isAdminLoggedIn()) { header('Location: /admin/dashboard.php'); exit; }
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="/assets/css/global.css">
-<link rel="stylesheet" href="/assets/css/admin.css">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/global.css')) ?>">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/admin.css')) ?>">
 </head>
 <body>
 

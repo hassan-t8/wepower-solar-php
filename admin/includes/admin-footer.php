@@ -2,10 +2,10 @@
   </div>
 </div>
 
-<script src="/assets/js/toast.js"></script>
-<script src="/assets/js/admin/admin-common.js"></script>
+<script src="<?= h(asset('/assets/js/toast.js')) ?>"></script>
+<script src="<?= h(asset('/assets/js/admin/admin-common.js')) ?>"></script>
 <?php foreach ($adminPageScripts ?? [] as $script): ?>
-<script src="/assets/js/admin/<?= h($script) ?>"></script>
+<script src="<?= h(asset('/assets/js/admin/' . $script)) ?>"></script>
 <?php endforeach; ?>
 </body>
 </html>

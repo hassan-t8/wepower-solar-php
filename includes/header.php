@@ -69,17 +69,17 @@ trackVisit($_SERVER['REQUEST_URI'] ?? '/');
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<link rel="stylesheet" href="/assets/css/global.css">
-<link rel="stylesheet" href="/assets/css/header.css">
-<link rel="stylesheet" href="/assets/css/footer.css">
-<link rel="stylesheet" href="/assets/css/pages.css">
-<link rel="stylesheet" href="/assets/css/apply-modal.css">
-<link rel="stylesheet" href="/assets/css/toast.css">
-<link rel="stylesheet" href="/assets/css/whatsapp-button.css">
-<link rel="stylesheet" href="/assets/css/video-popup.css">
-<link rel="stylesheet" href="/assets/css/lang.css">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/global.css')) ?>">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/header.css')) ?>">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/footer.css')) ?>">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/pages.css')) ?>">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/apply-modal.css')) ?>">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/toast.css')) ?>">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/whatsapp-button.css')) ?>">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/video-popup.css')) ?>">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/lang.css')) ?>">
 <?php foreach ($pageStyles ?? [] as $style): ?>
-<link rel="stylesheet" href="/assets/css/<?= h($style) ?>">
+<link rel="stylesheet" href="<?= h(asset('/assets/css/' . $style)) ?>">
 <?php endforeach; ?>
 </head>
 <body class="<?= h($bodyClass) ?><?= $LANG_CODE === 'ur' ? ' lang-ur' : '' ?>">

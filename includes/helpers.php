@@ -187,6 +187,21 @@ function csvExport(string $type, array $rows): never
     exit;
 }
 
+/**
+ * Versioned URL for a file under /assets — appends ?v=<content hash> so
+ * browsers and the host's cache fetch the new copy after every deploy
+ * instead of serving stale CSS/JS with fresh HTML.
+ */
+function asset(string $path): string
+{
+    static $cache = [];
+    if (!isset($cache[$path])) {
+        $file = dirname(__DIR__) . $path;
+        $cache[$path] = is_file($file) ? $path . '?v=' . substr(md5_file($file), 0, 10) : $path;
+    }
+    return $cache[$path];
+}
+
 /** Escape for safe HTML output — shorthand for htmlspecialchars(). */
 function h($value): string
 {

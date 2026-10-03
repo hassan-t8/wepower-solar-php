@@ -87,29 +87,37 @@ h3 { font-size:clamp(1.25rem,2.5vw,1.6rem); }
 @media (max-width:520px){ .form-row { grid-template-columns:1fr; } }
 .btn-block { white-space:normal; text-align:center; }
 
-/* Phone: country-code picker + national number (built by form-validation.js) */
-.phone-group { display:flex; align-items:stretch; gap:6px; min-width:0; direction:ltr; } /* numbers read LTR even in Urdu */
-.phone-group input { flex:1 1 auto; min-width:0; }
-.phone-cc {
-  position:relative; flex:0 0 auto; display:flex; align-items:center; gap:4px;
-  padding:0 10px 0 12px; border:1.5px solid var(--gray-200); border-radius:12px;
-  background:var(--gray-50); color:var(--gray-800); font-weight:600; font-size:.92rem;
+/* Phone: one box holding the country code (left) and the number (built by form-validation.js) */
+.phone-group {
+  display:flex; align-items:stretch; min-width:0; direction:ltr; /* numbers read LTR even in Urdu */
+  border:1.5px solid var(--gray-200); border-radius:12px; background:#fff; overflow:hidden;
   transition:border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.phone-group:focus-within { border-color:var(--green-500); box-shadow:0 0 0 4px var(--green-100); }
+.phone-cc {
+  position:relative; flex:0 0 auto; display:flex; align-items:center; gap:5px;
+  padding:0 10px 0 14px; background:var(--gray-50); border-right:1.5px solid var(--gray-200);
+  color:var(--gray-800); font-weight:600; font-size:.95rem; white-space:nowrap;
 }
 .phone-cc i { font-size:.7rem; color:var(--gray-500); }
 /* The real <select> sits invisibly on top, so the closed state shows a compact "+92"
    while the native dropdown (best on mobile) lists full country names. */
 .field .phone-cc select {
   position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer;
-  padding:0; border:0; font-size:16px;
+  padding:0; border:0; border-radius:0; box-shadow:none; font-size:16px;
 }
+.field .phone-group input {
+  flex:1 1 auto; min-width:0; border:0; border-radius:0; box-shadow:none; background:transparent;
+}
+.field .phone-group input:focus { box-shadow:none; }
 [dir="rtl"] .field input[type="email"] { direction:ltr; text-align:right; }
-.phone-cc:focus-within { border-color:var(--green-500); box-shadow:0 0 0 4px var(--green-100); }
 
 /* Inline validation errors */
 .field.has-error input, .field.has-error select, .field.has-error textarea,
-.field.has-error .phone-cc { border-color:#ef4444; }
-.field.has-error input:focus, .field.has-error textarea:focus { box-shadow:0 0 0 4px #fee2e2; }
+.field.has-error .phone-group { border-color:#ef4444; }
+.field.has-error input:focus, .field.has-error textarea:focus,
+.field.has-error .phone-group:focus-within { box-shadow:0 0 0 4px #fee2e2; }
+.field.has-error .phone-group input:focus { box-shadow:none; }
 .field-error { color:#b91c1c; font-size:.78rem; line-height:1.35; margin-top:5px; }
 
 @media (max-width:600px) {
@@ -119,7 +127,8 @@ h3 { font-size:clamp(1.25rem,2.5vw,1.6rem); }
   .field input, .field select, .field textarea {
     padding:9px 11px; font-size:16px; border-radius:10px;
   }
-  .phone-cc { border-radius:10px; padding:0 8px 0 10px; font-size:.9rem; }
+  .phone-group { border-radius:10px; }
+  .phone-cc { padding:0 8px 0 11px; font-size:.9rem; }
   .field textarea { min-height:68px; }
   .btn-lg { padding:12px 22px; font-size:.93rem; }
 }

@@ -9,7 +9,7 @@ $listSearchPlaceholder = 'Search name, email, subject…';
 $listHeaderCols = ['Name', 'Email', 'Phone', 'Subject'];
 require __DIR__ . '/includes/list-page.php';
 ?>
-<script src="/assets/js/admin/list-table.js"></script>
+<script src="<?= h(asset('/assets/js/admin/list-table.js')) ?>"></script>
 <script>
 initAdminList({
   type: 'contacts',

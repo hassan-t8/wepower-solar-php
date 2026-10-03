@@ -10,7 +10,7 @@ $listHeaderCols = ['Name', 'Phone', 'City', 'Property', 'Total Load (W)', 'Rec. 
 $listNoStatus = true;
 require __DIR__ . '/includes/list-page.php';
 ?>
-<script src="/assets/js/admin/list-table.js"></script>
+<script src="<?= h(asset('/assets/js/admin/list-table.js')) ?>"></script>
 <script>
 initAdminList({
   type: 'load_calculations',
