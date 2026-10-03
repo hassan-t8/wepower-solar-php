@@ -8,9 +8,10 @@ require_once __DIR__ . '/../includes/notifications.php';
 $prefs = getNotificationPrefs((int) $admin['id']);
 $pushConfigured = isPushConfigured();
 $pushEnabled = getSetting('push_enabled') === 'true';
-$vapidPublic = (string) getSetting('push_vapid_public_key');
-$vapidSubject = (string) getSetting('push_vapid_subject');
-$hasPrivate = (string) getSetting('push_vapid_private_key') !== '';
+$fb = firebaseWebConfig();
+$serviceAccount = fcmServiceAccount();
+$myDevices = countRows('SELECT COUNT(*) c FROM push_subscriptions WHERE admin_id = ?', [(int) $admin['id']]);
+$pushState = $pushConfigured ? ['ok', 'Active'] : ($serviceAccount ? ['warn', 'Switched off'] : ['warn', 'Needs service account']);
 $recent = fetchAll('SELECT type, title, body, url, created_at FROM admin_notifications ORDER BY id DESC LIMIT 30');
 ?>
 
@@ -50,25 +51,49 @@ $recent = fetchAll('SELECT type, title, body, url, created_at FROM admin_notific
 
 <div class="ntf-card">
   <h4><i class="bi bi-phone-vibrate"></i> Push notifications (admin panel closed)
-    <span class="ntf-status <?= $pushConfigured ? 'ok' : 'warn' ?>" id="pushStatus"><?= $pushConfigured ? 'Configured' : 'Not configured yet' ?></span>
+    <span class="ntf-status <?= h($pushState[0]) ?>" id="pushStatus"><?= h($pushState[1]) ?></span>
   </h4>
-  <p>Push delivers alerts to your phone or computer even when the admin panel isn't open. Enter the push provider keys below when they're ready; everything else is already set up.</p>
+  <p>Delivers alerts to your phone or computer even when the admin panel isn't open, via Firebase Cloud Messaging.
+    Your devices registered: <strong id="pushDeviceCount"><?= (int) $myDevices ?></strong></p>
 
-  <form id="pushConfigForm" autocomplete="off">
+  <form id="pushConfigForm" autocomplete="off"
+        data-firebase='<?= h(json_encode($fb, JSON_UNESCAPED_SLASHES)) ?>'>
     <div class="ntf-row">
       <i class="bi bi-power"></i>
-      <div class="ntf-row-text"><strong>Enable push notifications</strong><span>Requires the keys below.</span></div>
+      <div class="ntf-row-text"><strong>Enable push notifications</strong><span>Needs the service account below.</span></div>
       <label class="ntf-switch"><input type="checkbox" name="push_enabled" <?= $pushEnabled ? 'checked' : '' ?> aria-label="Enable push"><span></span></label>
     </div>
-    <div class="form-row" style="margin-top:8px">
-      <div class="field"><label>Public key (VAPID)</label><input type="text" name="push_vapid_public_key" value="<?= h($vapidPublic) ?>" placeholder="B…"></div>
-      <div class="field"><label>Private key (VAPID)</label><input type="password" name="push_vapid_private_key" placeholder="<?= $hasPrivate ? '•••••••• (saved — type to replace)' : 'Paste private key' ?>"></div>
+
+    <div class="field" style="margin-top:8px">
+      <label>Firebase service account (JSON) <span class="field-hint">— Firebase → Project settings → Service accounts → Generate new private key</span></label>
+      <?php if ($serviceAccount): ?>
+        <div class="ntf-status ok" style="margin-bottom:8px"><i class="bi bi-shield-check"></i> Saved: <?= h($serviceAccount['client_email']) ?></div>
+      <?php endif; ?>
+      <textarea name="fcm_service_account" rows="4" spellcheck="false" style="font-family:monospace;font-size:.8rem"
+        placeholder="<?= $serviceAccount ? 'Saved securely — paste a new JSON only to replace it' : 'Paste the whole JSON file here, or choose the file below' ?>"></textarea>
+      <input type="file" id="saFile" accept="application/json,.json" style="margin-top:8px">
     </div>
-    <div class="field"><label>Contact (subject)</label><input type="text" name="push_vapid_subject" value="<?= h($vapidSubject) ?>" placeholder="mailto:admin@yourdomain.com"></div>
+
+    <details style="margin:6px 0 4px">
+      <summary style="cursor:pointer;font-weight:600;font-size:.88rem;color:var(--gray-600)">Firebase web app settings (pre-filled)</summary>
+      <div class="form-row" style="margin-top:12px">
+        <div class="field"><label>Project ID</label><input type="text" name="fcm_project_id" value="<?= h($fb['projectId']) ?>"></div>
+        <div class="field"><label>Sender ID</label><input type="text" name="fcm_sender_id" value="<?= h($fb['messagingSenderId']) ?>"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>API key (web)</label><input type="text" name="fcm_api_key" value="<?= h($fb['apiKey']) ?>"></div>
+        <div class="field"><label>App ID</label><input type="text" name="fcm_app_id" value="<?= h($fb['appId']) ?>"></div>
+      </div>
+      <div class="field"><label>Web Push certificate key (VAPID)</label><input type="text" name="fcm_vapid_key" value="<?= h($fb['vapidKey']) ?>"></div>
+    </details>
+
     <div class="ntf-actions">
       <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-save"></i> Save push settings</button>
-      <button type="button" class="btn btn-outline btn-sm" id="pushSubscribeBtn" data-vapid="<?= h($vapidPublic) ?>" <?= $pushConfigured ? '' : 'disabled' ?>>
+      <button type="button" class="btn btn-outline btn-sm" id="pushSubscribeBtn" <?= $pushConfigured ? '' : 'disabled' ?>>
         <i class="bi bi-phone"></i> Enable push on this device
+      </button>
+      <button type="button" class="btn btn-outline btn-sm" id="pushTestBtn" <?= $pushConfigured ? '' : 'disabled' ?>>
+        <i class="bi bi-send"></i> Send test push
       </button>
     </div>
   </form>

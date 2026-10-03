@@ -1,8 +1,8 @@
 /**
- * Admin push service worker (scope /admin/). Shows a notification for each
- * push message and opens the related admin page when it's clicked.
- * A push with a JSON payload {title, body, url} is shown as-is; a push with
- * no payload fetches the newest event from the admin feed instead.
+ * Admin push service worker (scope /admin/), used by Firebase Cloud Messaging.
+ * Shows a notification for each push (FCM data message {title, body, url})
+ * and opens the related admin page when it's clicked. A push without a
+ * usable payload falls back to the newest event from the admin feed.
  */
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()));
@@ -10,7 +10,12 @@ self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim(
 self.addEventListener('push', (event) => {
   event.waitUntil((async () => {
     let data = null;
-    try { data = event.data ? event.data.json() : null; } catch (e) { data = null; }
+    try {
+      const msg = event.data ? event.data.json() : null;
+      // Firebase Cloud Messaging wraps data messages as {data: {...}, from, fcmMessageId}
+      data = msg ? (msg.data || msg.notification || msg) : null;
+      if (data && !data.title) data = null;
+    } catch (e) { data = null; }
     if (!data) {
       try {
         const res = await fetch('/admin/api/updates.php?since=0', { credentials: 'include', cache: 'no-store' });
