@@ -190,21 +190,25 @@ $smtpPassMasked = !empty($s['smtp_pass']) ? '••••••••' : '';
   <div class="adm-settings-card">
     <h4 style="margin-bottom:20px"><i class="bi bi-shield-lock" style="margin-right:8px;color:var(--green-600)"></i>Change Password</h4>
     <div id="pwAlert" hidden></div>
-    <form id="pwForm">
+    <form id="pwForm" novalidate autocomplete="on">
+      <!-- lets password managers save the new password for the right account -->
+      <input type="text" name="username" autocomplete="username" value="<?= h($admin['email'] ?? '') ?>" hidden readonly>
       <div style="max-width:420px">
         <div class="field">
-          <label>Current Password</label>
-          <div style="position:relative"><input type="password" name="current_password" required style="padding-right:44px"><button type="button" class="pw-eye-toggle" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray-400);cursor:pointer;padding:2px;display:flex;align-items:center;font-size:.95rem"><i class="bi bi-eye"></i></button></div>
+          <label for="pwCurrent">Current Password</label>
+          <div class="pw-wrap"><input type="password" id="pwCurrent" name="current_password" autocomplete="current-password" required><button type="button" class="pw-eye-toggle" aria-label="Show password"><i class="bi bi-eye"></i></button></div>
         </div>
         <div class="field">
-          <label>New Password</label>
-          <div style="position:relative"><input type="password" name="new_password" required placeholder="Min. 8 characters" style="padding-right:44px"><button type="button" class="pw-eye-toggle" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray-400);cursor:pointer;padding:2px;display:flex;align-items:center;font-size:.95rem"><i class="bi bi-eye"></i></button></div>
+          <label for="pwNew">New Password</label>
+          <div class="pw-wrap"><input type="password" id="pwNew" name="new_password" autocomplete="new-password" required minlength="8" maxlength="72" placeholder="At least 8 characters"><button type="button" class="pw-eye-toggle" aria-label="Show password"><i class="bi bi-eye"></i></button></div>
+          <div class="pw-meter" aria-hidden="true"><span id="pwMeterBar"></span></div>
+          <div class="pw-hint" id="pwHint">Use 8+ characters. Mixing letters, numbers and symbols makes it stronger.</div>
         </div>
         <div class="field">
-          <label>Confirm New Password</label>
-          <div style="position:relative"><input type="password" name="confirm_password" required style="padding-right:44px"><button type="button" class="pw-eye-toggle" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray-400);cursor:pointer;padding:2px;display:flex;align-items:center;font-size:.95rem"><i class="bi bi-eye"></i></button></div>
+          <label for="pwConfirm">Confirm New Password</label>
+          <div class="pw-wrap"><input type="password" id="pwConfirm" name="confirm_password" autocomplete="new-password" required maxlength="72"><button type="button" class="pw-eye-toggle" aria-label="Show password"><i class="bi bi-eye"></i></button></div>
         </div>
-        <button type="submit" class="btn btn-primary" id="pwSubmitBtn" disabled><i class="bi bi-lock"></i> Update Password</button>
+        <button type="submit" class="btn btn-primary" id="pwSubmitBtn"><i class="bi bi-lock"></i> Update Password</button>
       </div>
     </form>
   </div>

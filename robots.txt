@@ -6,4 +6,4 @@ Disallow: /config/
 Disallow: /includes/
 Disallow: /uploads/
 
-Sitemap: https://wepower.pk/sitemap.xml
+Sitemap: https://wepowerenergysolutions.com/sitemap.xml

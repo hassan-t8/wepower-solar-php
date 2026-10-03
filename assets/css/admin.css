@@ -564,3 +564,15 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
 /* Clickable table rows (dashboard recent applications) */
 .adm-row-link { cursor:pointer; transition:background .15s; }
 .adm-row-link:hover, .adm-row-link:focus-visible { background:var(--green-50); outline:none; }
+
+/* Change password form */
+.pw-wrap { position:relative; }
+.pw-wrap input { padding-right:44px; }
+.pw-eye-toggle { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--gray-400); cursor:pointer; padding:2px; display:flex; align-items:center; font-size:.95rem; }
+.pw-eye-toggle:hover { color:var(--gray-600); }
+.pw-meter { height:5px; border-radius:4px; background:var(--gray-100); margin-top:8px; overflow:hidden; }
+.pw-meter span { display:block; height:100%; width:0; background:#ef4444; transition:width .2s, background .2s; }
+.pw-meter span[data-level="2"] { background:#f59e0b; }
+.pw-meter span[data-level="3"] { background:#22c55e; }
+.pw-meter span[data-level="4"] { background:#15803d; }
+.pw-hint { font-size:.78rem; color:var(--gray-500); margin-top:5px; }

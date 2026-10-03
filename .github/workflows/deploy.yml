@@ -1,9 +1,10 @@
-name: Deploy (Hostinger + VPS)
+name: Deploy to VPS
 
-# Runs on every push to main — SSHes into Hostinger and runs ~/deploy-wepower.sh,
-# which pulls main and syncs it into the live site. The script never touches
-# config/config.php or uploads/, so live DB credentials and real uploaded
-# files (resumes/logos) are never overwritten by an automated deploy.
+# Runs on every push to main: SSHes into the Contabo VPS (wepowerenergysolutions.com)
+# and runs ~/deploy-wepower.sh, which pulls main and syncs it into the live site.
+# The script never touches config/config.php or uploads/, so the live DB
+# credentials and real uploaded files (resumes/logos) are never overwritten.
+# The key in VPS_DEPLOY_KEY is restricted on the server to running that script only.
 
 on:
   push:
@@ -16,24 +17,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to Hostinger (old host, until the domain switch)
-        env:
-          SSH_KEY: ${{ secrets.WEPOWER }}
-        run: |
-          mkdir -p ~/.ssh
-          # Accept the key with or without its BEGIN/END lines.
-          body=$(printf '%s' "$SSH_KEY" | grep -v -- '-----' | tr -d ' \r\n')
-          {
-            echo '-----BEGIN OPENSSH PRIVATE KEY-----'
-            echo "$body" | fold -w 70
-            echo '-----END OPENSSH PRIVATE KEY-----'
-          } > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p 65002 194.36.184.188 >> ~/.ssh/known_hosts
-          ssh -p 65002 u467613868@194.36.184.188 'bash ~/deploy-wepower.sh'
-
-      # New Contabo VPS (wepowerenergysolutions.com). The key in VPS_DEPLOY_KEY
-      # is restricted on the server to running ~/deploy-wepower.sh only.
       - name: Deploy to VPS
         env:
           SSH_KEY: ${{ secrets.VPS_DEPLOY_KEY }}

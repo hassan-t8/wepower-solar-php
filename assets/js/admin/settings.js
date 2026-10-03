@@ -178,6 +178,9 @@
   }
 
   // ---- Password change ----
+  // ---- Change password ----
+  // The button is always clickable (browser autofill doesn't count as typing, so a
+  // "disabled until you type" button looked dead). Every outcome shows a message.
   const pwForm = document.getElementById('pwForm');
   const pwSubmitBtn = document.getElementById('pwSubmitBtn');
   const pwAlert = document.getElementById('pwAlert');
@@ -186,12 +189,39 @@
     pwAlert.className = 'adm-alert ' + type;
     pwAlert.style.marginBottom = '20px';
     pwAlert.innerHTML = '<i class="bi ' + (type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle') + '"></i>' + esc(msg);
+    pwAlert.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  function pwFieldError(input, msg) {
+    const field = input.closest('.field');
+    let box = field.querySelector('.field-error');
+    if (!msg) { field.classList.remove('has-error'); if (box) box.remove(); return; }
+    if (!box) { box = document.createElement('div'); box.className = 'field-error'; field.appendChild(box); }
+    box.textContent = msg;
+    field.classList.add('has-error');
+  }
+  function pwStrength(v) {
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (v.length >= 12) score++;
+    if (/[a-z]/.test(v) && /[A-Z]/.test(v)) score++;
+    if (/\d/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    return Math.min(4, score); // 0..4
   }
   if (pwForm) {
-    pwForm.addEventListener('input', () => {
-      const dirty = Array.from(pwForm.elements).some((el) => el.type === 'password' && el.value.length > 0);
-      pwSubmitBtn.disabled = !dirty;
+    const cur = pwForm.current_password, nw = pwForm.new_password, cf = pwForm.confirm_password;
+    const bar = document.getElementById('pwMeterBar');
+    const hint = document.getElementById('pwHint');
+    const LABELS = ['Too short', 'Weak', 'Okay', 'Good', 'Strong'];
+    nw.addEventListener('input', () => {
+      const s = nw.value ? pwStrength(nw.value) : 0;
+      bar.style.width = nw.value ? ((s + 1) * 20) + '%' : '0';
+      bar.dataset.level = String(s);
+      hint.textContent = nw.value
+        ? 'Strength: ' + (nw.value.length < 8 ? LABELS[0] : LABELS[s])
+        : 'Use 8+ characters. Mixing letters, numbers and symbols makes it stronger.';
     });
+    [cur, nw, cf].forEach((el) => el.addEventListener('input', () => pwFieldError(el, '')));
     pwForm.querySelectorAll('.pw-eye-toggle').forEach((btn) => {
       btn.addEventListener('click', () => {
         const input = btn.previousElementSibling;
@@ -200,25 +230,51 @@
         btn.innerHTML = '<i class="bi ' + (show ? 'bi-eye-slash' : 'bi-eye') + '"></i>';
       });
     });
+
     pwForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       pwAlert.hidden = true;
-      const newPw = pwForm.new_password.value;
-      const confirmPw = pwForm.confirm_password.value;
-      if (newPw !== confirmPw) { pwShowAlert('error', 'New passwords do not match.'); return; }
+      // client-side checks first, each shown under its field
+      let bad = null;
+      const fail = (el, msg) => { pwFieldError(el, msg); bad = bad || el; };
+      [cur, nw, cf].forEach((el) => pwFieldError(el, ''));
+      if (!cur.value) fail(cur, 'Enter your current password.');
+      if (!nw.value) fail(nw, 'Enter a new password.');
+      else if (nw.value.length < 8) fail(nw, 'Use at least 8 characters.');
+      else if (nw.value.length > 72) fail(nw, 'Use 72 characters or fewer.');
+      else if (nw.value === cur.value) fail(nw, 'The new password must be different from the current one.');
+      if (!cf.value) fail(cf, 'Type the new password again.');
+      else if (nw.value && cf.value !== nw.value) fail(cf, 'Passwords do not match.');
+      if (bad) { bad.focus(); return; }
+
+      const orig = pwSubmitBtn.innerHTML;
+      pwSubmitBtn.disabled = true;
+      pwSubmitBtn.innerHTML = '<span class="btn-spinner"></span> Updating…';
       try {
         const res = await fetch('/admin/api/change-password.php', {
           method: 'POST', credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ current_password: pwForm.current_password.value, new_password: newPw }),
+          body: JSON.stringify({ current_password: cur.value, new_password: nw.value }),
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
-        pwShowAlert('success', data.message);
+        let data = {};
+        try { data = await res.json(); } catch (_) { /* non-JSON (e.g. server error page) */ }
+        if (res.status === 401 && data.error === 'Unauthorized') {
+          throw new Error('Your session has expired. Please log in again, then change the password.');
+        }
+        if (!res.ok) {
+          if (res.status === 401) { pwFieldError(cur, data.error || 'Current password is incorrect.'); cur.focus(); }
+          throw new Error(data.error || ('Could not update the password (server error ' + res.status + '). Please try again.'));
+        }
+        pwShowAlert('success', 'Password updated. Use the new password next time you log in.');
+        if (window.showToast) showToast('Password updated', 'success');
         pwForm.reset();
-        pwSubmitBtn.disabled = true;
+        bar.style.width = '0';
+        hint.textContent = 'Use 8+ characters. Mixing letters, numbers and symbols makes it stronger.';
       } catch (err) {
-        pwShowAlert('error', err.message);
+        pwShowAlert('error', err.message === 'Failed to fetch' ? 'No connection to the server. Check your internet and try again.' : err.message);
+      } finally {
+        pwSubmitBtn.disabled = false;
+        pwSubmitBtn.innerHTML = orig;
       }
     });
   }
