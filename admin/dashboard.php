@@ -15,7 +15,7 @@ require_once __DIR__ . '/includes/admin-header.php';
 </div>
 
 <div id="admDashboardContent" hidden>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px" id="visitorCards"></div>
+  <div class="adm-visitor-cards" id="visitorCards"></div>
 
   <div class="adm-stats" id="statCards"></div>
 

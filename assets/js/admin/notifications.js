@@ -99,50 +99,18 @@
     }
   });
 
-  // ---- Register this device for push ----
-  const FIREBASE_VERSION = '12.19.0';
-  let firebaseLoaded = null;
-  function loadScript(src) {
-    return new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = src; s.onload = resolve; s.onerror = () => reject(new Error('Could not load Firebase.'));
-      document.head.appendChild(s);
-    });
-  }
-  function loadFirebase() {
-    if (!firebaseLoaded) {
-      const base = 'https://cdn.jsdelivr.net/npm/firebase@' + FIREBASE_VERSION + '/';
-      firebaseLoaded = loadScript(base + 'firebase-app-compat.js').then(() => loadScript(base + 'firebase-messaging-compat.js'));
-    }
-    return firebaseLoaded;
-  }
-
+  // ---- Register this device for push (shared code in push-register.js) ----
   const subBtn = document.getElementById('pushSubscribeBtn');
   subBtn.addEventListener('click', async () => {
-    if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
-      showToast('This browser does not support push. On iPhone, first add the site to your Home Screen.', 'error');
-      return;
-    }
     subBtn.disabled = true;
     const origHtml = subBtn.innerHTML;
     subBtn.innerHTML = '<span class="btn-spinner" style="border-color:rgba(22,163,74,.3);border-top-color:var(--green-600)"></span> Registering… (can take up to 30s)';
     try {
+      if (!('Notification' in window)) throw new Error('This browser does not support notifications.');
       if ((await Notification.requestPermission()) !== 'granted') throw new Error('Notifications were not allowed in this browser.');
-      const [reg] = await Promise.all([
-        navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' }).then(() => navigator.serviceWorker.ready),
-        loadFirebase(),
-      ]);
-      const app = window.firebase.apps.length ? window.firebase.app() : window.firebase.initializeApp({
-        apiKey: firebaseCfg.apiKey,
-        projectId: firebaseCfg.projectId,
-        messagingSenderId: firebaseCfg.messagingSenderId,
-        appId: firebaseCfg.appId,
-      });
-      const token = await app.messaging().getToken({ vapidKey: firebaseCfg.vapidKey, serviceWorkerRegistration: reg });
-      if (!token) throw new Error('Firebase did not return a device token.');
-      const data = await postJSON('/admin/api/push-subscribe.php', { token });
-      document.getElementById('pushDeviceCount').textContent = data.devices;
-      store.set('admPushToken', token);
+      const devices = await window.AdmPush.register();
+      document.getElementById('pushDeviceCount').textContent = devices;
+      renderDesktop();
       showToast('Push enabled on this device. Try "Send test push".', 'success');
     } catch (err) {
       showToast(err.message, 'error');

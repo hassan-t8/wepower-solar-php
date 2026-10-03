@@ -157,3 +157,97 @@
 
   poll();
 })();
+
+/**
+ * Notification permission prompt. Browsers only show their real "Allow"
+ * dialog after a click, and never again once the user picks "Block", so:
+ *  - not decided yet → popup once per browser session (i.e. after login)
+ *    plus a slim banner on every admin page until allowed;
+ *  - blocked → banner explaining how to unblock in the browser;
+ *  - allowed → desktop alerts on, and this device is registered for push
+ *    automatically (push-register.js).
+ */
+(function () {
+  if (!('Notification' in window)) return;
+  const content = document.querySelector('.adm-content');
+  if (!content) return;
+  const session = {
+    get(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* private mode */ } },
+  };
+  const isChromeLike = /Chrome|Edg/.test(navigator.userAgent);
+  const unblockHelp = isChromeLike
+    ? 'Click the icon left of the address bar → Site settings → Notifications → Allow, then reload.'
+    : 'Open this site’s settings in your browser, set Notifications to Allow, then reload.';
+
+  let banner = null;
+  let modal = null;
+
+  function removeUi() {
+    if (banner) { banner.remove(); banner = null; }
+    if (modal) { modal.remove(); modal = null; }
+  }
+
+  async function allow() {
+    const result = await Notification.requestPermission();
+    removeUi();
+    if (result === 'granted') {
+      try { localStorage.setItem('admDesktopNotif', 'on'); } catch (e) { /* ignore */ }
+      if (window.AdmPush && window.AdmPush.configured) {
+        showToast('Notifications allowed — setting up push on this device…', 'success');
+        window.AdmPush.register()
+          .then(() => showToast('Push notifications are on for this device.', 'success'))
+          .catch((err) => showToast(err.message, 'error'));
+      } else {
+        showToast('Notifications allowed. You’ll get alerts for new activity.', 'success');
+      }
+    } else {
+      render();
+    }
+  }
+
+  function showBanner(blocked) {
+    banner = document.createElement('div');
+    banner.className = 'adm-perm-banner' + (blocked ? ' blocked' : '');
+    banner.innerHTML = blocked
+      ? `<i class="bi bi-bell-slash"></i><div><strong>Notifications are blocked in this browser.</strong><span>${unblockHelp}</span></div>
+         <button type="button" class="adm-perm-x" aria-label="Hide"><i class="bi bi-x-lg"></i></button>`
+      : `<i class="bi bi-bell"></i><div><strong>Turn on notifications</strong><span>Get alerted the moment a new application, message or booking arrives.</span></div>
+         <button type="button" class="btn btn-primary btn-sm adm-perm-allow"><i class="bi bi-check2-circle"></i> Allow</button>
+         <button type="button" class="adm-perm-x" aria-label="Hide"><i class="bi bi-x-lg"></i></button>`;
+    content.prepend(banner);
+    const allowBtn = banner.querySelector('.adm-perm-allow');
+    if (allowBtn) allowBtn.addEventListener('click', allow);
+    banner.querySelector('.adm-perm-x').addEventListener('click', () => { banner.remove(); banner = null; });
+  }
+
+  function showModal() {
+    session.set('admPermModalShown', '1');
+    modal = document.createElement('div');
+    modal.className = 'adm-perm-overlay';
+    modal.innerHTML = `
+      <div class="adm-perm-modal" role="dialog" aria-modal="true" aria-labelledby="admPermTitle">
+        <div class="adm-perm-icon"><i class="bi bi-bell-fill"></i></div>
+        <h3 id="admPermTitle">Allow notifications</h3>
+        <p>Get instant alerts for new quote requests, job applications, messages and bookings — even when this tab is in the background.</p>
+        <button type="button" class="btn btn-primary btn-block adm-perm-allow"><i class="bi bi-check2-circle"></i> Allow notifications</button>
+        <button type="button" class="adm-perm-later">Not now</button>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.querySelector('.adm-perm-allow').addEventListener('click', allow);
+    modal.querySelector('.adm-perm-later').addEventListener('click', () => { modal.remove(); modal = null; });
+  }
+
+  function render() {
+    removeUi();
+    const perm = Notification.permission;
+    if (perm === 'granted') {
+      if (window.AdmPush) window.AdmPush.autoRegister();
+      return;
+    }
+    showBanner(perm === 'denied');
+    if (perm === 'default' && !session.get('admPermModalShown')) showModal();
+  }
+
+  render();
+})();

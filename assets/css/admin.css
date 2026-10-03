@@ -346,3 +346,50 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
 @media (max-width:640px) { .ntf-grid { grid-template-columns:1fr; } .ntf-card { padding:18px; } }
 .adm-action-btn.rv-open { background:var(--gray-100); color:var(--gray-600); }
 .adm-action-btn.rv-open:hover { background:#eff6ff; color:#2563eb; }
+
+/* NOTIFICATION PERMISSION PROMPT (admin-common.js) */
+.adm-perm-banner {
+  display:flex; align-items:center; gap:14px; margin-bottom:20px; padding:14px 16px;
+  background:var(--green-50); border:1px solid var(--green-200); border-radius:var(--radius);
+}
+.adm-perm-banner > i { font-size:1.3rem; color:var(--green-600); flex-shrink:0; }
+.adm-perm-banner > div { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; font-size:.85rem; color:var(--gray-600); }
+.adm-perm-banner strong { color:var(--gray-800); font-size:.92rem; }
+.adm-perm-banner.blocked { background:#fffbeb; border-color:#fde68a; }
+.adm-perm-banner.blocked > i { color:#d97706; }
+.adm-perm-x { width:30px; height:30px; flex-shrink:0; border-radius:50%; color:var(--gray-500); display:flex; align-items:center; justify-content:center; }
+.adm-perm-x:hover { background:rgba(0,0,0,.06); }
+.adm-perm-overlay {
+  position:fixed; inset:0; z-index:1200; background:rgba(15,23,42,.55); backdrop-filter:blur(4px);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+}
+.adm-perm-modal {
+  width:100%; max-width:400px; background:#fff; border-radius:var(--radius-xl); box-shadow:var(--shadow-xl);
+  padding:36px 28px 22px; text-align:center;
+}
+.adm-perm-icon {
+  width:72px; height:72px; margin:0 auto 18px; border-radius:50%;
+  background:var(--green-50); color:var(--green-600); border:1px solid var(--green-200);
+  display:flex; align-items:center; justify-content:center; font-size:2rem;
+}
+.adm-perm-modal h3 { margin-bottom:8px; }
+.adm-perm-modal p { color:var(--gray-500); font-size:.92rem; margin-bottom:22px; }
+.adm-perm-later { margin-top:10px; padding:8px 14px; color:var(--gray-500); font-size:.88rem; font-weight:600; border-radius:var(--radius-pill); }
+.adm-perm-later:hover { background:var(--gray-100); }
+@media (max-width:600px) {
+  .adm-perm-banner { flex-wrap:wrap; }
+  .adm-perm-banner .adm-perm-allow { order:3; width:100%; justify-content:center; }
+  .adm-perm-overlay { align-items:flex-end; padding:0; }
+  .adm-perm-modal { max-width:100%; border-radius:22px 22px 0 0; padding-bottom:calc(22px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* Dashboard visitor cards + compact top bar on phones */
+.adm-visitor-cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-bottom:24px; }
+@media (max-width:900px) { .adm-visitor-cards { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:600px) {
+  .adm-topbar-title { font-size:.98rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
+  .adm-topbar > div:first-child { min-width:0; }
+  .adm-topbar-right { gap:8px; flex-shrink:0; }
+  .adm-hide-sm { display:none; }
+  .adm-topbar-right .btn { padding:9px 11px; }
+}

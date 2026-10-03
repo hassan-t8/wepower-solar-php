@@ -6,6 +6,7 @@
  */
 require_once __DIR__ . '/../../includes/auth.php';
 require_once __DIR__ . '/../../includes/settings.php';
+require_once __DIR__ . '/../../includes/notifications.php';
 requireAdminPage();
 
 $admin = currentAdmin();
@@ -56,6 +57,10 @@ function admLink(array $n, string $active): void {
 <link rel="stylesheet" href="<?= h(asset('/assets/css/global.css')) ?>">
 <link rel="stylesheet" href="<?= h(asset('/assets/css/admin.css')) ?>">
 <link rel="stylesheet" href="<?= h(asset('/assets/css/toast.css')) ?>">
+<script>
+  // Push setup for this browser (push-register.js); public values only.
+  window.ADM_PUSH = <?= json_encode(['configured' => isPushConfigured(), 'firebase' => firebaseWebConfig()], JSON_UNESCAPED_SLASHES) ?>;
+</script>
 </head>
 <body>
 
@@ -113,7 +118,7 @@ function admLink(array $n, string $active): void {
           </div>
         </div>
         <a href="/index.php" target="_blank" rel="noreferrer" class="btn btn-outline btn-sm" style="font-size:.8rem">
-          <i class="bi bi-box-arrow-up-right"></i> View Site
+          <i class="bi bi-box-arrow-up-right"></i><span class="adm-hide-sm">View Site</span>
         </a>
       </div>
     </header>
