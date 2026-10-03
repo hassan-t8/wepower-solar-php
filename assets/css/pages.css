@@ -4,7 +4,7 @@
 
 /* Page hero */
 .pg-hero {
-  padding:140px 0 72px;
+  padding:140px 0 52px;
   background:linear-gradient(135deg,var(--dark) 0%,var(--dark-2) 60%,#0d2d1a 100%);
   text-align:center; position:relative; overflow:hidden;
 }
@@ -194,7 +194,7 @@
 }
 
 /* Services detail page */
-.svc-detail { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; padding:72px 0; border-bottom:1px solid var(--gray-100); }
+.svc-detail { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; padding:48px 0; border-bottom:1px solid var(--gray-100); }
 .svc-detail:last-child { border-bottom:none; }
 .svc-detail:nth-child(even) .svc-detail-img { order:1; }
 .svc-detail:nth-child(even) .svc-detail-txt { order:0; }

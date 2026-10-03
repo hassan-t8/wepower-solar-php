@@ -1,5 +1,5 @@
 /* ============ TEMPLATE 1 — AURORA ============ */
-.t1-hero { position:relative; padding:140px 0 90px; overflow:hidden; background:linear-gradient(180deg,var(--green-50),#fff 70%); }
+.t1-hero { position:relative; padding:140px 0 56px; overflow:hidden; background:linear-gradient(180deg,var(--green-50),#fff 70%); }
 .t1-mesh {
   position:absolute; inset:0; opacity:.7; pointer-events:none;
   background:
@@ -56,7 +56,7 @@
 .t1-apply { display:inline-flex; align-items:center; gap:8px; font-weight:600; color:var(--green-700); font-size:.95rem; transition:gap .2s var(--ease); }
 .t1-apply:hover { gap:13px; }
 
-.t1-stats { padding:64px 0; background:linear-gradient(120deg,var(--green-700),var(--green-600)); }
+.t1-stats { padding:52px 0; background:linear-gradient(120deg,var(--green-700),var(--green-600)); }
 .t1-stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center; }
 .t1-stat-num { font-size:2.8rem; font-weight:800; color:#fff; font-family:'Sora',sans-serif; }
 .t1-stat-label { color:rgba(255,255,255,.85); font-weight:500; }
@@ -75,7 +75,7 @@
 .t1-product h4 { font-size:1.08rem; margin-bottom:7px; }
 .t1-product p { font-size:.89rem; color:var(--gray-500); }
 
-.t1-cta { padding:30px 0 96px; }
+.t1-cta { padding:8px 0 64px; }
 .t1-cta-box { position:relative; overflow:hidden; text-align:center; padding:70px 40px; border-radius:var(--radius-xl); background:linear-gradient(130deg,var(--dark),var(--green-800)); box-shadow:var(--shadow-xl); }
 .t1-cta-box h2 { color:#fff; max-width:680px; margin:0 auto 14px; }
 .t1-cta-box p { color:rgba(255,255,255,.82); max-width:560px; margin:0 auto 30px; }
