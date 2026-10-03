@@ -1,4 +1,4 @@
-name: Deploy to Hostinger
+name: Deploy (Hostinger + VPS)
 
 # Runs on every push to main — SSHes into Hostinger and runs ~/deploy-wepower.sh,
 # which pulls main and syncs it into the live site. The script never touches
@@ -16,7 +16,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy over SSH
+      - name: Deploy to Hostinger (old host, until the domain switch)
         env:
           SSH_KEY: ${{ secrets.WEPOWER }}
         run: |
@@ -31,3 +31,15 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p 65002 194.36.184.188 >> ~/.ssh/known_hosts
           ssh -p 65002 u467613868@194.36.184.188 'bash ~/deploy-wepower.sh'
+
+      # New Contabo VPS (wepowerenergysolutions.com). The key in VPS_DEPLOY_KEY
+      # is restricted on the server to running ~/deploy-wepower.sh only.
+      - name: Deploy to VPS
+        env:
+          SSH_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" | tr -d '\r' > ~/.ssh/vps_deploy
+          chmod 600 ~/.ssh/vps_deploy
+          ssh-keyscan -H 185.211.6.213 >> ~/.ssh/known_hosts 2>/dev/null
+          ssh -i ~/.ssh/vps_deploy deploy@185.211.6.213 deploy
