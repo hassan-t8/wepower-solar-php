@@ -12,12 +12,24 @@
     return d.innerHTML;
   }
 
-  fetch('/admin/api/stats.php', { credentials: 'include' })
-    .then((r) => r.json())
-    .then(renderDashboard)
-    .catch(() => {
-      document.getElementById('admLoading').innerHTML = '<div style="color:#dc2626">Failed to load dashboard data.</div>';
-    });
+  let chart = null;
+
+  function load(silent) {
+    return fetch('/admin/api/stats.php', { credentials: 'include', cache: 'no-store' })
+      .then((r) => r.json())
+      .then(renderDashboard)
+      .catch(() => {
+        if (!silent) document.getElementById('admLoading').innerHTML = '<div style="color:#dc2626">Failed to load dashboard data.</div>';
+      });
+  }
+  load(false);
+
+  // Live updates (admin-common.js): refresh the numbers in place when anything new arrives.
+  let liveTimer = null;
+  window.addEventListener('adm:live', () => {
+    clearTimeout(liveTimer);
+    liveTimer = setTimeout(() => load(true), 400); // coalesce bursts
+  });
 
   function renderDashboard(data) {
     document.getElementById('admLoading').hidden = true;
@@ -75,7 +87,8 @@
     const gradient = ctx.createLinearGradient(0, 0, 0, 220);
     gradient.addColorStop(0, 'rgba(34,197,94,.25)');
     gradient.addColorStop(1, 'rgba(34,197,94,0)');
-    new Chart(ctx, {
+    if (chart) chart.destroy();
+    chart = new Chart(ctx, {
       type: 'line',
       data: {
         labels,

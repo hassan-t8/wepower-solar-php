@@ -5,6 +5,7 @@
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/helpers.php';
 require_once __DIR__ . '/../includes/mailer.php';
+require_once __DIR__ . '/../includes/notifications.php';
 require_once __DIR__ . '/../config/site.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') jsonResponse(['error' => 'Method not allowed'], 405);
@@ -36,6 +37,8 @@ try {
         'INSERT INTO contacts (name, email, phone, subject, message) VALUES (?, ?, ?, ?, ?)',
         [$name, $email, $phone, $subject, $message]
     );
+
+    notifyAdmins('contacts', 'New message from ' . $name, mb_substr($message, 0, 140), $id);
 
     sendMail(
         getAdminRecipients(),

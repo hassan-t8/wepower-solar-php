@@ -10,6 +10,7 @@ $listHeaderCols = ['Name', 'Phone', 'Position', 'Experience', 'Education', 'Resu
 require __DIR__ . '/includes/list-page.php';
 ?>
 <script src="<?= h(asset('/assets/js/admin/list-table.js')) ?>"></script>
+<script src="<?= h(asset('/assets/js/admin/resume-viewer.js')) ?>"></script>
 <script>
 initAdminList({
   type: 'careers',
@@ -23,7 +24,10 @@ initAdminList({
     { render: (r, esc) => r.experience_years ? esc(r.experience_years) + ' yr' : '—' },
     { render: (r, esc) => `<span style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block">${esc(r.education || '—')}</span>` },
     { render: (r) => r.resume_filename
-        ? `<a class="adm-action-btn dl" href="/admin/api/resume-download.php?id=${r.id}" target="_blank" title="Download Resume"><i class="bi bi-file-earmark-arrow-down"></i></a>`
+        ? `<div class="adm-resume-btns">
+            <button type="button" class="adm-action-btn rv-open" title="View Resume" onclick="__viewResume(${r.id})"><i class="bi bi-file-earmark-text"></i></button>
+            <a class="adm-action-btn dl" href="/admin/api/resume-download.php?id=${r.id}" title="Download Resume"><i class="bi bi-file-earmark-arrow-down"></i></a>
+          </div>`
         : `<span style="color:var(--gray-300);font-size:.82rem">—</span>` },
   ],
   detailTitle: (r, esc) => esc(r.full_name),

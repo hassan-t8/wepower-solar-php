@@ -39,6 +39,8 @@ $companyName = setting('company_name', $brand['name']);
 // Visitor page-view tracking (public pages only — this file is never
 // included from api/*.php or admin/*, so no path filtering is needed).
 trackVisit($_SERVER['REQUEST_URI'] ?? '/');
+require_once __DIR__ . '/notifications.php';
+maybeNotifyDailyVisitors(); // first page view of the day posts yesterday's visitor count
 ?>
 <!DOCTYPE html>
 <html lang="<?= h($LANG_CODE) ?>" dir="<?= h($DIR) ?>">

@@ -20,21 +20,26 @@ $badgeCareers = countRows("SELECT COUNT(*) c FROM careers WHERE status = 'new'")
 
 $navMain = [['to' => 'dashboard.php', 'key' => 'dashboard', 'icon' => 'bi-grid-1x2', 'label' => 'Dashboard']];
 $navLeads = [
-    ['to' => 'applications.php', 'key' => 'applications', 'icon' => 'bi-lightning-charge', 'label' => 'Applications', 'badge' => $badgeApplications],
-    ['to' => 'contacts.php', 'key' => 'contacts', 'icon' => 'bi-envelope', 'label' => 'Contacts', 'badge' => $badgeContacts],
-    ['to' => 'bookings.php', 'key' => 'bookings', 'icon' => 'bi-calendar-check', 'label' => 'Bookings', 'badge' => $badgeBookings, 'badgeRed' => true],
-    ['to' => 'careers.php', 'key' => 'careers', 'icon' => 'bi-briefcase', 'label' => 'Careers', 'badge' => $badgeCareers],
+    ['to' => 'applications.php', 'key' => 'applications', 'icon' => 'bi-lightning-charge', 'label' => 'Applications', 'badge' => $badgeApplications, 'badgeKey' => 'applications'],
+    ['to' => 'contacts.php', 'key' => 'contacts', 'icon' => 'bi-envelope', 'label' => 'Contacts', 'badge' => $badgeContacts, 'badgeKey' => 'contacts'],
+    ['to' => 'bookings.php', 'key' => 'bookings', 'icon' => 'bi-calendar-check', 'label' => 'Bookings', 'badge' => $badgeBookings, 'badgeRed' => true, 'badgeKey' => 'bookings'],
+    ['to' => 'careers.php', 'key' => 'careers', 'icon' => 'bi-briefcase', 'label' => 'Careers', 'badge' => $badgeCareers, 'badgeKey' => 'careers'],
     ['to' => 'jobs.php', 'key' => 'jobs', 'icon' => 'bi-person-lines-fill', 'label' => 'Job Postings'],
     ['to' => 'calculations.php', 'key' => 'calculations', 'icon' => 'bi-calculator', 'label' => 'Calculations'],
 ];
-$navSystem = [['to' => 'settings.php', 'key' => 'settings', 'icon' => 'bi-gear', 'label' => 'Settings']];
+$navSystem = [
+    ['to' => 'notifications.php', 'key' => 'notifications', 'icon' => 'bi-bell', 'label' => 'Notifications'],
+    ['to' => 'settings.php', 'key' => 'settings', 'icon' => 'bi-gear', 'label' => 'Settings'],
+];
 
 function admLink(array $n, string $active): void {
     $isActive = $n['key'] === $active;
     echo '<a href="' . h($n['to']) . '" class="adm-link ' . ($isActive ? 'active' : '') . '">';
     echo '<i class="bi ' . h($n['icon']) . '"></i>' . h($n['label']);
-    if (!empty($n['badge'])) {
-        echo '<span class="badge ' . (!empty($n['badgeRed']) ? 'badge-red' : '') . '">' . (int)$n['badge'] . '</span>';
+    // Badges with a badgeKey are always rendered (hidden at 0) so the live updater can change them.
+    if (!empty($n['badgeKey'])) {
+        echo '<span class="badge ' . (!empty($n['badgeRed']) ? 'badge-red' : '') . '" data-badge="' . h($n['badgeKey']) . '"'
+            . (empty($n['badge']) ? ' hidden' : '') . '>' . (int)$n['badge'] . '</span>';
     }
     echo '</a>';
 }
@@ -94,6 +99,19 @@ function admLink(array $n, string $active): void {
         <div class="adm-topbar-title">WePower Solar — Admin</div>
       </div>
       <div class="adm-topbar-right">
+        <div class="adm-bell-wrap">
+          <button type="button" class="adm-bell" id="admBellBtn" aria-label="Notifications" aria-expanded="false">
+            <i class="bi bi-bell"></i><span class="adm-bell-count" id="admBellCount" hidden>0</span>
+          </button>
+          <div class="adm-bell-panel" id="admBellPanel" hidden>
+            <div class="adm-bell-head">
+              <strong>Notifications</strong>
+              <span class="adm-live-dot" id="admLiveDot" title="Live updates"><i></i> Live</span>
+            </div>
+            <div class="adm-bell-list" id="admBellList"><div class="adm-bell-empty">No notifications yet</div></div>
+            <a class="adm-bell-foot" href="notifications.php"><i class="bi bi-sliders"></i> Notification settings</a>
+          </div>
+        </div>
         <a href="/index.php" target="_blank" rel="noreferrer" class="btn btn-outline btn-sm" style="font-size:.8rem">
           <i class="bi bi-box-arrow-up-right"></i> View Site
         </a>

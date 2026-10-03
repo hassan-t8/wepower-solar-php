@@ -5,6 +5,7 @@
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/helpers.php';
 require_once __DIR__ . '/../includes/mailer.php';
+require_once __DIR__ . '/../includes/notifications.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') jsonResponse(['error' => 'Method not allowed'], 405);
 checkFormRateLimit('calculator');
@@ -39,6 +40,8 @@ try {
         'INSERT INTO load_calculations (name, email, phone, city, property_type, num_people, appliances_json, total_load_w, recommended_kva, estimated_bill) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
         [$name, $email, $phone, $city, $propertyType, $numPeople, json_encode($appliances), $totalLoadW, $recommendedKva, $estimatedBill]
     );
+
+    notifyAdmins('calculations', 'Load calculation saved' . ($name ? ': ' . $name : ''), $recommendedKva . ' kVA recommended' . ($phone ? ' · ' . $phone : ''), $id);
 
     $applianceRows = '';
     foreach ($appliances as $a) {

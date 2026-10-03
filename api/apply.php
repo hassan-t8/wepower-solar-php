@@ -6,6 +6,7 @@
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/helpers.php';
 require_once __DIR__ . '/../includes/mailer.php';
+require_once __DIR__ . '/../includes/notifications.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') jsonResponse(['error' => 'Method not allowed'], 405);
 checkFormRateLimit('apply');
@@ -36,6 +37,8 @@ try {
         'INSERT INTO applications (name, email, phone, city, property_type, service_type, notes) VALUES (?, ?, ?, ?, ?, ?, ?)',
         [$name, $email, $phone, $city, $propertyType, $serviceType, $notes]
     );
+
+    notifyAdmins('applications', 'New quote request: ' . $name, trim(($serviceType ?: 'Solar quote') . ($city ? ' · ' . $city : '') . ' · ' . $phone), $id);
 
     sendMail(
         getAdminRecipients(),

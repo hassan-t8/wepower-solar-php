@@ -130,7 +130,7 @@ function initAdminList(config) {
       const cells = config.columns.map((col) => `<td>${col.render(row, esc)}</td>`).join('');
       const statusCell = config.statuses ? `<td>${statusSelectHtml(row)}</td>` : '';
       const dateCell = `<td style="color:var(--gray-400);font-size:.82rem;white-space:nowrap">${fmtDate(row.created_at, false)}</td>`;
-      return `<tr>
+      return `<tr data-row-id="${esc(row.id)}">
         <td style="color:var(--gray-400);font-weight:600">#${row.id}</td>
         ${cells}${statusCell}${dateCell}
         <td><div style="display:flex;gap:6px">
@@ -154,7 +154,10 @@ function initAdminList(config) {
     const statusButtons = config.statuses ? `
       <div class="adm-modal-actions">
         ${config.statuses.map((s) => `<button class="btn btn-sm ${row.status === s ? 'btn-primary' : 'btn-outline'}" style="font-size:.82rem" onclick="__admStatus_${config.type}(${row.id}, '${s}')">${cap(s)}</button>`).join('')}
-        ${config.resumeDownload && row.resume_filename ? `<a class="btn btn-sm btn-outline" style="margin-left:auto;font-size:.82rem" href="/admin/api/resume-download.php?id=${row.id}" target="_blank"><i class="bi bi-download"></i> Resume</a>` : `<button class="btn btn-sm" style="background:#fef2f2;color:#dc2626;margin-left:auto" onclick="__admDel_${config.type}(${row.id})"><i class="bi bi-trash"></i> Delete</button>`}
+        ${config.resumeDownload && row.resume_filename ? `<span style="margin-left:auto;display:flex;gap:8px">
+          <button class="btn btn-sm btn-primary" style="font-size:.82rem" onclick="__viewResume(${row.id})"><i class="bi bi-eye"></i> View Resume</button>
+          <a class="btn btn-sm btn-outline" style="font-size:.82rem" href="/admin/api/resume-download.php?id=${row.id}"><i class="bi bi-download"></i> Download</a>
+        </span>` : `<button class="btn btn-sm" style="background:#fef2f2;color:#dc2626;margin-left:auto" onclick="__admDel_${config.type}(${row.id})"><i class="bi bi-trash"></i> Delete</button>`}
       </div>` : '';
 
     modalBody.innerHTML = `
@@ -168,10 +171,40 @@ function initAdminList(config) {
   }
   window['__admView_' + config.type] = openModal;
 
-  rows.__loading = true;
-  render();
-  fetch('/admin/api/list.php?type=' + encodeURIComponent(config.type), { credentials: 'include' })
-    .then((r) => r.json())
-    .then((data) => { rows = Array.isArray(data) ? data : []; render(); })
-    .catch(() => { rows = []; render(); });
+  // Resume viewer (careers page loads resume-viewer.js)
+  window.__viewResume = (id) => {
+    const row = rows.find((r) => sameId(r.id, id));
+    if (row && window.openResumeViewer) {
+      window.openResumeViewer({ id: row.id, name: row.full_name, filename: row.resume_filename });
+    }
+  };
+
+  let freshIds = new Set();
+  function load(silent) {
+    if (!silent) { rows.__loading = true; render(); }
+    return fetch('/admin/api/list.php?type=' + encodeURIComponent(config.type), { credentials: 'include', cache: 'no-store' })
+      .then((r) => r.json())
+      .then((data) => {
+        const next = Array.isArray(data) ? data : [];
+        if (silent) {
+          const known = new Set(rows.map((r) => String(r.id)));
+          freshIds = new Set(next.filter((r) => !known.has(String(r.id))).map((r) => String(r.id)));
+        }
+        rows = next;
+        render();
+        freshIds.forEach((id) => {
+          const tr = tbody.querySelector(`[data-row-id="${id}"]`);
+          if (tr) tr.classList.add('adm-row-new');
+        });
+      })
+      .catch(() => { if (!silent) { rows = []; render(); } });
+  }
+
+  // Live updates (admin-common.js): reload in place when a matching record arrives.
+  const LIVE_TYPE = { load_calculations: 'calculations' }[config.type] || config.type;
+  window.addEventListener('adm:live', (e) => {
+    if (e.detail.types.includes(LIVE_TYPE)) load(true);
+  });
+
+  load(false);
 }

@@ -6,6 +6,7 @@
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/helpers.php';
 require_once __DIR__ . '/../includes/mailer.php';
+require_once __DIR__ . '/../includes/notifications.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') jsonResponse(['error' => 'Method not allowed'], 405);
 checkFormRateLimit('careers');
@@ -49,6 +50,8 @@ try {
         'INSERT INTO careers (full_name, email, phone, position, experience_years, education, cover_letter, resume_filename) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
         [$fullName, $email, $phone, $position, $experienceYears, $education, $coverLetter, $resumeFile]
     );
+
+    notifyAdmins('careers', 'New job application: ' . $fullName, $position . ($resumeFile ? ' · resume attached' : '') . ' · ' . $phone, $id);
 
     sendMail(
         getAdminRecipients(),

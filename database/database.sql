@@ -160,6 +160,36 @@ CREATE TABLE IF NOT EXISTS form_submissions (
   INDEX idx_form_submissions_ip_time (ip, submitted_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Admin notifications (also auto-created on first use by includes/notifications.php)
+CREATE TABLE IF NOT EXISTS admin_notifications (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  type VARCHAR(30) NOT NULL,
+  title VARCHAR(200) NOT NULL,
+  body VARCHAR(500),
+  url VARCHAR(255),
+  ref_id INT UNSIGNED,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_admin_notifications_type (type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS notification_prefs (
+  admin_id INT UNSIGNED NOT NULL,
+  type VARCHAR(30) NOT NULL,
+  enabled TINYINT(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (admin_id, type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  admin_id INT UNSIGNED NOT NULL,
+  endpoint VARCHAR(500) NOT NULL,
+  keys_json TEXT,
+  user_agent VARCHAR(255),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_push_endpoint (endpoint(191)),
+  INDEX idx_push_admin (admin_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- =================================================================
 -- SEED DATA
 -- =================================================================
