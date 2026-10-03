@@ -554,3 +554,5 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
 .adm-perm-banner.waiting { background:#eff6ff; border-color:#bfdbfe; }
 .adm-perm-banner.waiting > i { color:#2563eb; }
 .adm-perm-banner span .bi { font-size:.85em; }
+.ntf-lastpush { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.84rem; color:var(--gray-600); margin:-6px 0 16px; }
+.ntf-lastpush > i { color:var(--green-600); }

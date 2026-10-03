@@ -29,12 +29,28 @@ self.addEventListener('push', (event) => {
       } catch (e) { /* offline or logged out */ }
     }
     data = data || { title: 'WePower Admin', body: 'You have a new notification.', url: '/admin/dashboard.php' };
-    await self.registration.showNotification(data.title, {
-      body: data.body || '',
-      icon: '/assets/images/favicon.svg',
-      tag: data.id ? 'wepower-' + data.id : undefined,
-      data: { url: data.url || '/admin/dashboard.php' },
-    });
+    let shown = false;
+    let error = '';
+    try {
+      await self.registration.showNotification(data.title, {
+        body: data.body || '',
+        icon: '/assets/images/logo.png', // PNG: some OS notification centres can't render SVG icons
+        badge: '/assets/images/logo.png',
+        tag: data.id ? 'wepower-' + data.id : undefined,
+        requireInteraction: false,
+        data: { url: data.url || '/admin/dashboard.php' },
+      });
+      shown = true;
+    } catch (e) {
+      error = String(e && e.message || e);
+    }
+    // Delivery receipt, so the admin panel can tell "never arrived" from "arrived but OS hid it".
+    try {
+      await fetch('/api/push-ack.php', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: data.title, shown, error }),
+      });
+    } catch (e) { /* offline */ }
   })());
 });
 

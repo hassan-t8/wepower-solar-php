@@ -70,5 +70,10 @@
     try { await register(); } catch (e) { /* silent: the Notifications page shows errors on demand */ }
   }
 
+  // Pick up a new /admin/sw.js promptly after each deploy.
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistration('/admin/').then((r) => r && r.update()).catch(() => {});
+  }
+
   window.AdmPush = { configured: cfg.configured, canRegister: cfg.canRegister, supported, register, autoRegister };
 })();

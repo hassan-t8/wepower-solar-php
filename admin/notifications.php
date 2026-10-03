@@ -11,6 +11,7 @@ $pushEnabled = getSetting('push_enabled') === 'true';
 $fb = firebaseWebConfig();
 $serviceAccount = fcmServiceAccount();
 $myDevices = countRows('SELECT COUNT(*) c FROM push_subscriptions WHERE admin_id = ?', [(int) $admin['id']]);
+$lastPush = json_decode((string) getSetting('push_last_received'), true);
 $pushState = $pushConfigured ? ['ok', 'Active'] : ($serviceAccount ? ['warn', 'Switched off'] : ['warn', 'Needs service account']);
 $recent = fetchAll('SELECT type, title, body, url, created_at FROM admin_notifications ORDER BY id DESC LIMIT 30');
 ?>
@@ -55,6 +56,16 @@ $recent = fetchAll('SELECT type, title, body, url, created_at FROM admin_notific
   </h4>
   <p>Delivers alerts to your phone or computer even when the admin panel isn't open, via Firebase Cloud Messaging.
     Your devices registered: <strong id="pushDeviceCount"><?= (int) $myDevices ?></strong></p>
+  <p class="ntf-lastpush">
+    <i class="bi bi-broadcast"></i>
+    <?php if ($lastPush): ?>
+      Last push received by a browser: <strong data-time="<?= h($lastPush['at']) ?>"><?= h($lastPush['at']) ?></strong>
+      — “<?= h($lastPush['title']) ?>”
+      <?= $lastPush['shown'] ? '<span class="ntf-status ok">shown</span>' : '<span class="ntf-status warn">not shown: ' . h($lastPush['error']) . '</span>' ?>
+    <?php else: ?>
+      No push has reached a browser yet.
+    <?php endif; ?>
+  </p>
 
   <form id="pushConfigForm" autocomplete="off"
         data-firebase='<?= h(json_encode($fb, JSON_UNESCAPED_SLASHES)) ?>'>

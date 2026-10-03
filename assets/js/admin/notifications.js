@@ -62,7 +62,7 @@
   toggle.addEventListener('change', () => { store.set('admDesktopNotif', toggle.checked ? 'on' : 'off'); renderDesktop(); });
   testBtn.addEventListener('click', () => {
     if (supported && Notification.permission === 'granted' && store.get('admDesktopNotif') !== 'off') {
-      new Notification('WePower test alert', { body: 'Desktop alerts are working on this device.', icon: '/assets/images/favicon.svg' });
+      new Notification('WePower test alert', { body: 'Desktop alerts are working on this device.', icon: '/assets/images/logo.png' });
     } else {
       showToast('Test: alerts appear like this while desktop alerts are off or not allowed.', 'info');
     }

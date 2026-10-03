@@ -109,7 +109,7 @@
     if (prefs[e.type] === false) return;
     const wantDesktop = store.get('admDesktopNotif') !== 'off';
     if (document.hidden && wantDesktop && 'Notification' in window && Notification.permission === 'granted') {
-      const n = new Notification(e.title, { body: e.body || '', tag: 'wepower-' + e.id, icon: '/assets/images/favicon.svg' });
+      const n = new Notification(e.title, { body: e.body || '', tag: 'wepower-' + e.id, icon: '/assets/images/logo.png' });
       n.onclick = () => { window.focus(); if (e.url) window.location.href = e.url; n.close(); };
     } else if (window.showToast) {
       showToast(e.title + (e.body ? ' — ' + e.body : ''), 'info');
