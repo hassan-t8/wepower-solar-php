@@ -25,6 +25,17 @@ Options -Indexes
 
     # /sitemap.xml -> sitemap.xml.php (keeps the URL clean for crawlers)
     RewriteRule ^sitemap\.xml$ sitemap.xml.php [L]
+
+    # Clean URLs: /about serves about.php; old /about.php links redirect to /about
+    # (GET only, never API endpoints, so form POSTs are untouched)
+    RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$
+    RewriteCond %{THE_REQUEST} \s/+((?!api/|admin/api/)[^?\s]*?)(?:index)?\.php[\s?]
+    RewriteCond %{REQUEST_URI} !sw\.php$
+    RewriteRule ^ /%1 [R=301,L,NE,QSA]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^(.+?)/?$ $1.php [L]
 </IfModule>
 
 # Hide PHP version / server signature where the host allows it

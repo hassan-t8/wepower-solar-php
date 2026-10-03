@@ -9,7 +9,7 @@ require_once __DIR__ . '/includes/header.php';
 <section class="pg-hero">
   <div class="container pg-hero-inner">
     <div class="pg-breadcrumb">
-      <a href="/index.php"><?= h(t('common.home')) ?></a><i class="bi bi-chevron-right"></i><span><?= h(t('calc.breadcrumb')) ?></span>
+      <a href="/"><?= h(t('common.home')) ?></a><i class="bi bi-chevron-right"></i><span><?= h(t('calc.breadcrumb')) ?></span>
     </div>
     <span class="tag"><?= h(t('calc.heroTag')) ?></span>
     <h1 class="display"><?= h(t('calc.heroTitle')) ?></h1>

@@ -357,7 +357,7 @@ function initAdminList(config) {
     if (e.detail.types.includes(LIVE_TYPE)) load(true);
   });
 
-  // Deep link: <page>.php?open=<id> (dashboard rows, bell items, push notifications)
+  // Deep link: /admin/<page>?open=<id> (dashboard rows, bell items, push notifications)
   const openId = new URLSearchParams(window.location.search).get('open');
   load(false).then(() => {
     if (!openId) return;

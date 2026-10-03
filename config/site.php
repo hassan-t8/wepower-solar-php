@@ -55,12 +55,12 @@ $roadmap = [
 ];
 
 $nav = [
-    ['label' => 'Home', 'to' => '/index.php'],
-    ['label' => 'About', 'to' => '/about.php'],
-    ['label' => 'Services', 'to' => '/services.php'],
-    ['label' => 'Load Calculator', 'to' => '/load-calculator.php'],
-    ['label' => 'Careers', 'to' => '/careers.php'],
-    ['label' => 'Contact', 'to' => '/contact.php'],
+    ['label' => 'Home', 'to' => '/'],
+    ['label' => 'About', 'to' => '/about'],
+    ['label' => 'Services', 'to' => '/services'],
+    ['label' => 'Load Calculator', 'to' => '/load-calculator'],
+    ['label' => 'Careers', 'to' => '/careers'],
+    ['label' => 'Contact', 'to' => '/contact'],
 ];
 
 $heroStats = [

@@ -9,12 +9,12 @@ header('Content-Type: application/xml; charset=utf-8');
 
 $siteUrl = rtrim(SITE_URL, '/');
 $pages = [
-    ['loc' => '/index.php', 'priority' => '1.0'],
-    ['loc' => '/about.php', 'priority' => '0.8'],
-    ['loc' => '/services.php', 'priority' => '0.9'],
-    ['loc' => '/load-calculator.php', 'priority' => '0.8'],
-    ['loc' => '/careers.php', 'priority' => '0.6'],
-    ['loc' => '/contact.php', 'priority' => '0.7'],
+    ['loc' => '/', 'priority' => '1.0'],
+    ['loc' => '/about', 'priority' => '0.8'],
+    ['loc' => '/services', 'priority' => '0.9'],
+    ['loc' => '/load-calculator', 'priority' => '0.8'],
+    ['loc' => '/careers', 'priority' => '0.6'],
+    ['loc' => '/contact', 'priority' => '0.7'],
 ];
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";

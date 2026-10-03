@@ -67,7 +67,7 @@ if ($schemaSameAs) $schema['sameAs'] = $schemaSameAs;
 
     <div class="ftr-col">
       <h5><?= h(t('footer.services')) ?></h5>
-      <ul><?php foreach (array_slice($services, 0, 5) as $s): ?><li><a href="/services.php#<?= h($s['id']) ?>"><?= h($s['title']) ?></a></li><?php endforeach; ?></ul>
+      <ul><?php foreach (array_slice($services, 0, 5) as $s): ?><li><a href="/services#<?= h($s['id']) ?>"><?= h($s['title']) ?></a></li><?php endforeach; ?></ul>
     </div>
 
     <div class="ftr-col">

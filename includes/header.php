@@ -88,14 +88,14 @@ maybeNotifyDailyVisitors(); // first page view of the day posts yesterday's visi
 
 <header class="hdr hdr-<?= h($headerVariant) ?>" id="siteHeader">
   <div class="container hdr-inner">
-    <a href="/index.php" class="hdr-logo">
+    <a href="/" class="hdr-logo">
       <img src="<?= h($logo) ?>" alt="<?= h($companyName) ?>">
     </a>
 
     <nav class="hdr-nav" id="hdrNav">
       <?php foreach ($nav as $n): ?>
         <?php
-          $isHome = $n['to'] === '/index.php';
+          $isHome = $n['to'] === '/';
           $currentPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
           $isActive = $isHome ? (basename($currentPath) === 'index.php' || $currentPath === '/') : (basename($currentPath) === basename($n['to']));
         ?>

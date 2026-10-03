@@ -20,4 +20,4 @@ logoutAdmin();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     jsonResponse(['success' => true]);
 }
-header('Location: /admin/login.php');
+header('Location: /admin/login');

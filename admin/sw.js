@@ -28,7 +28,7 @@ self.addEventListener('push', (event) => {
         data = (feed.events || []).slice(-1)[0] || null;
       } catch (e) { /* offline or logged out */ }
     }
-    data = data || { title: 'WePower Admin', body: 'You have a new notification.', url: '/admin/dashboard.php' };
+    data = data || { title: 'WePower Admin', body: 'You have a new notification.', url: '/admin/dashboard' };
     let shown = false;
     let error = '';
     try {
@@ -38,7 +38,7 @@ self.addEventListener('push', (event) => {
         badge: '/assets/images/logo.png',
         tag: data.id ? 'wepower-' + data.id : undefined,
         requireInteraction: false,
-        data: { url: data.url || '/admin/dashboard.php' },
+        data: { url: data.url || '/admin/dashboard' },
       });
       shown = true;
     } catch (e) {
@@ -56,7 +56,7 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const url = (event.notification.data && event.notification.data.url) || '/admin/dashboard.php';
+  const url = (event.notification.data && event.notification.data.url) || '/admin/dashboard';
   event.waitUntil((async () => {
     const wins = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
     for (const w of wins) {

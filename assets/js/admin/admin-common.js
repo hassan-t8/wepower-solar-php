@@ -21,7 +21,7 @@
       let pushToken = '';
       try { pushToken = localStorage.getItem('admPushToken') || ''; } catch (e) { /* ignore */ }
       try {
-        await fetch('/admin/logout.php', {
+        await fetch('/admin/logout', {
           method: 'POST', credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ push_token: pushToken }), // server unregisters this device
@@ -29,7 +29,7 @@
       } catch (e) { /* still leave the panel */ }
       // Forget this device's registration so the next login registers it again.
       try { localStorage.removeItem('admPushToken'); sessionStorage.removeItem('admPushRegistered'); } catch (e) { /* ignore */ }
-      window.location.href = '/admin/login.php';
+      window.location.href = '/admin/login';
     });
   }
 })();

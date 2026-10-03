@@ -33,7 +33,7 @@ function isAdminLoggedIn(): bool
 function requireAdminPage(): void
 {
     if (!isAdminLoggedIn()) {
-        header('Location: /admin/login.php');
+        header('Location: /admin/login');
         exit;
     }
 }

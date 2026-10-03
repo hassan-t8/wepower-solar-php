@@ -18,12 +18,12 @@ require_once __DIR__ . '/settings.php';
 
 /** Notification types an admin can switch on/off. key => [label, description, icon, admin page]. */
 const NOTIFY_TYPES = [
-    'applications' => ['Quote / Service Applications', '"Get a Quote" and service requests from the website.', 'bi-lightning-charge', '/admin/applications.php'],
-    'careers'      => ['Career Applications', 'Job applications from the Careers page.', 'bi-briefcase', '/admin/careers.php'],
-    'contacts'     => ['Contact Messages', 'Messages sent from the Contact page.', 'bi-envelope', '/admin/contacts.php'],
-    'bookings'     => ['Site Survey Bookings', 'Free consultation / site survey bookings.', 'bi-calendar-check', '/admin/bookings.php'],
-    'calculations' => ['Load Calculator Results', 'Visitors who saved load-calculator results for a quote.', 'bi-calculator', '/admin/calculations.php'],
-    'visitors'     => ['Daily Visitor Summary', 'Once a day: how many people visited the website yesterday.', 'bi-graph-up-arrow', '/admin/dashboard.php'],
+    'applications' => ['Quote / Service Applications', '"Get a Quote" and service requests from the website.', 'bi-lightning-charge', '/admin/applications'],
+    'careers'      => ['Career Applications', 'Job applications from the Careers page.', 'bi-briefcase', '/admin/careers'],
+    'contacts'     => ['Contact Messages', 'Messages sent from the Contact page.', 'bi-envelope', '/admin/contacts'],
+    'bookings'     => ['Site Survey Bookings', 'Free consultation / site survey bookings.', 'bi-calendar-check', '/admin/bookings'],
+    'calculations' => ['Load Calculator Results', 'Visitors who saved load-calculator results for a quote.', 'bi-calculator', '/admin/calculations'],
+    'visitors'     => ['Daily Visitor Summary', 'Once a day: how many people visited the website yesterday.', 'bi-graph-up-arrow', '/admin/dashboard'],
 ];
 
 const NOTIFY_SCHEMA_VERSION = '1';
@@ -95,7 +95,7 @@ function notifyAdmins(string $type, string $title, string $body = '', ?int $refI
 {
     try {
         ensureNotificationSchema();
-        $url = NOTIFY_TYPES[$type][3] ?? '/admin/dashboard.php';
+        $url = NOTIFY_TYPES[$type][3] ?? '/admin/dashboard';
         if ($refId && $type !== 'visitors') $url .= '?open=' . $refId; // opens that record's detail view
         $id = insertGetId(
             'INSERT INTO admin_notifications (type, title, body, url, ref_id) VALUES (?, ?, ?, ?, ?)',
@@ -233,7 +233,7 @@ function deliverPush(array $subscription, array $payload): array
     foreach (['id', 'type', 'title', 'body', 'url'] as $k) {
         $data[$k] = (string) ($payload[$k] ?? ''); // FCM data values must be strings
     }
-    $absolute = rtrim(defined('SITE_URL') ? SITE_URL : '', '/') . ($data['url'] ?: '/admin/dashboard.php');
+    $absolute = rtrim(defined('SITE_URL') ? SITE_URL : '', '/') . ($data['url'] ?: '/admin/dashboard');
 
     $webpush = ['headers' => ['Urgency' => 'high', 'TTL' => '86400']];
     if (preg_match('#^https://#', $absolute)) $webpush['fcm_options'] = ['link' => $absolute];

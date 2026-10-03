@@ -42,7 +42,7 @@ require_once __DIR__ . '/includes/admin-header.php';
   <div class="adm-table-card">
     <div class="adm-table-header">
       <div class="adm-table-title">Recent Applications</div>
-      <a href="applications.php" class="btn btn-outline btn-sm" style="font-size:.8rem">View All</a>
+      <a href="applications" class="btn btn-outline btn-sm" style="font-size:.8rem">View All</a>
     </div>
     <div class="adm-table-wrap">
       <table class="adm-table">

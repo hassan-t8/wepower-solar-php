@@ -54,10 +54,10 @@
 
     // ---- Lead stat cards ----
     const statCards = [
-      { label: 'Applications', value: stats.applications.total, badge: `${stats.applications.new} new`, ico: 'bi-lightning-charge', color: 'green', to: 'applications.php' },
-      { label: 'Contacts', value: stats.contacts.total, badge: `${stats.contacts.new} new`, ico: 'bi-envelope', color: 'blue', to: 'contacts.php' },
-      { label: 'Bookings', value: stats.bookings.total, badge: `${stats.bookings.pending} pending`, ico: 'bi-calendar-check', color: 'amber', to: 'bookings.php' },
-      { label: 'Careers', value: stats.careers.total, badge: `${stats.careers.new} new`, ico: 'bi-briefcase', color: 'rose', to: 'careers.php' },
+      { label: 'Applications', value: stats.applications.total, badge: `${stats.applications.new} new`, ico: 'bi-lightning-charge', color: 'green', to: 'applications' },
+      { label: 'Contacts', value: stats.contacts.total, badge: `${stats.contacts.new} new`, ico: 'bi-envelope', color: 'blue', to: 'contacts' },
+      { label: 'Bookings', value: stats.bookings.total, badge: `${stats.bookings.pending} pending`, ico: 'bi-calendar-check', color: 'amber', to: 'bookings' },
+      { label: 'Careers', value: stats.careers.total, badge: `${stats.careers.new} new`, ico: 'bi-briefcase', color: 'rose', to: 'careers' },
     ];
     document.getElementById('statCards').innerHTML = statCards.map((c) => `
       <a href="${c.to}" style="text-decoration:none">
@@ -166,7 +166,7 @@
       // Each row opens that application's detail view on the Applications page.
       tbody.innerHTML = recentApplications.map((a) => {
         const d = new Date(String(a.created_at).replace(' ', 'T') + 'Z'); // DB times are UTC
-        const href = 'applications.php?open=' + encodeURIComponent(a.id);
+        const href = 'applications?open=' + encodeURIComponent(a.id);
         return `
         <tr class="adm-row-link" data-href="${href}" tabindex="0" title="Open application #${esc(a.id)}">
           <td style="color:var(--gray-400);font-weight:600">#${esc(a.id)}</td>

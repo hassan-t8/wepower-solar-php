@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/auth.php';
-if (isAdminLoggedIn()) { header('Location: /admin/dashboard.php'); exit; }
+if (isAdminLoggedIn()) { header('Location: /admin/dashboard'); exit; }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +63,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     });
     var data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Login failed');
-    window.location.href = '/admin/dashboard.php';
+    window.location.href = '/admin/dashboard';
   } catch (err) {
     errBox.hidden = false;
     errBox.querySelector('span').textContent = err.message;

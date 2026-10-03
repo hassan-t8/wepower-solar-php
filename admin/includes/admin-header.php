@@ -19,18 +19,18 @@ $badgeContacts = countRows("SELECT COUNT(*) c FROM contacts WHERE status = 'new'
 $badgeBookings = countRows("SELECT COUNT(*) c FROM bookings WHERE status = 'pending'");
 $badgeCareers = countRows("SELECT COUNT(*) c FROM careers WHERE status = 'new'");
 
-$navMain = [['to' => 'dashboard.php', 'key' => 'dashboard', 'icon' => 'bi-grid-1x2', 'label' => 'Dashboard']];
+$navMain = [['to' => 'dashboard', 'key' => 'dashboard', 'icon' => 'bi-grid-1x2', 'label' => 'Dashboard']];
 $navLeads = [
-    ['to' => 'applications.php', 'key' => 'applications', 'icon' => 'bi-lightning-charge', 'label' => 'Applications', 'badge' => $badgeApplications, 'badgeKey' => 'applications'],
-    ['to' => 'contacts.php', 'key' => 'contacts', 'icon' => 'bi-envelope', 'label' => 'Contacts', 'badge' => $badgeContacts, 'badgeKey' => 'contacts'],
-    ['to' => 'bookings.php', 'key' => 'bookings', 'icon' => 'bi-calendar-check', 'label' => 'Bookings', 'badge' => $badgeBookings, 'badgeRed' => true, 'badgeKey' => 'bookings'],
-    ['to' => 'careers.php', 'key' => 'careers', 'icon' => 'bi-briefcase', 'label' => 'Careers', 'badge' => $badgeCareers, 'badgeKey' => 'careers'],
-    ['to' => 'jobs.php', 'key' => 'jobs', 'icon' => 'bi-person-lines-fill', 'label' => 'Job Postings'],
-    ['to' => 'calculations.php', 'key' => 'calculations', 'icon' => 'bi-calculator', 'label' => 'Calculations'],
+    ['to' => 'applications', 'key' => 'applications', 'icon' => 'bi-lightning-charge', 'label' => 'Applications', 'badge' => $badgeApplications, 'badgeKey' => 'applications'],
+    ['to' => 'contacts', 'key' => 'contacts', 'icon' => 'bi-envelope', 'label' => 'Contacts', 'badge' => $badgeContacts, 'badgeKey' => 'contacts'],
+    ['to' => 'bookings', 'key' => 'bookings', 'icon' => 'bi-calendar-check', 'label' => 'Bookings', 'badge' => $badgeBookings, 'badgeRed' => true, 'badgeKey' => 'bookings'],
+    ['to' => 'careers', 'key' => 'careers', 'icon' => 'bi-briefcase', 'label' => 'Careers', 'badge' => $badgeCareers, 'badgeKey' => 'careers'],
+    ['to' => 'jobs', 'key' => 'jobs', 'icon' => 'bi-person-lines-fill', 'label' => 'Job Postings'],
+    ['to' => 'calculations', 'key' => 'calculations', 'icon' => 'bi-calculator', 'label' => 'Calculations'],
 ];
 $navSystem = [
-    ['to' => 'notifications.php', 'key' => 'notifications', 'icon' => 'bi-bell', 'label' => 'Notifications'],
-    ['to' => 'settings.php', 'key' => 'settings', 'icon' => 'bi-gear', 'label' => 'Settings'],
+    ['to' => 'notifications', 'key' => 'notifications', 'icon' => 'bi-bell', 'label' => 'Notifications'],
+    ['to' => 'settings', 'key' => 'settings', 'icon' => 'bi-gear', 'label' => 'Settings'],
 ];
 
 function admLink(array $n, string $active): void {
@@ -114,10 +114,10 @@ function admLink(array $n, string $active): void {
               <span class="adm-live-dot" id="admLiveDot" title="Live updates"><i></i> Live</span>
             </div>
             <div class="adm-bell-list" id="admBellList"><div class="adm-bell-empty">No notifications yet</div></div>
-            <a class="adm-bell-foot" href="notifications.php"><i class="bi bi-sliders"></i> Notification settings</a>
+            <a class="adm-bell-foot" href="notifications"><i class="bi bi-sliders"></i> Notification settings</a>
           </div>
         </div>
-        <a href="/index.php" target="_blank" rel="noreferrer" class="btn btn-outline btn-sm" style="font-size:.8rem">
+        <a href="/" target="_blank" rel="noreferrer" class="btn btn-outline btn-sm" style="font-size:.8rem">
           <i class="bi bi-box-arrow-up-right"></i><span class="adm-hide-sm">View Site</span>
         </a>
       </div>

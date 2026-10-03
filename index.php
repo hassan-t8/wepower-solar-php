@@ -20,7 +20,7 @@ require_once __DIR__ . '/includes/header.php';
         <button type="button" class="btn btn-primary btn-lg" data-open-apply-modal>
           <i class="bi bi-lightning-charge-fill"></i> <?= h(t('common.getFreeQuote')) ?>
         </button>
-        <a href="/load-calculator.php" class="btn btn-outline btn-lg">
+        <a href="/load-calculator" class="btn btn-outline btn-lg">
           <i class="bi bi-calculator"></i> <?= h(t('common.calculateLoad')) ?>
         </a>
       </div>
@@ -62,7 +62,7 @@ require_once __DIR__ . '/includes/header.php';
           </div>
         <?php endforeach; ?>
       </div>
-      <a href="/about.php" class="btn btn-primary"><?= h(t('common.learnMore')) ?> <i class="bi bi-arrow-right"></i></a>
+      <a href="/about" class="btn btn-primary"><?= h(t('common.learnMore')) ?> <i class="bi bi-arrow-right"></i></a>
     </div>
     <div class="t1-why-img">
       <img src="/assets/images/who-we-are-solar.png" alt="Home solar">
@@ -151,7 +151,7 @@ require_once __DIR__ . '/includes/header.php';
       <p><?= h(t('home.ctaSub')) ?></p>
       <div class="t1-actions" style="justify-content:center">
         <button type="button" class="btn btn-white btn-lg" data-open-apply-modal><i class="bi bi-send"></i> <?= h(t('common.applyNow')) ?></button>
-        <a href="/contact.php" class="btn btn-ghost-light btn-lg"><i class="bi bi-telephone"></i> <?= h(t('common.talkToExpert')) ?></a>
+        <a href="/contact" class="btn btn-ghost-light btn-lg"><i class="bi bi-telephone"></i> <?= h(t('common.talkToExpert')) ?></a>
       </div>
     </div>
   </div>

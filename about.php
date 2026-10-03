@@ -8,7 +8,7 @@ require_once __DIR__ . '/includes/header.php';
 <section class="pg-hero">
   <div class="container pg-hero-inner">
     <div class="pg-breadcrumb">
-      <a href="/index.php"><?= h(t('common.home')) ?></a><i class="bi bi-chevron-right"></i><span><?= h(t('about.breadcrumb')) ?></span>
+      <a href="/"><?= h(t('common.home')) ?></a><i class="bi bi-chevron-right"></i><span><?= h(t('about.breadcrumb')) ?></span>
     </div>
     <span class="tag"><?= h(t('about.heroTag')) ?></span>
     <h1 class="display"><?= h(t('about.heroTitle')) ?></h1>
@@ -25,7 +25,7 @@ require_once __DIR__ . '/includes/header.php';
         <p class="muted" style="margin-bottom:20px"><?= h($company['who']) ?></p>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
           <button type="button" class="btn btn-primary" data-open-apply-modal><i class="bi bi-lightning-charge-fill"></i> <?= h(t('common.getFreeQuote')) ?></button>
-          <a href="/contact.php" class="btn btn-outline"><i class="bi bi-telephone"></i> <?= h(t('common.contactUs')) ?></a>
+          <a href="/contact" class="btn btn-outline"><i class="bi bi-telephone"></i> <?= h(t('common.contactUs')) ?></a>
         </div>
       </div>
       <div>
@@ -155,7 +155,7 @@ require_once __DIR__ . '/includes/header.php';
     <p style="color:rgba(255,255,255,.85);margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto"><?= h(t('about.ctaSub')) ?></p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
       <button type="button" class="btn btn-white btn-lg" data-open-apply-modal><i class="bi bi-send"></i> <?= h(t('common.applyNow')) ?></button>
-      <a href="/contact.php" class="btn btn-ghost-light btn-lg"><i class="bi bi-telephone"></i> <?= h(t('common.talkToUs')) ?></a>
+      <a href="/contact" class="btn btn-ghost-light btn-lg"><i class="bi bi-telephone"></i> <?= h(t('common.talkToUs')) ?></a>
     </div>
   </div>
 </section>
