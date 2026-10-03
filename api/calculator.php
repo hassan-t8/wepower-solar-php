@@ -59,7 +59,8 @@ try {
             'Property Type' => $propertyType ?: '—', 'People' => $numPeople,
             'Total Load' => $totalLoadW . ' W', 'Recommended System' => $recommendedKva . ' KVA',
             'Appliances' => '<table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:13px"><tr style="background:#f3f4f6"><th style="padding:6px 10px;text-align:left">Item</th><th style="padding:6px 10px;text-align:left">Qty</th><th style="padding:6px 10px;text-align:left">Power</th><th style="padding:6px 10px;text-align:left">Total</th></tr>' . $applianceRows . '</table>',
-        ])
+        ]),
+        $email ?: null // reply to the customer
     );
 
     if ($email) {
@@ -77,7 +78,7 @@ try {
                 </table>
                 <p style="color:#374151;font-size:15px;line-height:1.7">
                   Our team will reach out to provide a detailed proposal and pricing for your ' . $recommendedKva . ' KVA system.
-                  You can also call us directly at <strong>0335-5777898</strong>.
+                  You can also call us directly at <strong>' . h(getSetting('company_phone1') ?: '0335-5777898') . '</strong>.
                 </p>')
         );
     }

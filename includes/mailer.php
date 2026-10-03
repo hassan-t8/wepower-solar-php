@@ -33,7 +33,13 @@ function getSmtpConfig(): array
  * the original's fire-and-forget `.catch(() => {})` behavior, just
  * synchronous since PHP has no unawaited-promise equivalent.
  */
-function sendMail(string $to, string $subject, string $html): array
+/**
+ * Send one email through the SMTP account in Admin → Settings.
+ * Sender = the SMTP username; Reply-To = $replyTo when given (e.g. the customer,
+ * on admin alerts), otherwise the current company email from Settings, so
+ * replies always reach the address that is set today.
+ */
+function sendMail(string $to, string $subject, string $html, ?string $replyTo = null): array
 {
     $cfg = getSmtpConfig();
     if (!$cfg['user'] || !$cfg['pass']) {
@@ -53,6 +59,10 @@ function sendMail(string $to, string $subject, string $html): array
         $mail->CharSet = 'UTF-8';
 
         $mail->setFrom($cfg['user'], $cfg['fromName']);
+        $reply = trim((string) ($replyTo ?: getSetting('company_email')));
+        if ($reply !== '' && filter_var($reply, FILTER_VALIDATE_EMAIL) && strcasecmp($reply, $cfg['user']) !== 0) {
+            $mail->addReplyTo($reply);
+        }
         foreach (array_filter(array_map('trim', explode(',', $to))) as $addr) {
             $mail->addAddress($addr);
         }

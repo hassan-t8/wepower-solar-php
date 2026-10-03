@@ -43,7 +43,8 @@ try {
     sendMail(
         getAdminRecipients(),
         'New Contact Form: ' . ($subject ?: 'General Inquiry'),
-        mailWrap('New Contact Submission', ['Name' => $name, 'Email' => $email, 'Phone' => $phone, 'Subject' => $subject, 'Message' => $message])
+        mailWrap('New Contact Submission', ['Name' => $name, 'Email' => $email, 'Phone' => $phone, 'Subject' => $subject, 'Message' => $message]),
+        $email ?: null // reply to the customer
     );
 
     sendMail(

@@ -61,7 +61,8 @@ try {
             'Experience' => $experienceYears . ' years', 'Education' => $education,
             'Cover Letter' => $coverLetter,
             'Resume' => $resumeFile ? 'Uploaded: ' . $resumeFile : 'Not uploaded',
-        ])
+        ]),
+        $email ?: null // reply to the customer
     );
 
     sendMail(

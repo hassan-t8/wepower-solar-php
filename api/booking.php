@@ -50,7 +50,8 @@ try {
             'Name' => $name, 'Email' => $email, 'Phone' => $phone, 'City' => $city,
             'Property Type' => $propertyType, 'Service Type' => $serviceType,
             'Preferred Date' => $preferredDate, 'Notes' => $notes,
-        ])
+        ]),
+        $email ?: null // reply to the customer
     );
 
     $extraRows = '';
