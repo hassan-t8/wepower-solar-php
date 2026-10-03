@@ -39,6 +39,18 @@ function initAdminList(config) {
     return d.innerHTML;
   }
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  // Ids may arrive as numbers or strings depending on the PDO driver — compare as strings.
+  const sameId = (a, b) => String(a) === String(b);
+  // MySQL returns "YYYY-MM-DD HH:MM:SS"; Safari can't parse the space form, so use ISO "T".
+  function parseDate(v) {
+    const d = new Date(typeof v === 'string' ? v.replace(' ', 'T') : v);
+    return isNaN(d) ? null : d;
+  }
+  function fmtDate(v, withTime) {
+    const d = parseDate(v);
+    if (!d) return '—';
+    return withTime ? d.toLocaleString() : d.toLocaleDateString();
+  }
 
   if (config.statuses && filterSelect) {
     filterSelect.innerHTML = '<option value="all">All Status</option>' +
@@ -65,8 +77,8 @@ function initAdminList(config) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: config.statusUpdateType || config.type, id, status }),
     });
-    rows = rows.map((r) => (r.id === id ? { ...r, status } : r));
-    if (selected && selected.id === id) selected = { ...selected, status };
+    rows = rows.map((r) => (sameId(r.id, id) ? { ...r, status } : r));
+    if (selected && sameId(selected.id, id)) selected = { ...selected, status };
     render();
     if (selected) openModal(selected);
   }
@@ -78,7 +90,7 @@ function initAdminList(config) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: config.deleteType || config.type, id }),
     });
-    rows = rows.filter((r) => r.id !== id);
+    rows = rows.filter((r) => !sameId(r.id, id));
     closeModal();
     render();
   }
@@ -117,7 +129,7 @@ function initAdminList(config) {
     tbody.innerHTML = list.map((row) => {
       const cells = config.columns.map((col) => `<td>${col.render(row, esc)}</td>`).join('');
       const statusCell = config.statuses ? `<td>${statusSelectHtml(row)}</td>` : '';
-      const dateCell = `<td style="color:var(--gray-400);font-size:.82rem;white-space:nowrap">${new Date(row.created_at).toLocaleDateString()}</td>`;
+      const dateCell = `<td style="color:var(--gray-400);font-size:.82rem;white-space:nowrap">${fmtDate(row.created_at, false)}</td>`;
       return `<tr>
         <td style="color:var(--gray-400);font-weight:600">#${row.id}</td>
         ${cells}${statusCell}${dateCell}
@@ -129,7 +141,12 @@ function initAdminList(config) {
     }).join('');
   }
 
-  function openModal(row) {
+  // Accepts a row object or a row id (the table's View button passes the id).
+  function openModal(rowOrId) {
+    const row = typeof rowOrId === 'object' && rowOrId !== null
+      ? rowOrId
+      : rows.find((r) => sameId(r.id, rowOrId));
+    if (!row) return;
     selected = row;
     const fields = config.detailFields.map((f) => `
       <div class="adm-modal-row"><label>${esc(f.label)}</label><span>${f.render(row, esc)}</span></div>
@@ -142,7 +159,7 @@ function initAdminList(config) {
 
     modalBody.innerHTML = `
       <h3>${config.detailTitle(row, esc)}</h3>
-      <div class="adm-modal-date">${new Date(row.created_at).toLocaleString()}</div>
+      <div class="adm-modal-date">${fmtDate(row.created_at, true)}</div>
       <div class="adm-modal-grid">${fields}</div>
       ${config.detailExtra ? config.detailExtra(row, esc) : ''}
       ${statusButtons}

@@ -15,6 +15,37 @@ function clean($value): string
     return trim(strip_tags((string) $value));
 }
 
+/** Strict-enough email check: filter_var plus a real TLD (rejects "a@b"). */
+function isValidEmail(string $email): bool
+{
+    return strlen($email) <= 254
+        && filter_var($email, FILTER_VALIDATE_EMAIL) !== false
+        && preg_match('/@[^@]+\.[A-Za-z]{2,}$/', $email) === 1;
+}
+
+/**
+ * Normalize a phone number to "+<code> <national digits>", or return null if
+ * invalid. The forms send "+92 3001234567"; a bare "03001234567" (old
+ * clients) is treated as Pakistani. Pakistan must be a 10-digit mobile
+ * starting with 3; other countries just need 7–14 national digits (E.164).
+ */
+function normalizePhone(string $raw): ?string
+{
+    $raw = trim($raw);
+    if (preg_match('/^\+(\d{1,4})[\s-]*([\d\s-]+)$/', $raw, $m)) {
+        $code = $m[1];
+        $national = ltrim(preg_replace('/\D/', '', $m[2]), '0');
+    } else {
+        $code = '92';
+        $national = ltrim(preg_replace('/\D/', '', $raw), '0');
+    }
+    if ($code === '92') {
+        return preg_match('/^3\d{9}$/', $national) ? "+92 $national" : null;
+    }
+    $len = strlen($national);
+    return ($len >= 7 && $len <= 14 && strlen($code . $national) <= 15) ? "+$code $national" : null;
+}
+
 /** Send a JSON response and stop execution — mirrors res.json()/res.status().json(). */
 function jsonResponse($data, int $status = 200): never
 {

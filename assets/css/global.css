@@ -54,6 +54,10 @@ h3 { font-size:clamp(1.25rem,2.5vw,1.6rem); }
 .btn-lg { padding:16px 32px; font-size:1.04rem; }
 .btn-sm { padding:9px 18px; font-size:.88rem; }
 .btn-block { width:100%; justify-content:center; }
+.btn { max-width:100%; }
+/* Long labels (e.g. "Apply for Commercial & Industrial Solar") must wrap on small phones,
+   otherwise they push the page wider than the screen and the whole site zooms out. */
+@media (max-width:480px) { .btn { white-space:normal; text-align:center; justify-content:center; } }
 
 .tag {
   display:inline-block; background:var(--green-50); color:var(--green-700);
@@ -79,14 +83,43 @@ h3 { font-size:clamp(1.25rem,2.5vw,1.6rem); }
 }
 .field textarea { resize:vertical; min-height:90px; }
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form-row > .field { min-width:0; } /* let grid cells shrink instead of overflowing the modal */
 @media (max-width:520px){ .form-row { grid-template-columns:1fr; } }
+.btn-block { white-space:normal; text-align:center; }
+
+/* Phone: country-code picker + national number (built by form-validation.js) */
+.phone-group { display:flex; align-items:stretch; gap:6px; min-width:0; direction:ltr; } /* numbers read LTR even in Urdu */
+.phone-group input { flex:1 1 auto; min-width:0; }
+.phone-cc {
+  position:relative; flex:0 0 auto; display:flex; align-items:center; gap:4px;
+  padding:0 10px 0 12px; border:1.5px solid var(--gray-200); border-radius:12px;
+  background:var(--gray-50); color:var(--gray-800); font-weight:600; font-size:.92rem;
+  transition:border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.phone-cc i { font-size:.7rem; color:var(--gray-500); }
+/* The real <select> sits invisibly on top, so the closed state shows a compact "+92"
+   while the native dropdown (best on mobile) lists full country names. */
+.field .phone-cc select {
+  position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer;
+  padding:0; border:0; font-size:16px;
+}
+[dir="rtl"] .field input[type="email"] { direction:ltr; text-align:right; }
+.phone-cc:focus-within { border-color:var(--green-500); box-shadow:0 0 0 4px var(--green-100); }
+
+/* Inline validation errors */
+.field.has-error input, .field.has-error select, .field.has-error textarea,
+.field.has-error .phone-cc { border-color:#ef4444; }
+.field.has-error input:focus, .field.has-error textarea:focus { box-shadow:0 0 0 4px #fee2e2; }
+.field-error { color:#b91c1c; font-size:.78rem; line-height:1.35; margin-top:5px; }
 
 @media (max-width:600px) {
   .field { margin-bottom:10px; }
   .field label { font-size:.78rem; margin-bottom:3px; }
+  /* 16px minimum stops iOS Safari zooming the page when an input is focused */
   .field input, .field select, .field textarea {
-    padding:9px 11px; font-size:.88rem; border-radius:10px;
+    padding:9px 11px; font-size:16px; border-radius:10px;
   }
+  .phone-cc { border-radius:10px; padding:0 8px 0 10px; font-size:.9rem; }
   .field textarea { min-height:68px; }
   .btn-lg { padding:12px 22px; font-size:.93rem; }
 }

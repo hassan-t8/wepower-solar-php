@@ -130,10 +130,14 @@ if ($promoOn && $promoUrl && preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/
     applySuccessBody: <?= json_encode(t('apply.successBody')) ?>,
     applyThereFallback: <?= json_encode($LANG_CODE === 'ur' ? 'وہاں' : 'there') ?>,
     careersRequiredErr: <?= json_encode(t('careersModal.requiredErr')) ?>,
+<?php foreach (t('validation') as $vKey => $vMsg): ?>
+    <?= $vKey ?>: <?= json_encode($vMsg) ?>,
+<?php endforeach; ?>
   };
 </script>
 <script src="/assets/js/toast.js"></script>
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/form-validation.js"></script>
 <script src="/assets/js/apply-modal.js"></script>
 <script src="/assets/js/lang-switcher.js"></script>
 <script src="/assets/js/lang-hint.js"></script>

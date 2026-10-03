@@ -127,7 +127,7 @@
           <td>${esc(a.service_type || '—')}</td>
           <td>${esc(a.city || '—')}</td>
           <td><span class="status-badge status-${esc(a.status)}">${esc(a.status)}</span></td>
-          <td style="color:var(--gray-400);font-size:.82rem">${new Date(a.created_at).toLocaleDateString()}</td>
+          <td style="color:var(--gray-400);font-size:.82rem">${new Date(String(a.created_at).replace(' ', 'T')).toLocaleDateString()}</td>
         </tr>
       `).join('');
     }

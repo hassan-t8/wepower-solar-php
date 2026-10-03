@@ -80,13 +80,13 @@ require_once __DIR__ . '/includes/header.php';
         <div class="calc-panel" id="saveResultsPanel" style="margin-top:28px" hidden>
           <h3 style="margin-bottom:6px"><?= h(t('calc.saveTitle')) ?></h3>
           <p class="muted" style="font-size:.9rem;margin-bottom:20px"><?= h(t('calc.saveSub')) ?></p>
-          <form id="saveResultsForm">
+          <form id="saveResultsForm" novalidate data-validate>
             <div class="form-row">
               <div class="field"><label><?= h(t('calc.name')) ?></label><input type="text" name="name" placeholder="<?= h(t('calc.namePh')) ?>"></div>
-              <div class="field"><label><?= h(t('contact.phoneLabel')) ?></label><input type="text" name="phone" placeholder="<?= h(t('calc.phonePh')) ?>"></div>
+              <div class="field"><label><?= h(t('contact.phoneLabel')) ?></label><input type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" placeholder="<?= h(t('calc.phonePh')) ?>"></div>
             </div>
             <div class="form-row">
-              <div class="field"><label><?= h(t('contact.email')) ?></label><input type="email" name="email" placeholder="<?= h(t('calc.emailPh')) ?>"></div>
+              <div class="field"><label><?= h(t('contact.email')) ?></label><input type="email" name="email" maxlength="254" autocomplete="email" data-email placeholder="<?= h(t('calc.emailPh')) ?>"></div>
               <div class="field"><label><?= h(t('calc.city')) ?></label><input type="text" name="city" placeholder="<?= h(t('calc.cityPh')) ?>"></div>
             </div>
             <div class="form-error" id="calcError" hidden><span></span></div>

@@ -27,13 +27,13 @@
         <h3 class="apply-title"><?= h(t('apply.title')) ?></h3>
         <p class="apply-sub"><?= h(t('apply.sub')) ?></p>
 
-        <form id="applyForm">
+        <form id="applyForm" novalidate data-validate>
           <div class="form-row">
             <div class="field"><label><?= h(t('apply.fullName')) ?></label><input type="text" name="name" required placeholder="<?= h(t('apply.fullNamePh')) ?>"></div>
-            <div class="field"><label><?= h(t('apply.phone')) ?></label><input type="text" name="phone" required placeholder="<?= h(t('apply.phonePh')) ?>"></div>
+            <div class="field"><label><?= h(t('apply.phone')) ?></label><input type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" required placeholder="<?= h(t('apply.phonePh')) ?>"></div>
           </div>
           <div class="form-row">
-            <div class="field"><label><?= h(t('apply.email')) ?></label><input type="email" name="email" required placeholder="<?= h(t('apply.emailPh')) ?>"></div>
+            <div class="field"><label><?= h(t('apply.email')) ?></label><input type="email" name="email" maxlength="254" autocomplete="email" data-email required placeholder="<?= h(t('apply.emailPh')) ?>"></div>
             <div class="field"><label><?= h(t('apply.city')) ?></label><input type="text" name="city" placeholder="<?= h(t('apply.cityPh')) ?>"></div>
           </div>
           <div class="form-row">

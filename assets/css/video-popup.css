@@ -9,6 +9,9 @@
 
 .vp-modal {
   width: 100%; max-width: 760px;
+  /* Never taller than the screen: cap width so the 16:9 video + 58px header fit the height */
+  max-width: min(760px, calc((100vh - 32px - 58px) * 16 / 9));
+  max-width: min(760px, calc((100dvh - 32px - 58px) * 16 / 9));
   background: #0f172a; border-radius: 16px; overflow: hidden;
   box-shadow: 0 24px 80px rgba(0,0,0,.6);
   animation: vp-slide-in .35s cubic-bezier(0.4,0,0.2,1);
@@ -25,11 +28,12 @@
   background: linear-gradient(90deg, #16a34a, #15803d);
 }
 .vp-title {
+  min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
   color: #fff; font-weight: 700; font-size: .95rem; letter-spacing: .3px;
   display: flex; align-items: center; gap: 8px;
 }
 .vp-title i { font-size: 1.1rem; color: #bbf7d0; }
-.vp-actions { display: flex; align-items: center; gap: 8px; }
+.vp-actions { flex-shrink: 0; display: flex; align-items: center; gap: 8px; }
 
 /* Mute / Subscribe / Close buttons */
 .vp-icon-btn {
@@ -77,7 +81,12 @@
 
 @media (max-width: 520px) {
   .vp-overlay { padding: 0; align-items: flex-end; }
-  .vp-modal { border-radius: 16px 16px 0 0; max-height: 85vh; }
+  .vp-modal {
+    border-radius: 16px 16px 0 0; max-width: 100%;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .vp-header { padding: 10px 12px; }
+  .vp-title { font-size: .88rem; }
   .vp-subscribe span { display: none; }
   .vp-subscribe { padding: 6px 10px; }
 }

@@ -21,6 +21,16 @@ if (!$name || !$email || !$message) {
     jsonResponse(['error' => 'Name, email, and message are required.'], 400);
 }
 
+if (!isValidEmail($email)) {
+    jsonResponse(['error' => 'Please enter a valid email address.'], 400);
+}
+if ($phone !== '') {
+    $phone = normalizePhone($phone);
+    if ($phone === null) {
+        jsonResponse(['error' => 'Please enter a valid phone number (Pakistan: 10 digits starting with 3, e.g. +92 3001234567).'], 400);
+    }
+}
+
 try {
     $id = insertGetId(
         'INSERT INTO contacts (name, email, phone, subject, message) VALUES (?, ?, ?, ?, ?)',

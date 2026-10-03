@@ -71,14 +71,14 @@ $phones = implode(' / ', $brand['phones']);
       <div class="contact-form-col">
         <div class="contact-card">
           <div id="contactFormWrap">
-            <form id="contactForm">
+            <form id="contactForm" novalidate data-validate>
               <h3 style="margin-bottom:6px"><?= h(t('contact.formTitle')) ?></h3>
               <p class="muted" style="margin-bottom:24px;font-size:.9rem"><?= h(t('contact.formSub')) ?></p>
               <div class="form-row">
                 <div class="field"><label><?= h(t('contact.fullName')) ?></label><input type="text" name="name" required placeholder="<?= h(t('contact.fullNamePh')) ?>"></div>
-                <div class="field"><label><?= h(t('contact.phoneLabel')) ?></label><input type="text" name="phone" placeholder="03xx-xxxxxxx"></div>
+                <div class="field"><label><?= h(t('contact.phoneLabel')) ?></label><input type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" placeholder="3xx xxxxxxx"></div>
               </div>
-              <div class="field"><label><?= h(t('contact.emailReq')) ?></label><input type="email" name="email" required placeholder="you@email.com"></div>
+              <div class="field"><label><?= h(t('contact.emailReq')) ?></label><input type="email" name="email" maxlength="254" autocomplete="email" data-email required placeholder="you@email.com"></div>
               <div class="field"><label><?= h(t('contact.messageReq')) ?></label><textarea name="message" required placeholder="<?= h(t('contact.messagePh')) ?>" style="min-height:90px"></textarea></div>
 
               <div class="form-error" id="contactError" hidden><span></span></div>
@@ -118,8 +118,8 @@ $phones = implode(' / ', $brand['phones']);
   <div class="container">
     <div style="border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--gray-200)">
       <iframe title="WePower Office Location"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3322.4793!2d73.089!3d33.5213!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBahria+Town+Phase+7!5e0!3m2!1sen!2s!4v1000000000000"
-        width="100%" height="380" style="border:0;display:block" allowfullscreen loading="lazy"></iframe>
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7200.472221595387!2d73.08403315139924!3d33.52430547107239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfed0039659f35%3A0xc24187ea792ac21e!2sWePower%20Solar%20Energy!5e0!3m2!1sen!2s!4v1790998979617!5m2!1sen!2s"
+        width="100%" height="380" style="border:0;display:block" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
   </div>
 </section>

@@ -23,6 +23,14 @@ if (!$name || !$email || !$phone) {
     jsonResponse(['error' => 'Name, email and phone are required.'], 400);
 }
 
+if (!isValidEmail($email)) {
+    jsonResponse(['error' => 'Please enter a valid email address.'], 400);
+}
+$phone = normalizePhone($phone);
+if ($phone === null) {
+    jsonResponse(['error' => 'Please enter a valid phone number (Pakistan: 10 digits starting with 3, e.g. +92 3001234567).'], 400);
+}
+
 try {
     $id = insertGetId(
         'INSERT INTO applications (name, email, phone, city, property_type, service_type, notes) VALUES (?, ?, ?, ?, ?, ?, ?)',

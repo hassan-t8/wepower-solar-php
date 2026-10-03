@@ -29,9 +29,9 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       </div>
       <div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
           <?php foreach ($stats as $s): ?>
-            <div style="background:var(--green-50);border:1px solid var(--green-200);border-radius:var(--radius-lg);padding:24px 20px;text-align:center">
+            <div style="background:var(--green-50);border:1px solid var(--green-200);border-radius:var(--radius-lg);padding:24px 12px;text-align:center;overflow-wrap:anywhere">
               <div style="font-size:2rem;font-weight:700;color:var(--green-700);line-height:1"><?= (int)$s['value'] ?><?= h($s['suffix']) ?></div>
               <div style="color:var(--gray-600);font-size:.85rem;margin-top:6px"><?= h($s['label']) ?></div>
             </div>

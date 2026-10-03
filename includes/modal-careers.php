@@ -32,13 +32,13 @@
       <div id="cmFormWrap">
         <h2 class="cm-title"><?= h(t('careersModal.title')) ?></h2>
         <p class="cm-sub"><?= h(t('careersModal.sub')) ?></p>
-        <form id="careersForm">
+        <form id="careersForm" novalidate data-validate>
           <div class="form-row">
             <div class="field"><label><?= h(t('careersModal.fullName')) ?></label><input type="text" name="full_name" required placeholder="<?= h(t('careersModal.fullNamePh')) ?>"></div>
-            <div class="field"><label><?= h(t('careersModal.phone')) ?></label><input type="text" name="phone" required placeholder="<?= h(t('careersModal.phonePh')) ?>"></div>
+            <div class="field"><label><?= h(t('careersModal.phone')) ?></label><input type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" required placeholder="<?= h(t('careersModal.phonePh')) ?>"></div>
           </div>
           <div class="form-row">
-            <div class="field"><label><?= h(t('careersModal.email')) ?></label><input type="email" name="email" required placeholder="<?= h(t('careersModal.emailPh')) ?>"></div>
+            <div class="field"><label><?= h(t('careersModal.email')) ?></label><input type="email" name="email" maxlength="254" autocomplete="email" data-email required placeholder="<?= h(t('careersModal.emailPh')) ?>"></div>
             <div class="field">
               <label><?= h(t('careersModal.position')) ?></label>
               <select name="position" id="cmPositionSelect" required>

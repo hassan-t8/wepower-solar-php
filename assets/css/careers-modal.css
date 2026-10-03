@@ -13,7 +13,8 @@
   background: #fff; border-radius: var(--radius-xl); overflow: hidden;
   box-shadow: var(--shadow-xl);
   display: grid; grid-template-columns: 0.85fr 1.15fr;
-  max-height: 92vh;
+  grid-template-rows: minmax(0, 1fr); /* row respects max-height so .cm-body scrolls instead of clipping */
+  max-height: 92vh; max-height: 92dvh;
   align-self: center;
 }
 
@@ -30,11 +31,14 @@
 
 /* ─── Side panel ─────────────────────────────────────────────── */
 .cm-side {
-  position: relative; overflow: hidden; padding: 40px 28px; color: #fff;
+  position: relative; padding: 40px 28px; color: #fff;
   background: linear-gradient(150deg, var(--green-700), var(--green-600) 55%, var(--green-500));
   display: flex; flex-direction: column; justify-content: center;
-  min-height: 0;
+  min-height: 0; overflow-y: auto; overflow-x: hidden;
+  overscroll-behavior: contain;
 }
+.cm-side > * { position: relative; z-index: 1; }
+.cm-side > .cm-side-glow { position: absolute; z-index: 0; pointer-events: none; }
 .cm-side-glow {
   position: absolute; width: 260px; height: 260px; border-radius: 50%;
   background: radial-gradient(circle, var(--solar), transparent 70%);
@@ -59,7 +63,8 @@
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
 }
-.cm-title { font-size: 1.5rem; margin-bottom: 4px; }
+.cm-title { font-size: 1.5rem; margin-bottom: 4px; padding-right: 40px; }
+.cm-body input[type="file"] { padding: 9px 10px; font-size: .88rem; }
 .cm-sub { color: var(--gray-500); font-size: .9rem; margin-bottom: 20px; }
 .field-hint { color: var(--gray-400); font-weight: 400; font-size: .82rem; }
 
@@ -83,6 +88,35 @@
 .cm-success h3 { font-size: 1.5rem; margin-bottom: 10px; }
 .cm-success p { color: var(--gray-500); max-width: 340px; margin-bottom: 24px; }
 
+/* ─── Short viewports: compact spacing so the form fits ─────── */
+@media (max-height: 750px) {
+  .cm-overlay { padding: 10px; }
+  .cm-modal { max-height: 96vh; max-height: 96dvh; }
+  .cm-side { padding: 26px 26px; }
+  .cm-side-icon { font-size: 1.9rem; margin-bottom: 8px; }
+  .cm-side h3 { font-size: 1.2rem; }
+  .cm-body { padding: 24px 30px 20px; }
+  .cm-title { font-size: 1.3rem; }
+  .cm-sub { margin-bottom: 14px; }
+  .cm-body .field { margin-bottom: 11px; }
+}
+
+/* ─── Small laptop / narrow desktop: shrink side panel ───────── */
+@media (max-width: 1000px) and (min-width: 781px) {
+  .cm-modal { grid-template-columns: 0.75fr 1.25fr; max-width: 760px; }
+  .cm-side { padding: 32px 22px; }
+  .cm-side h3 { font-size: 1.25rem; }
+}
+
+/* ─── Landscape phones / very short screens: drop side panel ─── */
+@media (max-height: 520px) and (min-width: 601px) {
+  .cm-overlay { padding: 8px; }
+  .cm-modal { grid-template-columns: 1fr; max-width: 620px; max-height: calc(100vh - 16px); max-height: calc(100dvh - 16px); }
+  .cm-side { display: none; }
+  .cm-body { padding: 20px 24px 18px; }
+  .cm-title { font-size: 1.2rem; }
+}
+
 /* ─── Tablet: hide side panel ────────────────────────────────── */
 @media (max-width: 780px) {
   .cm-modal { grid-template-columns: 1fr; max-width: 520px; }
@@ -98,8 +132,14 @@
     display: flex; flex-direction: column;
     max-width: 100%; width: 100%;
     border-radius: 22px 22px 0 0;
-    height: 92vh; max-height: 92vh;
+    height: auto; max-height: 92vh; max-height: 92dvh;
     overflow: hidden;
+  }
+  /* Drag handle — standard bottom-sheet affordance */
+  .cm-modal::before {
+    content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 38px; height: 4px; border-radius: 4px; background: var(--gray-300);
+    z-index: 4; pointer-events: none;
   }
   .cm-side { display: none; }
   .cm-body {
@@ -108,10 +148,14 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    padding: 48px 20px 80px;
+    padding: 30px 16px 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   }
-  .cm-body .form-row { grid-template-columns: 1fr; }
-  .cm-close { top: 12px; right: 12px; }
-  .cm-title { font-size: 1.15rem; }
+  .cm-body .form-row { grid-template-columns: 1fr; gap: 0; }
+  .cm-close { top: 14px; right: 14px; width: 34px; height: 34px; font-size: .9rem; }
+  .cm-title { font-size: 1.2rem; }
   .cm-sub { font-size: .82rem; margin-bottom: 12px; }
+  .cm-body .btn-block { margin-top: 6px; padding: 12px 14px; font-size: .92rem; }
+  .cm-success { padding: 24px 8px 8px; }
+  .cm-check { width: 68px; height: 68px; font-size: 2.1rem; margin-bottom: 16px; }
 }
