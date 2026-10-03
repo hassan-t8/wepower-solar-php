@@ -103,7 +103,7 @@ $smtpPassMasked = !empty($s['smtp_pass']) ? '••••••••' : '';
 <!-- TAB 1: SMTP -->
 <div class="adm-settings-tab" data-tab-panel="1" hidden>
   <div class="adm-settings-card">
-    <form class="settings-section-form" data-keys="smtp_host,smtp_port,smtp_user,smtp_pass,smtp_from_name,smtp_secure" id="smtpForm">
+    <form class="settings-section-form" data-keys="smtp_host,smtp_port,smtp_user,smtp_pass,smtp_from_name,smtp_secure" id="smtpForm" autocomplete="off">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px;flex-wrap:wrap">
         <h4 style="margin-bottom:0"><i class="bi bi-envelope-at" style="margin-right:8px;color:var(--green-600)"></i>SMTP / Email Configuration</h4>
       </div>
@@ -111,11 +111,11 @@ $smtpPassMasked = !empty($s['smtp_pass']) ? '••••••••' : '';
       <div class="adm-settings-grid">
         <div class="field"><label>SMTP Host</label><input type="text" name="smtp_host" value="<?= h($s['smtp_host'] ?? '') ?>" placeholder="smtp.gmail.com"></div>
         <div class="field"><label>Port</label><input type="number" name="smtp_port" value="<?= h($s['smtp_port'] ?? '587') ?>" placeholder="587"></div>
-        <div class="field"><label>Username / Email</label><input type="text" name="smtp_user" value="<?= h($s['smtp_user'] ?? '') ?>" placeholder="yourname@gmail.com"></div>
+        <div class="field"><label>Username / Email</label><input type="email" name="smtp_user" value="<?= h($s['smtp_user'] ?? '') ?>" placeholder="yourcompany@gmail.com" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false"></div>
         <div class="field">
           <label>Password / App Password</label>
           <div style="position:relative">
-            <input type="password" name="smtp_pass" id="smtpPassInput" value="<?= h($smtpPassMasked) ?>" placeholder="Leave blank to keep current" style="padding-right:44px">
+            <input type="password" name="smtp_pass" id="smtpPassInput" value="<?= h($smtpPassMasked) ?>" placeholder="16-letter Gmail App Password" autocomplete="new-password" data-lpignore="true" data-1p-ignore style="padding-right:44px">
             <button type="button" id="smtpPassToggle" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray-400);cursor:pointer;padding:2px;display:flex;align-items:center;font-size:.95rem"><i class="bi bi-eye"></i></button>
           </div>
         </div>
@@ -144,7 +144,7 @@ $smtpPassMasked = !empty($s['smtp_pass']) ? '••••••••' : '';
       <p style="color:var(--gray-500);font-size:.88rem;margin-bottom:16px">All form submissions are sent to the <strong>SMTP username</strong> above automatically. Add extra team emails here (comma-separated) for additional copies.</p>
       <div class="field">
         <label>Additional Notification Emails <span style="color:var(--gray-400);font-weight:400">(comma-separated)</span></label>
-        <input type="text" name="admin_notification_emails" value="<?= h($s['admin_notification_emails'] ?? '') ?>" placeholder="sales@wepower.pk, hr@wepower.pk">
+        <input type="text" name="admin_notification_emails" value="<?= h($s['admin_notification_emails'] ?? '') ?>" placeholder="e.g. owner@gmail.com, sales@gmail.com" autocomplete="off">
       </div>
     </form>
   </div>
