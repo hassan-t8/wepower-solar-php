@@ -23,7 +23,7 @@ self.addEventListener('push', (event) => {
     } catch (e) { data = null; }
     if (!data) {
       try {
-        const res = await fetch('/admin/api/updates.php?since=0', { credentials: 'include', cache: 'no-store' });
+        const res = await fetch('/admin/api/updates.php?since=init', { credentials: 'include', cache: 'no-store' });
         const feed = await res.json();
         data = (feed.events || []).slice(-1)[0] || null;
       } catch (e) { /* offline or logged out */ }

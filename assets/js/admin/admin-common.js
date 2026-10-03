@@ -59,7 +59,7 @@
     set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode */ } },
   };
 
-  let lastId = 0;
+  let lastId = null;  // null until the first (init) response
   let events = [];   // newest last, max 30 kept for the bell list
   let prefs = {};
   let timer = null;
@@ -119,7 +119,7 @@
   async function poll() {
     if (stopped) return;
     try {
-      const res = await fetch('/admin/api/updates.php?since=' + lastId, { credentials: 'include', cache: 'no-store' });
+      const res = await fetch('/admin/api/updates.php?since=' + (lastId === null ? 'init' : lastId), { credentials: 'include', cache: 'no-store' });
       if (res.status === 401) { stopped = true; liveDot.classList.add('off'); return; }
       const data = await res.json();
       prefs = data.prefs || prefs;
@@ -134,8 +134,18 @@
           }));
         }
       }
-      if (data.initial && !store.get(SEEN_KEY)) store.set(SEEN_KEY, String(data.latest_id));
-      lastId = Math.max(lastId, Number(data.latest_id) || 0);
+      const latest = Number(data.latest_id) || 0;
+      if (data.initial) {
+        // first visit, or the notification history was cleared since this browser last looked
+        const seen = store.get(SEEN_KEY);
+        if (seen === null || Number(seen) > latest) store.set(SEEN_KEY, String(latest));
+      }
+      if (lastId !== null && latest < lastId) {
+        // history was cleared while this page was open: start counting again
+        events = [];
+        store.set(SEEN_KEY, '0');
+      }
+      lastId = lastId === null ? latest : (latest < lastId ? latest : Math.max(lastId, latest));
       renderBell();
       liveDot.classList.remove('off');
     } catch (err) {

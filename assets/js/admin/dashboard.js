@@ -30,6 +30,10 @@
     clearTimeout(liveTimer);
     liveTimer = setTimeout(() => load(true), 400); // coalesce bursts
   });
+  // Visitor counts and the graph change without any form event, so also refresh
+  // every 30 s while the tab is visible, and right away when you come back to it.
+  setInterval(() => { if (!document.hidden) load(true); }, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) load(true); });
 
   function renderDashboard(data) {
     document.getElementById('admLoading').hidden = true;
