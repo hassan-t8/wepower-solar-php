@@ -103,6 +103,8 @@ function mailWrap(string $title, array $rows): string
 function mailWrapCustomer(string $heading, string $bodyHtml): string
 {
     $year = date('Y');
+    // company email from Admin → Settings → Company (fallback: the business Gmail)
+    $supportEmail = htmlspecialchars(getSetting('company_email') ?: 'wepowersolarsolutions@gmail.com', ENT_QUOTES, 'UTF-8');
     return <<<HTML
     <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">
       <div style="background:linear-gradient(135deg,#16a34a,#22c55e);padding:28px 24px;color:#fff;text-align:center">
@@ -114,7 +116,7 @@ function mailWrapCustomer(string $heading, string $bodyHtml): string
         <h2 style="margin:0 0 14px;font-size:18px;color:#111827">{$heading}</h2>
         {$bodyHtml}
         <div style="margin-top:24px;padding:16px;background:#f0fdf4;border-left:4px solid #22c55e;color:#166534;border-radius:6px;font-size:13px;line-height:1.6">
-          <strong>Need help?</strong> Reply to this email or contact us at <a href="mailto:info@wepower.pk" style="color:#16a34a">info@wepower.pk</a>
+          <strong>Need help?</strong> Reply to this email or contact us at <a href="mailto:{$supportEmail}" style="color:#16a34a">{$supportEmail}</a>
         </div>
       </div>
       <div style="background:#f9fafb;padding:16px;text-align:center;font-size:12px;color:#6b7280;border-top:1px solid #e5e7eb">

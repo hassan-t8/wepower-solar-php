@@ -21,6 +21,9 @@
       toggle.classList.toggle('active', isOpen);
     });
     nav.querySelectorAll('a, button').forEach((el) => {
+      // The language button only opens its dropdown; closing the mobile menu here
+      // would hide the dropdown before it could be used.
+      if (el.closest('.lang-switch-btn') || el.matches('.lang-switch-btn')) return;
       el.addEventListener('click', () => {
         header.classList.remove('open');
         toggle.classList.remove('active');

@@ -42,7 +42,7 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section class="section" style="background:var(--gray-50);padding-top:80px;padding-bottom:80px">
+<section class="section section-alt">
   <div class="container">
     <div class="section-head">
       <span class="tag"><?= h(t('about.purposeTag')) ?></span>
@@ -89,7 +89,7 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section class="section" style="background:var(--gray-50);padding-top:80px;padding-bottom:80px">
+<section class="section section-alt">
   <div class="container">
     <div class="section-head">
       <span class="tag"><?= h(t('about.whyTag')) ?></span>
@@ -149,7 +149,7 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section style="background:linear-gradient(135deg,var(--green-700),var(--green-600));padding:80px 0">
+<section class="section-cta-band" style="background:linear-gradient(135deg,var(--green-700),var(--green-600))">
   <div class="container" style="text-align:center">
     <h2 style="color:#fff;margin-bottom:12px"><?= h(t('about.ctaTitle')) ?></h2>
     <p style="color:rgba(255,255,255,.85);margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto"><?= h(t('about.ctaSub')) ?></p>

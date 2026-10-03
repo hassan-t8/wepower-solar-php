@@ -263,3 +263,7 @@
 .form-error::before {
   content:"\f335"; font-family:"bootstrap-icons"; font-size:1rem;
 }
+
+@media (max-width:768px) {
+  .svc-detail { padding:44px 0; }
+}

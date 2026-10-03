@@ -92,3 +92,8 @@
   .t1-hero-stats { gap:22px; }
   .t1-float-1 { left:6px; } .t1-float-2 { right:6px; }
 }
+
+@media (max-width:768px) {
+  .t1-stats { padding:44px 0; }
+  .t1-cta { padding:12px 0 56px; }
+}

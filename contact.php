@@ -5,7 +5,7 @@ $headerVariant = 'solid';
 $pageScripts = ['contact-form.js', 'faq.js'];
 require_once __DIR__ . '/includes/header.php';
 
-$contactEmail = setting('company_email', 'info@wepower.pk');
+$contactEmail = setting('company_email', 'wepowersolarsolutions@gmail.com');
 $phones = implode(' / ', $brand['phones']);
 ?>
 

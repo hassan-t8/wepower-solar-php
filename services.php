@@ -43,7 +43,7 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section class="section" style="background:var(--gray-50);padding-top:80px;padding-bottom:80px">
+<section class="section section-alt">
   <div class="container">
     <div class="section-head">
       <span class="tag"><?= h(t('services.processTag')) ?></span>

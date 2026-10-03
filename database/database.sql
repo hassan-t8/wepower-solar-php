@@ -204,7 +204,7 @@ INSERT IGNORE INTO site_settings (`key`, value) VALUES
 ('company_address', 'Office 3, GF Plaza 179, Intellectual Village Spring North, Bahria Town Phase 7, Rawalpindi'),
 ('company_phone1', '0335-5777898'),
 ('company_phone2', '0304-7357138'),
-('company_email', 'info@wepower.pk'),
+('company_email', 'wepowersolarsolutions@gmail.com'),
 ('company_instagram', '@wepower__'),
 ('company_logo', '/assets/images/logo.png'),
 ('social_facebook', 'https://www.facebook.com/share/r/1CR6RbC6Eb/'),

@@ -41,7 +41,7 @@ $smtpPassMasked = !empty($s['smtp_pass']) ? '••••••••' : '';
         <div class="field" style="grid-column:span 2"><label>Office Address</label><textarea name="company_address" style="min-height:70px;resize:vertical"><?= h($s['company_address'] ?? '') ?></textarea></div>
         <div class="field"><label>Phone 1</label><input type="text" name="company_phone1" value="<?= h($s['company_phone1'] ?? '') ?>"></div>
         <div class="field"><label>Phone 2</label><input type="text" name="company_phone2" value="<?= h($s['company_phone2'] ?? '') ?>"></div>
-        <div class="field"><label>Email Address</label><input type="email" name="company_email" value="<?= h($s['company_email'] ?? '') ?>" placeholder="info@wepower.pk"></div>
+        <div class="field"><label>Email Address</label><input type="email" name="company_email" value="<?= h($s['company_email'] ?? '') ?>" placeholder="wepowersolarsolutions@gmail.com"></div>
         <div class="field"><label>Instagram Handle</label><input type="text" name="company_instagram" value="<?= h($s['company_instagram'] ?? '') ?>"></div>
       </div>
     </form>

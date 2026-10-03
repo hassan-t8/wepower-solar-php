@@ -7,7 +7,7 @@
  */
 $faqSubtext = $faqSubtext ?? t('home.faqSub');
 ?>
-<section class="section" style="background:var(--gray-50);padding-top:80px;padding-bottom:80px">
+<section class="section section-alt">
   <div class="container" style="max-width:820px">
     <div class="section-head" style="margin-bottom:48px">
       <span class="tag">FAQ</span>
