@@ -69,10 +69,10 @@ function admLink(array $n, string $active): void {
 
   <aside class="adm-sidebar" id="admSidebar">
     <div class="adm-logo">
-      <img src="/assets/images/logo.png" alt="WePower">
+      <img src="<?= h(asset('/assets/images/logo-wordmark.png')) ?>" alt="WePower">
       <div class="adm-logo-text">
-        <strong>WePower Admin</strong>
-        <span>Solar Management</span>
+        <strong>Admin Panel</strong>
+        <span>Management</span>
       </div>
     </div>
 

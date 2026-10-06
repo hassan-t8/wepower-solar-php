@@ -50,7 +50,7 @@ if ($schemaSameAs) $schema['sameAs'] = $schemaSameAs;
 <footer class="ftr">
   <div class="container ftr-grid">
     <div class="ftr-brand">
-      <img src="<?= h($logo) ?>" alt="<?= h($companyName) ?>" class="ftr-logo">
+      <img src="<?= h($logoDisplay) ?>" alt="<?= h($companyName) ?>" class="ftr-logo">
       <p><?= h($companyName) ?> — <?= h(t('footer.about')) ?></p>
       <div class="ftr-social">
         <?php if ($liUrl): ?><a href="<?= h($liUrl) ?>" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a><?php endif; ?>

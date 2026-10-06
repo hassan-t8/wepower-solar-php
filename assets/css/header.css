@@ -49,3 +49,12 @@
   .hdr-nav a::after { display:none; }
   .hdr-cta { margin-top:10px; justify-content:center; }
 }
+
+/* Small laptops / tablets in landscape (961–1200px): keep logo + full menu on one line */
+.hdr-nav a { white-space:nowrap; }
+@media (min-width:961px) and (max-width:1200px) {
+  .hdr-logo img { height:40px; }
+  .hdr-nav { gap:18px; }
+  .hdr-nav a { font-size:.9rem; }
+  .hdr-cta { padding:9px 16px; }
+}

@@ -34,6 +34,11 @@ $hreflangEn = $siteUrl . $requestPath;
 $hreflangUr = $siteUrl . $requestPath . '?lang=ur';
 
 $logo       = setting('company_logo', $brand['logo']);
+// On-page logo: the default logo has wide black margins that make the text tiny at
+// header/footer size, so pages show a trimmed copy of the same artwork. $logo (full
+// image) is still used for social previews and structured data. An uploaded custom
+// logo is shown as-is.
+$logoDisplay = $logo === '/assets/images/logo.png' ? asset('/assets/images/logo-wordmark.png') : $logo;
 $companyName = setting('company_name', $brand['name']);
 
 // Visitor page-view tracking (public pages only — this file is never
@@ -89,7 +94,7 @@ maybeNotifyDailyVisitors(); // first page view of the day posts yesterday's visi
 <header class="hdr hdr-<?= h($headerVariant) ?>" id="siteHeader">
   <div class="container hdr-inner">
     <a href="/" class="hdr-logo">
-      <img src="<?= h($logo) ?>" alt="<?= h($companyName) ?>">
+      <img src="<?= h($logoDisplay) ?>" alt="<?= h($companyName) ?>">
     </a>
 
     <nav class="hdr-nav" id="hdrNav">

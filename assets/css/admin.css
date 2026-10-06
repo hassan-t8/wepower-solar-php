@@ -11,8 +11,8 @@
   padding:22px 24px 18px; border-bottom:1px solid var(--gray-100);
   display:flex; align-items:center; gap:12px;
 }
-.adm-logo img { height:36px; }
-.adm-logo-text { display:flex; flex-direction:column; line-height:1.2; }
+.adm-logo img { height:32px; width:auto; flex-shrink:0; border-radius:6px; }
+.adm-logo-text { display:flex; flex-direction:column; line-height:1.2; min-width:0; white-space:nowrap; }
 .adm-logo-text strong { font-size:.92rem; color:var(--dark); }
 .adm-logo-text span { font-size:.72rem; color:var(--gray-400); font-weight:500; letter-spacing:.4px; text-transform:uppercase; }
 
@@ -226,7 +226,7 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
 }
 @media (max-width:480px){ .adm-login-card { padding:32px 24px; } }
 .adm-login-logo { text-align:center; margin-bottom:32px; }
-.adm-login-logo img { height:52px; margin:0 auto 12px; }
+.adm-login-logo img { height:52px; margin:0 auto 12px; border-radius:8px; }
 .adm-login-logo h2 { font-size:1.25rem; margin-bottom:4px; }
 .adm-login-logo p { color:var(--gray-500); font-size:.87rem; }
 .adm-login-error { background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:10px; padding:11px 14px; font-size:.86rem; margin-bottom:18px; display:flex; align-items:center; gap:8px; }
