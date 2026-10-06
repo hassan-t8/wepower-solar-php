@@ -55,14 +55,22 @@ function jsonResponse($data, int $status = 200): never
     exit;
 }
 
-/** Client IP, respecting a trusted reverse-proxy header if present. */
+/**
+ * Client IP for rate limits and logs. Uses the real connection address.
+ * X-Forwarded-For is only trusted when the request comes from a proxy listed
+ * in TRUSTED_PROXIES (config.php, e.g. if a CDN is put in front later);
+ * otherwise anyone could send a fake header and bypass the login/form limits.
+ */
 function clientIp(): string
 {
-    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        $parts = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-        return trim($parts[0]);
+    $remote = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+    $trusted = defined('TRUSTED_PROXIES') ? (array) TRUSTED_PROXIES : [];
+    if ($trusted && in_array($remote, $trusted, true) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $parts = array_map('trim', explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
+        $ip = end($parts); // the address the trusted proxy itself saw
+        if (filter_var($ip, FILTER_VALIDATE_IP)) return $ip;
     }
-    return $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+    return $remote;
 }
 
 /**
