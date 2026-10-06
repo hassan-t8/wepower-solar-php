@@ -5,6 +5,7 @@ name: Deploy to VPS
 # The script never touches config/config.php or uploads/, so the live DB
 # credentials and real uploaded files (resumes/logos) are never overwritten.
 # The key in VPS_DEPLOY_KEY is restricted on the server to running that script only.
+# SSH listens on port 52222 (port 22 is closed to cut automated login attempts).
 
 on:
   push:
@@ -24,5 +25,5 @@ jobs:
           mkdir -p ~/.ssh
           printf '%s\n' "$SSH_KEY" | tr -d '\r' > ~/.ssh/vps_deploy
           chmod 600 ~/.ssh/vps_deploy
-          ssh-keyscan -H 185.211.6.213 >> ~/.ssh/known_hosts 2>/dev/null
-          ssh -i ~/.ssh/vps_deploy deploy@185.211.6.213 deploy
+          ssh-keyscan -p 52222 -H 185.211.6.213 >> ~/.ssh/known_hosts 2>/dev/null
+          ssh -p 52222 -i ~/.ssh/vps_deploy deploy@185.211.6.213 deploy
