@@ -16,18 +16,33 @@
   const toggle = document.getElementById('hdrToggle');
   const nav = document.getElementById('hdrNav');
   if (toggle && header && nav) {
+    let openedAtY = 0;
+    const isMenuOpen = () => header.classList.contains('open');
+    const closeMenu = () => {
+      header.classList.remove('open');
+      toggle.classList.remove('active');
+    };
     toggle.addEventListener('click', () => {
       const isOpen = header.classList.toggle('open');
       toggle.classList.toggle('active', isOpen);
+      openedAtY = window.scrollY;
     });
     nav.querySelectorAll('a, button').forEach((el) => {
       // The language button only opens its dropdown; closing the mobile menu here
       // would hide the dropdown before it could be used.
       if (el.closest('.lang-switch-btn') || el.matches('.lang-switch-btn')) return;
-      el.addEventListener('click', () => {
-        header.classList.remove('open');
-        toggle.classList.remove('active');
-      });
+      el.addEventListener('click', closeMenu);
+    });
+    // Tap/click anywhere outside the header (menu + hamburger) closes the menu.
+    document.addEventListener('click', (e) => {
+      if (isMenuOpen() && !header.contains(e.target)) closeMenu();
+    });
+    // Scrolling the page closes it too (a small threshold ignores tiny jitters).
+    window.addEventListener('scroll', () => {
+      if (isMenuOpen() && Math.abs(window.scrollY - openedAtY) > 24) closeMenu();
+    }, { passive: true });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isMenuOpen()) closeMenu();
     });
   }
 
