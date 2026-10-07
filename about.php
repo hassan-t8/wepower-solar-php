@@ -78,7 +78,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
     <div class="ceo-card">
       <div class="ceo-img">
-        <img src="<?= h($ceo['image']) ?>" alt="<?= h($ceo['name']) ?>">
+        <img src="<?= h($ceo['image']) ?>" alt="<?= h($ceo['name']) ?>" loading="lazy" decoding="async">
       </div>
       <div>
         <h2 class="ceo-name"><?= h($ceo['name']) ?></h2>

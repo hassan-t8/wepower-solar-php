@@ -35,7 +35,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 
     <div class="t1-hero-visual">
-      <img src="/assets/images/hero.png" alt="Solar installation" class="t1-hero-img">
+      <img src="/assets/images/hero.webp" alt="Solar installation" class="t1-hero-img" width="1600" height="854" fetchpriority="high" decoding="async">
       <div class="t1-float t1-float-1">
         <div class="t1-float-num"><span class="js-counter" data-value="92" data-suffix="%">0%</span></div>
         <div class="t1-float-label"><?= h(t('home.floatSavings')) ?></div>
@@ -65,7 +65,7 @@ require_once __DIR__ . '/includes/header.php';
       <a href="/about" class="btn btn-primary"><?= h(t('common.learnMore')) ?> <i class="bi bi-arrow-right"></i></a>
     </div>
     <div class="t1-why-img">
-      <img src="/assets/images/who-we-are-solar.png" alt="Home solar">
+      <img src="/assets/images/who-we-are-solar.webp" alt="Home solar" width="1200" height="800" loading="lazy" decoding="async">
       <div class="t1-why-badge"><i class="bi bi-sun-fill"></i> <?= h(t('home.whoImgCaption')) ?></div>
     </div>
   </div>

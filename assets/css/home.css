@@ -21,7 +21,7 @@
 .t1-hstat span { font-size:.86rem; color:var(--gray-500); }
 
 .t1-hero-visual { position:relative; }
-.t1-hero-img { width:100%; border-radius:var(--radius-xl); box-shadow:var(--shadow-xl); object-fit:cover; aspect-ratio:4/3.4; }
+.t1-hero-img { width:100%; height:auto; border-radius:var(--radius-xl); box-shadow:var(--shadow-xl); object-fit:cover; aspect-ratio:4/3.4; }
 .t1-float { position:absolute; background:#fff; border-radius:16px; box-shadow:var(--shadow-lg); padding:16px 20px; }
 .t1-float-1 { bottom:30px; left:-26px; text-align:center; }
 .t1-float-num { font-size:1.9rem; font-weight:800; color:var(--green-600); font-family:'Sora',sans-serif; }
@@ -39,7 +39,7 @@
 .t1-feat h4 { font-size:1.05rem; margin-bottom:3px; }
 .t1-feat p { font-size:.92rem; color:var(--gray-500); }
 .t1-why-img { position:relative; }
-.t1-why-img img { border-radius:var(--radius-xl); box-shadow:var(--shadow-xl); aspect-ratio:1/1; object-fit:cover; }
+.t1-why-img img { width:100%; height:auto; border-radius:var(--radius-xl); box-shadow:var(--shadow-xl); aspect-ratio:1/1; object-fit:cover; }
 .t1-why-badge { position:absolute; bottom:-18px; left:18px; right:18px; background:#fff; border-radius:14px; box-shadow:var(--shadow-lg); padding:14px 18px; font-weight:600; font-size:.92rem; color:var(--dark); display:flex; align-items:center; gap:10px; }
 .t1-why-badge i { color:var(--solar); font-size:1.3rem; }
 

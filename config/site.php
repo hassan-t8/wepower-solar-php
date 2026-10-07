@@ -29,7 +29,7 @@ $company = [
 $ceo = [
     'name' => 'Mohammad Wasti',
     'role' => 'Founder & CEO · Electrical Engineer',
-    'image' => '/assets/images/ceo.png',
+    'image' => '/assets/images/ceo.webp',
     'bio' => "Mohammad Wasti is the Founder and CEO of WePower Solar and a qualified Electrical Engineer with international professional experience in Turkey and the United Arab Emirates during the early years of his career. This global exposure strengthened his technical expertise, work ethic, and understanding of international engineering and quality standards. A charismatic, energetic, and results-driven leader, he combines hands-on engineering knowledge with a strong business vision to deliver high-performance solar solutions. The company is supported by a team of highly qualified professionals — graduates of well-reputed institutions such as NUST, FAST, and IST — alongside qualified installation teams.",
 ];
 
@@ -80,37 +80,37 @@ $stats = [
 $services = [
     [
         'id' => 'residential', 'icon' => 'bi-house-heart', 'title' => 'Residential Solar',
-        'image' => '/assets/images/residential.png',
+        'image' => '/assets/images/residential.webp',
         'desc' => 'Customized rooftop solar solutions for homes — high-efficiency systems designed for maximum savings and long-term performance.',
         'points' => ['Customized rooftop systems', 'Payback in 3–4 years', 'Warranty-backed install'],
     ],
     [
         'id' => 'commercial', 'icon' => 'bi-building', 'title' => 'Commercial & Industrial',
-        'image' => '/assets/images/commercial.png',
+        'image' => '/assets/images/commercial.webp',
         'desc' => 'Tailored solar systems for offices, factories, and large facilities, designed for maximum efficiency and ROI.',
         'points' => ['Proven C&I track record', 'Strong, fast ROI', 'End-to-end EPC + O&M'],
     ],
     [
         'id' => 'hybrid', 'icon' => 'bi-lightning-charge', 'title' => 'On/Off-Grid & Hybrid',
-        'image' => '/assets/images/on-off-grid.png',
+        'image' => '/assets/images/on-off-grid.webp',
         'desc' => 'Grid-tied, independent, or hybrid setups optimized for efficiency — for homes, businesses, and industries.',
         'points' => ['24/7 power security', 'Smart load management', 'Net-metering compatible'],
     ],
     [
         'id' => 'netmetering', 'icon' => 'bi-speedometer2', 'title' => 'Net Metering',
-        'image' => '/assets/images/ground-mount.png',
+        'image' => '/assets/images/ground-mount.webp',
         'desc' => 'Hassle-free net metering setup. Complete support from application to grid connection for maximum savings.',
         'points' => ['Application to approval', 'Maximum bill savings', 'Grid connection handled'],
     ],
     [
         'id' => 'om', 'icon' => 'bi-tools', 'title' => 'Operation & Maintenance',
-        'image' => '/assets/images/om-maintenance.png',
+        'image' => '/assets/images/om-maintenance.webp',
         'desc' => 'Regular monitoring, preventive maintenance, and prompt troubleshooting. 2 years of free O&M support.',
         'points' => ['Performance monitoring', 'Fast response time', 'Preventive maintenance'],
     ],
     [
         'id' => 'design', 'icon' => 'bi-clipboard-check', 'title' => 'Site Survey & Design',
-        'image' => '/assets/images/solar-panel.png',
+        'image' => '/assets/images/solar-panel.webp',
         'desc' => 'Detailed load assessment, system design, and financial analysis to ensure the perfect fit for your needs.',
         'points' => ['On-site assessment', 'Engineered design', 'Financial analysis'],
     ],

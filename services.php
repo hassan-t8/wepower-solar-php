@@ -21,7 +21,7 @@ require_once __DIR__ . '/includes/header.php';
     <?php foreach ($services as $s): ?>
       <div class="svc-detail" id="<?= h($s['id']) ?>">
         <div class="svc-detail-img">
-          <img src="<?= h($s['image']) ?>" alt="<?= h($s['title']) ?>">
+          <img src="<?= h($s['image']) ?>" alt="<?= h($s['title']) ?>" loading="lazy" decoding="async">
         </div>
         <div class="svc-detail-txt">
           <span class="tag"><i class="bi <?= h($s['icon']) ?>"></i> <?= h($s['title']) ?></span>
