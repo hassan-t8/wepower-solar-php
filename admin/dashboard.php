@@ -52,7 +52,7 @@ require_once __DIR__ . '/includes/admin-header.php';
     </div>
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px" id="quickStatsRow"></div>
+  <div class="adm-quick-stats" id="quickStatsRow"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>

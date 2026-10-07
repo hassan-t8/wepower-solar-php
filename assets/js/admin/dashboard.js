@@ -195,7 +195,7 @@
       { label: "Today's Visitors", value: stats.visitors.today, icon: 'bi-person-lines-fill', sub: 'Unique page views' },
     ];
     document.getElementById('quickStatsRow').innerHTML = quick.map((c) => `
-      <div style="background:#fff;border-radius:var(--radius-lg);padding:22px 24px;border:1px solid var(--gray-200);display:flex;gap:16px;align-items:center">
+      <div class="adm-quick-card">
         <div style="width:46px;height:46px;border-radius:12px;background:var(--green-50);display:flex;align-items:center;justify-content:center;color:var(--green-600);font-size:1.2rem;flex-shrink:0">
           <i class="bi ${c.icon}"></i>
         </div>

@@ -315,3 +315,26 @@
 
   render();
 })();
+
+/**
+ * Mobile-friendly tables: copy each column header onto its cells as
+ * data-label, so on phones every row can be shown as a card
+ * ("Name: …", "Phone: …") instead of a wide table that scrolls sideways
+ * (styles in admin.css). Re-runs whenever a table's rows are re-rendered.
+ */
+(function () {
+  function label(table) {
+    const heads = Array.from(table.querySelectorAll('thead th')).map((th) => th.textContent.trim());
+    table.querySelectorAll('tbody tr').forEach((tr) => {
+      Array.from(tr.children).forEach((td, i) => {
+        if (td.hasAttribute('colspan')) { tr.classList.add('adm-row-msg'); return; }
+        td.setAttribute('data-label', heads[i] || '');
+      });
+    });
+  }
+  document.querySelectorAll('table.adm-table').forEach((table) => {
+    label(table);
+    const body = table.tBodies[0];
+    if (body) new MutationObserver(() => label(table)).observe(body, { childList: true });
+  });
+})();

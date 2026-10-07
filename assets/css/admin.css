@@ -576,3 +576,71 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
 .pw-meter span[data-level="3"] { background:#22c55e; }
 .pw-meter span[data-level="4"] { background:#15803d; }
 .pw-hint { font-size:.78rem; color:var(--gray-500); margin-top:5px; }
+
+/* Dashboard quick stats: 3 across on wide screens, stacked on small ones */
+.adm-quick-stats { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:18px; margin-top:20px; }
+.adm-quick-card { background:#fff; border-radius:var(--radius-lg); padding:22px 24px; border:1px solid var(--gray-200); display:flex; gap:16px; align-items:center; min-width:0; }
+@media (max-width:900px) { .adm-quick-stats { grid-template-columns:1fr; gap:12px; } .adm-quick-card { padding:16px 18px; } }
+
+/* Admin tables become cards on phones and tablets (labels come from admin-common.js).
+   Up to 1260px the content area is too narrow for 8-10 columns without sideways scrolling. */
+@media (max-width:1260px) {
+  .adm-table-wrap { overflow-x:visible; }
+  table.adm-table, table.adm-table tbody { display:block; width:100%; }
+  table.adm-table thead { display:none; }
+  .adm-table tr {
+    display:block; margin:12px; background:#fff; border:1px solid var(--gray-200);
+    border-radius:14px; overflow:hidden; box-shadow:0 1px 2px rgba(15,23,42,.04);
+  }
+  .adm-table tr:hover td { background:transparent; }
+  .adm-table td {
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    padding:9px 14px; border-bottom:1px solid var(--gray-100); text-align:right; min-width:0;
+  }
+  .adm-table td::before {
+    content:attr(data-label); flex-shrink:0; text-align:left;
+    font-size:.68rem; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:var(--gray-400);
+  }
+  .adm-table td[data-label=""]::before { display:none; }
+  .adm-table td > * { min-width:0; max-width:70%; white-space:normal !important; overflow-wrap:anywhere; }
+  .adm-table td > span[style*="max-width"] { max-width:70% !important; }
+  /* first cell (#id) is the card header */
+  .adm-table td:first-child { background:var(--gray-50); font-weight:700; }
+  .adm-table tr:last-child td, .adm-table td:last-child { border-bottom:none; }
+  /* action buttons: own row, right aligned, easy to tap */
+  .adm-table td:last-child { justify-content:flex-end; padding:10px 14px; }
+  .adm-table td:last-child::before { margin-right:auto; }
+  .adm-table td:last-child > div { max-width:none; }
+  .adm-action-btn { width:38px; height:38px; }
+  /* keep date and time together on the right */
+  .adm-table td.adm-date-cell { justify-content:flex-end; gap:4px; }
+  .adm-table td.adm-date-cell::before { margin-right:auto; }
+  .adm-date-cell span, .adm-date-cell small { display:inline; max-width:none; }
+  .adm-date-cell small::before { content:"· "; }
+  /* "Loading…" / "No records" rows stay plain */
+  .adm-table tr.adm-row-msg { border:none; box-shadow:none; background:transparent; }
+  .adm-table tr.adm-row-msg td { display:block; text-align:center; }
+  .adm-table tr.adm-row-msg td::before { display:none; }
+  .adm-pagination { padding:12px 16px; }
+}
+
+/* Tablets / small laptops: cards two per row */
+@media (min-width:700px) and (max-width:1260px) {
+  table.adm-table tbody { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:14px; padding:14px; align-items:start; }
+  .adm-table tr { margin:0; }
+  .adm-table tr.adm-row-msg { grid-column:1 / -1; }
+}
+
+/* Laptops (1261-1700px): compact table so all columns fit without sideways scrolling */
+@media (min-width:1261px) and (max-width:1700px) {
+  .adm-table th { padding:10px 10px; font-size:.7rem; }
+  .adm-table td { padding:11px 10px; font-size:.82rem; }
+  .adm-table td span { white-space:normal !important; overflow-wrap:break-word; }
+  .adm-table td:has(> span) { max-width:220px; }
+  /* only long emails may break anywhere; phone numbers stay on one line */
+  .adm-table td[data-label="Email"] span { overflow-wrap:anywhere; }
+  .adm-table td[data-label="Phone"], .adm-table td[data-label="Phone"] span { white-space:nowrap !important; }
+  .adm-table .adm-date-cell span, .adm-table .status-badge { white-space:nowrap !important; overflow-wrap:normal; }
+  .adm-table .adm-select-sm { padding:5px 6px; font-size:.78rem; }
+  .adm-table .adm-action-btn { width:30px; height:30px; }
+}
