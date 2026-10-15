@@ -2,7 +2,7 @@
 $pageTitle = 'Contact Us — WePower Solar Solutions';
 $pageDescription = "Have a question or ready to get a quote? Reach WePower Solar Solutions — Pakistan's trusted solar EPC partner. Our team replies within 24 hours.";
 $headerVariant = 'solid';
-$pageScripts = ['contact-form.js', 'faq.js'];
+$pageScripts = ['contact-form.js'];
 require_once __DIR__ . '/includes/header.php';
 
 // Contact details come from Admin → Settings → Company (code values are only a fallback)
@@ -38,6 +38,7 @@ $phones = implode(' / ', array_filter([
           <div>
             <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px"><?= h(t('contact.officeAddress')) ?></div>
             <div style="color:var(--gray-800);font-weight:500;line-height:1.5"><?= h($contactAddress) ?></div>
+            <a class="contact-directions" href="<?= h($brand['mapLink']) ?>" target="_blank" rel="noopener"><?= h(t('home.getDirections')) ?> <i class="bi bi-arrow-up-right"></i></a>
           </div>
         </div>
 
@@ -118,16 +119,6 @@ $phones = implode(' / ', array_filter([
   </div>
 </section>
 
-<?php $faqSubtext = t('contact.faqSub'); include __DIR__ . '/includes/faq-section.php'; ?>
 
-<section style="padding-bottom:80px">
-  <div class="container">
-    <div style="border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--gray-200)">
-      <iframe title="WePower Office Location"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7200.472221595387!2d73.08403315139924!3d33.52430547107239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfed0039659f35%3A0xc24187ea792ac21e!2sWePower%20Solar%20Energy!5e0!3m2!1sen!2s!4v1790998979617!5m2!1sen!2s"
-        width="100%" height="380" style="border:0;display:block" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-    </div>
-  </div>
-</section>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

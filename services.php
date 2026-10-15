@@ -24,7 +24,7 @@ require_once __DIR__ . '/includes/header.php';
           <img src="<?= h($s['image']) ?>" alt="<?= h($s['title']) ?>" loading="lazy" decoding="async">
         </div>
         <div class="svc-detail-txt">
-          <span class="tag"><i class="bi <?= h($s['icon']) ?>"></i> <?= h($s['title']) ?></span>
+          <span class="tag"><?= h($s['title']) ?></span>
           <h2><?= h($s['title']) ?></h2>
           <p><?= h($s['desc']) ?></p>
           <?php if (!empty($s['points'])): ?>
@@ -58,24 +58,6 @@ require_once __DIR__ . '/includes/header.php';
           </div>
           <h4 style="margin-bottom:6px"><?= h($p['title']) ?></h4>
           <p style="color:var(--gray-500);font-size:.88rem"><?= h($p['desc']) ?></p>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <span class="tag"><?= h(t('services.productsTag')) ?></span>
-      <h2><?= h(t('services.productsTitle')) ?></h2>
-    </div>
-    <div class="val-cards">
-      <?php foreach ($products as $p): ?>
-        <div class="val-card">
-          <div class="val-card-ico"><i class="bi <?= h($p['icon']) ?>"></i></div>
-          <h4><?= h($p['title']) ?></h4>
-          <p><?= h($p['desc']) ?></p>
         </div>
       <?php endforeach; ?>
     </div>

@@ -181,3 +181,6 @@
   .apply-success h3 { font-size: 1.3rem; }
   .apply-success p { font-size: .9rem; }
 }
+
+/* no decorative glow blob */
+.apply-side-glow { display:none !important; }

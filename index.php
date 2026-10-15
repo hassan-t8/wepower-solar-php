@@ -4,13 +4,11 @@ $pageDescription = "Pakistan's trusted solar EPC partner — residential, commer
 $headerVariant = 'light';
 $bodyClass = 't1';
 $pageStyles = ['home.css'];
-$pageScripts = ['faq.js', 'counter.js'];
+$pageScripts = ['counter.js'];
 require_once __DIR__ . '/includes/header.php';
 ?>
 
 <section class="t1-hero">
-  <div class="t1-mesh"></div>
-  <div class="t1-orb"></div>
   <div class="container t1-hero-grid">
     <div class="t1-hero-content">
       <span class="tag"><?= h(t('home.badge')) ?></span>
@@ -57,7 +55,6 @@ require_once __DIR__ . '/includes/header.php';
       <div class="t1-feats">
         <?php foreach ($whyFeatures as $f): ?>
           <div class="t1-feat">
-            <div class="t1-feat-ico"><i class="bi <?= h($f['icon']) ?>"></i></div>
             <div><h4><?= h($f['title']) ?></h4><p><?= h($f['desc']) ?></p></div>
           </div>
         <?php endforeach; ?>
@@ -66,36 +63,10 @@ require_once __DIR__ . '/includes/header.php';
     </div>
     <div class="t1-why-img">
       <img src="/assets/images/who-we-are-solar.webp" alt="Home solar" width="1200" height="800" loading="lazy" decoding="async">
-      <div class="t1-why-badge"><i class="bi bi-sun-fill"></i> <?= h(t('home.whoImgCaption')) ?></div>
     </div>
   </div>
 </section>
 
-<section class="section t1-services-sec">
-  <div class="container">
-    <div class="section-head">
-      <span class="tag"><?= h(t('home.servicesTag')) ?></span>
-      <h2><?= h(t('home.servicesTitle')) ?></h2>
-      <p><?= h(t('home.servicesSub')) ?></p>
-    </div>
-    <div class="t1-cards">
-      <?php foreach ($services as $s): ?>
-        <div class="t1-card" id="<?= h($s['id']) ?>">
-          <div class="t1-card-img" style="background-image:url('<?= h($s['image']) ?>')">
-            <div class="t1-card-ico"><i class="bi <?= h($s['icon']) ?>"></i></div>
-          </div>
-          <div class="t1-card-body">
-            <h3><?= h($s['title']) ?></h3>
-            <p><?= h($s['desc']) ?></p>
-            <button type="button" class="t1-apply" data-open-apply-modal data-service="<?= h($s['title']) ?>">
-              <?= h(t('common.applyNow')) ?> <i class="bi bi-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
 
 <section class="t1-stats">
   <div class="container t1-stats-grid">
@@ -108,23 +79,6 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <span class="tag"><?= h(t('home.processTag')) ?></span>
-      <h2><?= h(t('home.processTitle')) ?></h2>
-    </div>
-    <div class="t1-process">
-      <?php foreach ($process as $p): ?>
-        <div class="t1-step">
-          <div class="t1-step-num"><?= (int)$p['n'] ?></div>
-          <h4><?= h($p['title']) ?></h4><p><?= h($p['desc']) ?></p>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-
 <section class="section t1-services-sec">
   <div class="container">
     <div class="section-head">
@@ -134,7 +88,6 @@ require_once __DIR__ . '/includes/header.php';
     <div class="t1-products">
       <?php foreach ($products as $p): ?>
         <div class="t1-product">
-          <div class="t1-product-ico"><i class="bi <?= h($p['icon']) ?>"></i></div>
           <h4><?= h($p['title']) ?></h4><p><?= h($p['desc']) ?></p>
         </div>
       <?php endforeach; ?>
@@ -142,7 +95,7 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<?php include __DIR__ . '/includes/faq-section.php'; ?>
+<?php include __DIR__ . '/includes/map-section.php'; ?>
 
 <section class="t1-cta">
   <div class="container">

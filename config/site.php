@@ -12,6 +12,8 @@ $brand = [
     'logo' => '/assets/images/logo.png',
     'phones' => ['0335-5777898', '0304-7357138'],
     'instagram' => '@wepower__',
+    'mapEmbed' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7200.472221595387!2d73.08403315139924!3d33.52430547107239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfed0039659f35%3A0xc24187ea792ac21e!2sWePower%20Solar%20Energy!5e0!3m2!1sen!2s!4v1790998979617!5m2!1sen!2s',
+    'mapLink' => 'https://maps.google.com/?cid=13997618557969154590',
     'address' => 'Office 3, GF Plaza 179, Intellectual Village Spring North, Bahria Town Phase 7, Rawalpindi',
 ];
 

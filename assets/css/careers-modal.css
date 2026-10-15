@@ -159,3 +159,6 @@
   .cm-success { padding: 24px 8px 8px; }
   .cm-check { width: 68px; height: 68px; font-size: 2.1rem; margin-bottom: 16px; }
 }
+
+/* no decorative glow blob */
+.cm-side-glow { display:none !important; }

@@ -81,7 +81,7 @@ if ($schemaSameAs) $schema['sameAs'] = $schemaSameAs;
         </span>
       </div>
       <?php if ($email): ?><div class="ftr-contact"><i class="bi bi-envelope-fill"></i><span><a href="mailto:<?= h($email) ?>"><?= h($email) ?></a></span></div><?php endif; ?>
-      <?php if ($instagram): ?><div class="ftr-contact"><i class="bi bi-instagram"></i><span><?= h($instagram) ?></span></div><?php endif; ?>
+      <?php if ($instagram): ?><div class="ftr-contact"><i class="bi bi-instagram"></i><span><a href="<?= h($igUrl ?: 'https://www.instagram.com/' . ltrim($instagram, '@') . '/') ?>" target="_blank" rel="noopener"><?= h($instagram) ?></a></span></div><?php endif; ?>
     </div>
   </div>
   <div class="ftr-bottom">&copy; <?= h($year) ?> <?= h($companyName) ?>. <?= h(t('footer.rights')) ?></div>

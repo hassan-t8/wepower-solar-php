@@ -70,6 +70,10 @@ return [
         'faqSub' => 'Quick answers about solar in Pakistan.',
         'ctaTitle' => 'Ready to Cut Your Electricity Bill to Zero?',
         'ctaSub' => 'Get a free site survey and a tailored proposal from our solar experts. No obligation.',
+        'mapTag' => 'Visit Us',
+        'mapTitle' => 'Visit Our Office',
+        'mapSub' => 'Meet our team in Bahria Town Phase 7, Rawalpindi, during working hours, or call ahead to book a time.',
+        'getDirections' => 'Get Directions',
     ],
     'about' => [
         'breadcrumb' => 'About Us',

@@ -8,17 +8,14 @@
   background:linear-gradient(135deg,var(--dark) 0%,var(--dark-2) 60%,#0d2d1a 100%);
   text-align:center; position:relative; overflow:hidden;
 }
-.pg-hero::before {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 65% 50%,rgba(34,197,94,.18) 0,transparent 65%);
-  pointer-events:none;
-}
+
 .pg-hero-inner { position:relative; z-index:1; }
 .pg-hero h1 { color:#fff; margin:16px 0 12px; }
 .pg-hero p  { color:rgba(255,255,255,.7); max-width:600px; margin:0 auto; font-size:1.05rem; }
+/* breadcrumb sits on its own centred line above the section label */
 .pg-breadcrumb {
-  display:inline-flex; align-items:center; gap:8px;
-  color:rgba(255,255,255,.5); font-size:.85rem; margin-bottom:6px;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  color:rgba(255,255,255,.5); font-size:.85rem; margin-bottom:14px;
 }
 .pg-breadcrumb a { color:rgba(255,255,255,.55); }
 .pg-breadcrumb a:hover { color:#fff; }
@@ -267,3 +264,10 @@
 @media (max-width:768px) {
   .svc-detail { padding:44px 0; }
 }
+
+/* ---- Clean-up: cards use a green top rule instead of icon tiles ---------- */
+.val-card-ico { display:none !important; }
+.val-card { border-top:3px solid var(--green-500); }
+.roadmap-item { padding:16px 20px; background:var(--gray-50); border-radius:var(--radius); border:1px solid var(--gray-200); border-left:3px solid var(--green-500); }
+.contact-directions { display:inline-flex; align-items:center; gap:6px; margin-top:6px; font-size:.88rem; font-weight:600; color:var(--green-700); }
+.contact-directions:hover { color:var(--green-800); text-decoration:underline; }

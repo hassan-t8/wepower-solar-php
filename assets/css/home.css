@@ -1,5 +1,5 @@
 /* ============ TEMPLATE 1 — AURORA ============ */
-.t1-hero { position:relative; padding:140px 0 56px; overflow:hidden; background:linear-gradient(180deg,var(--green-50),#fff 70%); }
+.t1-hero { position:relative; padding:140px 0 56px; overflow:hidden; background:#fff; border-bottom:1px solid var(--gray-100); }
 .t1-mesh {
   position:absolute; inset:0; opacity:.7; pointer-events:none;
   background:
@@ -13,7 +13,7 @@
 @keyframes t1floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(26px)} }
 .t1-hero-grid { position:relative; display:grid; grid-template-columns:1.05fr .95fr; gap:50px; align-items:center; }
 .t1-hero-content h1 { margin:18px 0 18px; }
-.t1-grad { background:linear-gradient(120deg,var(--green-600),var(--solar)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.t1-grad { color:var(--green-600); }
 .t1-lead { font-size:1.12rem; color:var(--gray-600); max-width:540px; }
 .t1-actions { display:flex; gap:14px; flex-wrap:wrap; margin:30px 0 36px; }
 .t1-hero-stats { display:flex; gap:36px; }
@@ -34,7 +34,7 @@
 .t1-why { display:grid; grid-template-columns:1.1fr .9fr; gap:54px; align-items:center; }
 .t1-why .section-title { margin:14px 0; }
 .t1-feats { display:flex; flex-direction:column; gap:20px; margin:28px 0 30px; }
-.t1-feat { display:flex; gap:16px; }
+.t1-feat { display:flex; gap:16px; padding-left:16px; border-left:3px solid var(--green-500); }
 .t1-feat-ico { width:50px; height:50px; flex-shrink:0; border-radius:13px; background:var(--green-50); color:var(--green-600); display:flex; align-items:center; justify-content:center; font-size:1.4rem; border:1px solid var(--green-100); }
 .t1-feat h4 { font-size:1.05rem; margin-bottom:3px; }
 .t1-feat p { font-size:.92rem; color:var(--gray-500); }
@@ -96,4 +96,41 @@
 @media (max-width:768px) {
   .t1-stats { padding:44px 0; }
   .t1-cta { padding:12px 0 56px; }
+}
+
+/* ---- Clean-up: no AI-style decoration ----------------------------------- */
+.t1-mesh, .t1-orb, .t1-why-badge, .t1-feat-ico, .t1-product-ico { display:none !important; }
+.t1-hero-grid { align-items:center; }
+.t1-hero-content .tag { margin-bottom:4px; }
+/* products: plain cards with a green top rule instead of icon circles */
+.t1-product { text-align:left; border-top:3px solid var(--green-500); border-radius:var(--radius); padding:24px 22px; box-shadow:var(--shadow-sm, 0 1px 3px rgba(15,23,42,.06)); }
+.t1-product h4 { margin-bottom:8px; }
+.t1-product:hover { transform:none; }
+/* hero stats: an even 3-column row */
+.t1-hero-stats { display:grid; grid-template-columns:repeat(3, max-content); gap:36px; }
+@media (max-width:600px) {
+  .t1-hero { padding:112px 0 40px; }
+  .t1-actions { flex-direction:column; align-items:stretch; margin:24px 0 28px; }
+  .t1-actions .btn { width:100%; justify-content:center; }
+  .t1-hero-stats { grid-template-columns:repeat(3, minmax(0, 1fr)); gap:12px; }
+  .t1-hstat strong { font-size:1.45rem; }
+  .t1-hstat span { font-size:.76rem; line-height:1.3; display:block; }
+}
+
+/* ---- Visit Our Office (home) --------------------------------------------- */
+.office-sec { background:var(--gray-50); }
+.office-grid { display:grid; grid-template-columns:minmax(0, 0.9fr) minmax(0, 1.4fr); gap:28px; align-items:stretch; }
+.office-info { background:#fff; border:1px solid var(--gray-200); border-radius:var(--radius-lg); padding:28px; display:flex; flex-direction:column; gap:20px; }
+.office-row { padding-left:14px; border-left:3px solid var(--green-500); }
+.office-label { display:block; font-size:.74rem; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:var(--gray-500); margin-bottom:4px; }
+.office-row p { color:var(--gray-800); line-height:1.6; }
+.office-row a { color:var(--gray-800); }
+.office-row a:hover { color:var(--green-700); }
+.office-info .btn { align-self:flex-start; margin-top:auto; }
+.office-map { border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--gray-200); min-height:380px; background:var(--gray-100); }
+.office-map iframe { min-height:380px; }
+@media (max-width:860px) {
+  .office-grid { grid-template-columns:1fr; }
+  .office-map, .office-map iframe { min-height:300px; }
+  .office-info { padding:22px; }
 }

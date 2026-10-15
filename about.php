@@ -2,6 +2,7 @@
 $pageTitle = 'About Us — WePower Solar Solutions';
 $pageDescription = "Pakistan's trusted solar EPC partner. Learn about WePower Solar Solutions' mission, vision, leadership, and track record of landmark solar installations.";
 $headerVariant = 'solid';
+$pageScripts = array_merge($pageScripts ?? [], ['faq.js']);
 require_once __DIR__ . '/includes/header.php';
 ?>
 
@@ -23,10 +24,6 @@ require_once __DIR__ . '/includes/header.php';
         <span class="tag"><?= h(t('about.storyTag')) ?></span>
         <h2 class="section-title" style="text-align:<?= $DIR === 'rtl' ? 'right' : 'left' ?>"><?= h(t('about.storyTitle')) ?></h2>
         <p class="muted" style="margin-bottom:20px"><?= h($company['who']) ?></p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <button type="button" class="btn btn-primary" data-open-apply-modal><i class="bi bi-lightning-charge-fill"></i> <?= h(t('common.getFreeQuote')) ?></button>
-          <a href="/contact" class="btn btn-outline"><i class="bi bi-telephone"></i> <?= h(t('common.contactUs')) ?></a>
-        </div>
       </div>
       <div>
         <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
@@ -50,18 +47,15 @@ require_once __DIR__ . '/includes/header.php';
     </div>
     <div class="val-cards">
       <div class="val-card">
-        <div class="val-card-ico"><i class="bi bi-eye"></i></div>
         <h4><?= h(t('about.visionTitle')) ?></h4>
         <p><?= h($company['vision']) ?></p>
       </div>
       <div class="val-card">
-        <div class="val-card-ico"><i class="bi bi-bullseye"></i></div>
         <h4><?= h(t('about.missionTitle')) ?></h4>
         <p><?= h($company['mission']) ?></p>
       </div>
       <?php foreach ($company['values'] as $v): ?>
         <div class="val-card">
-          <div class="val-card-ico"><i class="bi bi-award"></i></div>
           <h4><?= h($v['title']) ?></h4>
           <p><?= h($v['desc']) ?></p>
         </div>
@@ -98,14 +92,12 @@ require_once __DIR__ . '/includes/header.php';
     <div class="val-cards">
       <?php foreach ($whyFeatures as $f): ?>
         <div class="val-card">
-          <div class="val-card-ico"><i class="bi <?= h($f['icon']) ?>"></i></div>
           <h4><?= h($f['title']) ?></h4>
           <p><?= h($f['desc']) ?></p>
         </div>
       <?php endforeach; ?>
       <?php foreach ($whyChoose as $w): ?>
         <div class="val-card">
-          <div class="val-card-ico"><i class="bi bi-check-circle"></i></div>
           <h4><?= h(t('about.trackRecord')) ?></h4>
           <p><?= h($w) ?></p>
         </div>
@@ -133,10 +125,7 @@ require_once __DIR__ . '/includes/header.php';
         <p class="muted" style="margin-bottom:24px"><?= h(t('about.nextDesc')) ?></p>
         <div style="display:flex;flex-direction:column;gap:16px">
           <?php foreach ($roadmap as $r): ?>
-            <div style="display:flex;gap:16px;align-items:start;padding:16px 20px;background:var(--gray-50);border-radius:var(--radius);border:1px solid var(--gray-200)">
-              <div style="width:42px;height:42px;border-radius:12px;background:var(--green-50);display:flex;align-items:center;justify-content:center;color:var(--green-600);font-size:1.1rem;flex-shrink:0">
-                <i class="bi <?= h($r['icon']) ?>"></i>
-              </div>
+            <div class="roadmap-item">
               <div>
                 <h4 style="font-size:1rem;margin-bottom:4px"><?= h($r['title']) ?></h4>
                 <p style="color:var(--gray-500);font-size:.88rem"><?= h($r['desc']) ?></p>
@@ -149,15 +138,6 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section class="section-cta-band" style="background:linear-gradient(135deg,var(--green-700),var(--green-600))">
-  <div class="container" style="text-align:center">
-    <h2 style="color:#fff;margin-bottom:12px"><?= h(t('about.ctaTitle')) ?></h2>
-    <p style="color:rgba(255,255,255,.85);margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto"><?= h(t('about.ctaSub')) ?></p>
-    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-      <button type="button" class="btn btn-white btn-lg" data-open-apply-modal><i class="bi bi-send"></i> <?= h(t('common.applyNow')) ?></button>
-      <a href="/contact" class="btn btn-ghost-light btn-lg"><i class="bi bi-telephone"></i> <?= h(t('common.talkToUs')) ?></a>
-    </div>
-  </div>
-</section>
+<?php $faqSubtext = t('contact.faqSub'); include __DIR__ . '/includes/faq-section.php'; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
