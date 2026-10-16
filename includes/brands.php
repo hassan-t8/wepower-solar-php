@@ -20,7 +20,7 @@
       ?>
         <article class="brand-card">
           <div class="brand-media">
-            <img src="<?= h($photo) ?>"<?= $photoPos ? ' style="object-position:' . h($photoPos) . '"' : '' ?> alt="<?= h(t('home.brands_' . $g['key'])) ?>" loading="lazy" decoding="async">
+            <img src="<?= h(asset($photo)) ?>"<?= $photoPos ? ' style="object-position:' . h($photoPos) . '"' : '' ?> alt="<?= h(t('home.brands_' . $g['key'])) ?>" loading="lazy" decoding="async">
             <div class="brand-media-txt">
               <h3><?= h(t('home.brands_' . $g['key'])) ?></h3>
               <ul class="brand-specs">
@@ -35,7 +35,7 @@
           </div>
           <ul class="brand-logos">
             <?php foreach ($g['items'] as $b): ?>
-              <li title="<?= h($b['name']) ?>"<?= !empty($b['tall']) ? ' class="is-tall"' : '' ?>><img src="<?= h($b['logo']) ?>" alt="<?= h($b['name']) ?>" loading="lazy" decoding="async"></li>
+              <li title="<?= h($b['name']) ?>"<?= !empty($b['tall']) ? ' class="is-tall"' : '' ?>><img src="<?= h(asset($b['logo'])) ?>" alt="<?= h($b['name']) ?>" loading="lazy" decoding="async"></li>
             <?php endforeach; ?>
           </ul>
         </article>
