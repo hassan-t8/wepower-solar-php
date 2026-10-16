@@ -644,3 +644,9 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
   .adm-table .adm-select-sm { padding:5px 6px; font-size:.78rem; }
   .adm-table .adm-action-btn { width:30px; height:30px; }
 }
+
+/* Settings: each section's save button sits at the bottom-right of its card */
+.adm-form-actions { display:flex; justify-content:flex-end; align-items:center; gap:12px; flex-wrap:wrap; margin-top:24px; padding-top:18px; border-top:1px solid var(--gray-100); }
+@media (max-width:520px) {
+  .adm-form-actions .btn { flex:1 1 100%; justify-content:center; }
+}
