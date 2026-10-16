@@ -650,3 +650,10 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
 @media (max-width:520px) {
   .adm-form-actions .btn { flex:1 1 100%; justify-content:center; }
 }
+
+/* Disabled buttons look disabled (they used to look identical to active ones) */
+.adm-main .btn:disabled, .adm-main .btn[disabled] { background:var(--gray-200); color:var(--gray-500); border-color:var(--gray-200); box-shadow:none; cursor:not-allowed; transform:none; opacity:1; }
+.adm-main .btn-outline:disabled { background:#fff; color:var(--gray-400); border-color:var(--gray-200); }
+/* ...except while working or just saved */
+.adm-main .btn:disabled:has(.adm-spinner), .adm-main .btn:disabled:has(.btn-spinner) { background:var(--green-600); color:#fff; border-color:var(--green-600); cursor:progress; }
+.adm-main .btn.is-saved, .adm-main .btn.is-saved:disabled { background:var(--green-50); color:var(--green-700); border-color:var(--green-200); cursor:default; }

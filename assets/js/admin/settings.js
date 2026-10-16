@@ -22,7 +22,10 @@
     });
   });
 
+  // Save buttons sit at the bottom of each section, so feedback is a toast
+  // (always on screen) rather than the alert box at the top of the page.
   function showAlert(type, msg) {
+    if (window.showToast) { window.showToast(msg, type); return; }
     const box = document.getElementById('settingsAlert');
     box.hidden = false;
     box.className = 'adm-alert ' + type;
@@ -31,10 +34,36 @@
     setTimeout(() => { box.hidden = true; }, 4500);
   }
 
+  const SPINNER = '<span class="adm-spinner" style="border-color:rgba(255,255,255,.35);border-top-color:#fff;width:14px;height:14px"></span>';
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  // Keep the loader on screen long enough to be seen, even when the server is instant.
+  async function withMinDelay(promise, ms) {
+    const minimum = wait(ms || 700);
+    try { return await promise; } finally { await minimum; }
+  }
+  // Button shows "✓ Saved" for a moment, then goes back to its label (still disabled).
+  function flashDone(btn, label, after) {
+    btn.classList.add('is-saved');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="bi bi-check2-circle"></i> ' + label;
+    btn._doneTimer = setTimeout(() => { btn._doneTimer = null; btn.classList.remove('is-saved'); after(); }, 2000);
+  }
+  function clearDone(btn, origHtml) {
+    if (!btn._doneTimer) return;
+    clearTimeout(btn._doneTimer);
+    btn._doneTimer = null;
+    btn.classList.remove('is-saved');
+    btn.innerHTML = origHtml;
+  }
+
   // ---- Per-section save forms, with dirty tracking ----
+  // A section's Save button stays disabled (grey) until something in that section
+  // changes; it shows a loader while saving, then "Saved", then disables again.
   document.querySelectorAll('.settings-section-form').forEach((form) => {
     const keys = form.dataset.keys.split(',');
     const submitBtn = form.querySelector('[type="submit"]');
+    const origLabel = submitBtn.innerHTML;
+    let saving = false;
     const initial = {};
     keys.forEach((k) => { initial[k] = fieldValue(form, k); });
 
@@ -46,8 +75,10 @@
     }
 
     function checkDirty() {
+      if (saving) return;
       const dirty = keys.some((k) => fieldValue(form, k) !== initial[k]);
-      submitBtn.disabled = !dirty;
+      if (dirty) clearDone(submitBtn, origLabel); // typing again ends the "Saved" state
+      if (!submitBtn._doneTimer) submitBtn.disabled = !dirty;
     }
     form.addEventListener('input', checkDirty);
     form.addEventListener('change', checkDirty);
@@ -57,27 +88,37 @@
       const payload = {};
       keys.forEach((k) => { payload[k] = fieldValue(form, k); });
 
-      const orig = submitBtn.innerHTML;
+      if (saving || submitBtn.disabled) return;
+      saving = true;
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span class="adm-spinner" style="border-color:rgba(255,255,255,.35);border-top-color:#fff;width:14px;height:14px"></span> Saving…';
+      submitBtn.innerHTML = SPINNER + ' Saving…';
 
+      let ok = false;
       try {
-        const res = await fetch('/admin/api/settings-save.php', {
+        const res = await withMinDelay(fetch('/admin/api/settings-save.php', {
           method: 'POST', credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
-        });
+        }));
         const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data.error || 'Save failed');
+        // What was sent is now the saved state (edits typed during the save stay "unsaved").
+        keys.forEach((k) => { initial[k] = payload[k]; });
         // The server may tidy a value (e.g. keeps only the link from pasted map HTML).
-        Object.entries(data.values || {}).forEach(([k, v]) => { if (form.elements[k]) form.elements[k].value = v; });
-        keys.forEach((k) => { initial[k] = fieldValue(form, k); });
-        showAlert('success', 'Settings saved!');
+        Object.entries(data.values || {}).forEach(([k, v]) => {
+          if (form.elements[k] && fieldValue(form, k) === payload[k]) form.elements[k].value = v;
+          initial[k] = v;
+        });
+        ok = true;
+        showAlert('success', 'Settings saved');
       } catch (err) {
-        showAlert('error', err.message);
+        showAlert('error', err.message === 'Failed to fetch' ? 'No connection to the server. Check your internet and try again.' : err.message);
       }
-      submitBtn.innerHTML = orig;
-      checkDirty();
+      saving = false;
+      submitBtn.innerHTML = origLabel;
+      const changedMeanwhile = keys.some((k) => fieldValue(form, k) !== initial[k]);
+      if (ok && !changedMeanwhile) flashDone(submitBtn, 'Saved', () => { submitBtn.innerHTML = origLabel; checkDirty(); });
+      else checkDirty(); // new edits typed during the save keep the button active
     });
   });
 
@@ -86,9 +127,11 @@
   const logoUploadBtn = document.getElementById('logoUploadBtn');
   const logoPreview = document.getElementById('logoPreview');
   const logoStatusText = document.getElementById('logoStatusText');
+  const logoOrig = logoUploadBtn ? logoUploadBtn.innerHTML : '';
   if (logoFileInput) {
     logoFileInput.addEventListener('change', () => {
       const file = logoFileInput.files[0];
+      clearDone(logoUploadBtn, logoOrig);
       logoUploadBtn.disabled = !file;
       if (file) {
         logoPreview.src = URL.createObjectURL(file);
@@ -98,24 +141,26 @@
     logoUploadBtn.addEventListener('click', async () => {
       const file = logoFileInput.files[0];
       if (!file) return;
-      const orig = logoUploadBtn.innerHTML;
       logoUploadBtn.disabled = true;
-      logoUploadBtn.innerHTML = '<span class="adm-spinner" style="border-color:rgba(255,255,255,.35);border-top-color:#fff;width:14px;height:14px"></span> Uploading…';
+      logoUploadBtn.innerHTML = SPINNER + ' Uploading…';
+      let ok = false;
       try {
         const fd = new FormData();
         fd.append('logo', file);
-        const res = await fetch('/admin/api/logo-upload.php', { method: 'POST', credentials: 'include', body: fd });
-        const data = await res.json();
+        const res = await withMinDelay(fetch('/admin/api/logo-upload.php', { method: 'POST', credentials: 'include', body: fd }));
+        const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data.error || 'Upload failed');
         logoPreview.src = data.url;
         logoStatusText.textContent = 'Current logo';
         logoFileInput.value = '';
-        showAlert('success', 'Logo uploaded! Visitors will see the new logo on their next page load.');
+        ok = true;
+        showAlert('success', 'Logo uploaded. Visitors see it on their next page load.');
       } catch (err) {
         showAlert('error', err.message);
       }
-      logoUploadBtn.innerHTML = orig;
-      logoUploadBtn.disabled = true;
+      logoUploadBtn.innerHTML = logoOrig;
+      if (ok) flashDone(logoUploadBtn, 'Uploaded', () => { logoUploadBtn.innerHTML = logoOrig; logoUploadBtn.disabled = !logoFileInput.files[0]; });
+      else logoUploadBtn.disabled = !logoFileInput.files[0];
     });
   }
 
@@ -138,7 +183,7 @@
       smtpTestBtn.disabled = true;
       smtpTestBtn.innerHTML = '<span class="adm-spinner" style="border-color:var(--green-200);border-top-color:var(--green-600)"></span> Testing…';
       try {
-        const res = await fetch('/admin/api/smtp-test.php', { method: 'POST', credentials: 'include' });
+        const res = await withMinDelay(fetch('/admin/api/smtp-test.php', { method: 'POST', credentials: 'include' }));
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
         showAlert('success', data.message);
@@ -182,8 +227,9 @@
 
   // ---- Password change ----
   // ---- Change password ----
-  // The button is always clickable (browser autofill doesn't count as typing, so a
-  // "disabled until you type" button looked dead). Every outcome shows a message.
+  // Like the other sections: disabled (grey) until something is typed, loader while
+  // updating, then "Updated" and disabled again. Re-checked after load because
+  // browser autofill can fill fields without an input event. Every outcome shows a message.
   const pwForm = document.getElementById('pwForm');
   const pwSubmitBtn = document.getElementById('pwSubmitBtn');
   const pwAlert = document.getElementById('pwAlert');
@@ -225,6 +271,17 @@
         : 'Use 8+ characters. Mixing letters, numbers and symbols makes it stronger.';
     });
     [cur, nw, cf].forEach((el) => el.addEventListener('input', () => pwFieldError(el, '')));
+    const pwOrig = pwSubmitBtn.innerHTML;
+    let pwBusy = false;
+    function pwCheck() {
+      if (pwBusy) return;
+      const filled = !!(cur.value || nw.value || cf.value);
+      if (filled) clearDone(pwSubmitBtn, pwOrig);
+      if (!pwSubmitBtn._doneTimer) pwSubmitBtn.disabled = !filled;
+    }
+    ['input', 'change', 'keyup'].forEach((ev) => pwForm.addEventListener(ev, pwCheck));
+    pwCheck();
+    setTimeout(pwCheck, 600);
     pwForm.querySelectorAll('.pw-eye-toggle').forEach((btn) => {
       btn.addEventListener('click', () => {
         const input = btn.previousElementSibling;
@@ -250,15 +307,16 @@
       else if (nw.value && cf.value !== nw.value) fail(cf, 'Passwords do not match.');
       if (bad) { bad.focus(); return; }
 
-      const orig = pwSubmitBtn.innerHTML;
+      pwBusy = true;
       pwSubmitBtn.disabled = true;
       pwSubmitBtn.innerHTML = '<span class="btn-spinner"></span> Updating…';
+      let ok = false;
       try {
-        const res = await fetch('/admin/api/change-password.php', {
+        const res = await withMinDelay(fetch('/admin/api/change-password.php', {
           method: 'POST', credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ current_password: cur.value, new_password: nw.value }),
-        });
+        }));
         let data = {};
         try { data = await res.json(); } catch (_) { /* non-JSON (e.g. server error page) */ }
         if (res.status === 401 && data.error === 'Unauthorized') {
@@ -270,14 +328,17 @@
         }
         pwShowAlert('success', 'Password updated. Use the new password next time you log in.');
         if (window.showToast) showToast('Password updated', 'success');
+        ok = true;
         pwForm.reset();
         bar.style.width = '0';
         hint.textContent = 'Use 8+ characters. Mixing letters, numbers and symbols makes it stronger.';
       } catch (err) {
         pwShowAlert('error', err.message === 'Failed to fetch' ? 'No connection to the server. Check your internet and try again.' : err.message);
       } finally {
-        pwSubmitBtn.disabled = false;
-        pwSubmitBtn.innerHTML = orig;
+        pwBusy = false;
+        pwSubmitBtn.innerHTML = pwOrig;
+        if (ok) flashDone(pwSubmitBtn, 'Updated', () => { pwSubmitBtn.innerHTML = pwOrig; pwCheck(); });
+        else pwCheck();
       }
     });
   }
