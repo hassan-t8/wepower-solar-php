@@ -148,8 +148,8 @@ $brandGroups = [
         'key' => 'panels',
         'photo' => '/assets/images/solar-panel.webp',
         'items' => [
-            ['name' => 'Canadian Solar', 'logo' => '/assets/images/brands/canadian-solar.webp', 'badge' => true], // logo is a coloured block
-            ['name' => 'LONGi', 'logo' => '/assets/images/brands/longi.webp', 'badge' => true],
+            ['name' => 'Canadian Solar', 'logo' => '/assets/images/brands/canadian-solar.webp', 'tall' => true], // icon stacked above the name
+            ['name' => 'LONGi', 'logo' => '/assets/images/brands/longi.webp'],
             ['name' => 'Jinko Solar', 'logo' => '/assets/images/brands/jinko-solar.webp'],
             ['name' => 'JA Solar', 'logo' => '/assets/images/brands/ja-solar.webp'],
         ],
