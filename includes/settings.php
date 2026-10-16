@@ -10,6 +10,7 @@
  */
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/helpers.php'; // asset()
 
 /** Keys the public site is allowed to read (mirrors PUBLIC_SETTING_KEYS in server.js). */
 const PUBLIC_SETTING_KEYS = [
@@ -65,6 +66,21 @@ function getPublicSettings(): array
         $settings[$row['key']] = $row['value'];
     }
     return $settings;
+}
+
+/**
+ * Logo to show on pages (site header/footer, admin sidebar, admin login).
+ * The built-in default has wide black margins, so pages use a trimmed copy of
+ * it; a logo uploaded in Admin → Settings is used as-is (uploads are trimmed
+ * when saved — see trimImageMargins()).
+ */
+function displayLogoUrl(): string
+{
+    $logo = setting('company_logo', '/assets/images/logo.png');
+    if ($logo === '' || $logo === '/assets/images/logo.png') {
+        return asset('/assets/images/logo-wordmark.png');
+    }
+    return $logo;
 }
 
 /** Shorthand for reading one public setting with a fallback default. */

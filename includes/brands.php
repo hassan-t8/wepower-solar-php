@@ -35,7 +35,7 @@
           </div>
           <ul class="brand-logos">
             <?php foreach ($g['items'] as $b): ?>
-              <li title="<?= h($b['name']) ?>"><img src="<?= h($b['logo']) ?>" alt="<?= h($b['name']) ?>" loading="lazy" decoding="async"></li>
+              <li title="<?= h($b['name']) ?>"<?= !empty($b['badge']) ? ' class="is-badge"' : '' ?>><img src="<?= h($b['logo']) ?>" alt="<?= h($b['name']) ?>" loading="lazy" decoding="async"></li>
             <?php endforeach; ?>
           </ul>
         </article>

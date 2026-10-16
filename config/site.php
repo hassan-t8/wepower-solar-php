@@ -148,10 +148,10 @@ $brandGroups = [
         'key' => 'panels',
         'photo' => '/assets/images/solar-panel.webp',
         'items' => [
-            ['name' => 'Canadian Solar', 'logo' => '/assets/images/brands/canadian-solar.png'],
-            ['name' => 'LONGi', 'logo' => '/assets/images/brands/longi.png'],
-            ['name' => 'Jinko Solar', 'logo' => '/assets/images/brands/jinko-solar.png'],
-            ['name' => 'JA Solar', 'logo' => '/assets/images/brands/ja-solar.svg'],
+            ['name' => 'Canadian Solar', 'logo' => '/assets/images/brands/canadian-solar.webp', 'badge' => true], // logo is a coloured block
+            ['name' => 'LONGi', 'logo' => '/assets/images/brands/longi.webp', 'badge' => true],
+            ['name' => 'Jinko Solar', 'logo' => '/assets/images/brands/jinko-solar.webp'],
+            ['name' => 'JA Solar', 'logo' => '/assets/images/brands/ja-solar.webp'],
         ],
     ],
     [
@@ -163,10 +163,10 @@ $brandGroups = [
         'credit' => 'Photo: Zátonyi Sándor (ifj.), CC BY 4.0',
         'creditUrl' => 'https://commons.wikimedia.org/wiki/File:Growatt_MOD_4000TL3-X_inverter.jpg',
         'items' => [
-            ['name' => 'Growatt', 'logo' => '/assets/images/brands/growatt.png'],
-            ['name' => 'GoodWe', 'logo' => '/assets/images/brands/goodwe.svg'],
-            ['name' => 'Solis', 'logo' => '/assets/images/brands/solis.png'],
-            ['name' => 'Inverex', 'logo' => '/assets/images/brands/inverex.png'],
+            ['name' => 'Growatt', 'logo' => '/assets/images/brands/growatt.webp'],
+            ['name' => 'GoodWe', 'logo' => '/assets/images/brands/goodwe.webp'],
+            ['name' => 'Solis', 'logo' => '/assets/images/brands/solis.webp'],
+            ['name' => 'Inverex', 'logo' => '/assets/images/brands/inverex.webp'],
         ],
     ],
 ];

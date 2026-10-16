@@ -58,3 +58,6 @@
   .hdr-nav a { font-size:.9rem; }
   .hdr-cta { padding:9px 16px; }
 }
+
+/* an uploaded logo on an off-white background blends into the white header */
+.hdr-logo img { mix-blend-mode:multiply; }

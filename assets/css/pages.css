@@ -290,6 +290,9 @@
 .brand-logos li { height:84px; display:flex; align-items:center; justify-content:center; padding:14px 18px; background:#fff; border:1px solid var(--gray-200); border-radius:var(--radius); transition:border-color .2s, box-shadow .2s, transform .2s; }
 .brand-logos li:hover { border-color:var(--green-500); box-shadow:0 6px 18px rgba(22,163,74,.12); transform:translateY(-2px); }
 .brand-logos img { max-width:100%; max-height:44px; width:auto; height:auto; object-fit:contain; }
+/* logos supplied as coloured blocks (e.g. on black/red) fill more of their tile */
+.brand-logos li.is-badge { padding:8px; }
+.brand-logos li.is-badge img { max-height:66px; border-radius:6px; }
 @media (max-width:860px) {
   .brands-grid { grid-template-columns:1fr; gap:22px; }
   .brand-media { height:270px; }
@@ -301,4 +304,5 @@
   .brand-logos { padding:16px; gap:10px; }
   .brand-logos li { height:70px; padding:10px 12px; }
   .brand-logos img { max-height:36px; }
+  .brand-logos li.is-badge img { max-height:54px; }
 }

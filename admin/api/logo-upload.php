@@ -18,6 +18,13 @@ try {
     jsonResponse(['error' => $e->getMessage()], 400);
 }
 
+// Crop the plain margins so the logo is readable at header size.
+try {
+    trimImageMargins(__DIR__ . '/../../uploads/logos/' . $filename);
+} catch (Throwable $e) {
+    error_log('[logo-upload] trim skipped: ' . $e->getMessage()); // keep the original file
+}
+
 $url = '/uploads/logos/' . $filename;
 setSetting('company_logo', $url);
 jsonResponse(['success' => true, 'url' => $url]);

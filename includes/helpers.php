@@ -142,6 +142,56 @@ function trackVisit(string $page): void
 }
 
 /**
+ * Crop the plain border around an image (white/solid background or transparent
+ * edges) and keep a small padding, so a logo fills the header instead of
+ * sitting tiny inside wide margins. Very large images are scaled down to
+ * $maxHeight. JPEG/PNG/WebP only; needs GD — without it the file is left as is.
+ * Returns true when the file was rewritten.
+ */
+function trimImageMargins(string $path, int $maxHeight = 360): bool
+{
+    if (!function_exists('imagecreatefromstring')) return false;
+    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'], true)) return false;
+    $im = @imagecreatefromstring((string) file_get_contents($path));
+    if (!$im) return false;
+    $w = imagesx($im); $h = imagesy($im);
+
+    // Background = the top-left pixel (colour + alpha).
+    $bg = imagecolorsforindex($im, imagecolorat($im, 0, 0));
+    $isBg = function (int $x, int $y) use ($im, $bg): bool {
+        $c = imagecolorsforindex($im, imagecolorat($im, $x, $y));
+        if ($bg['alpha'] >= 100) return $c['alpha'] >= 100;          // transparent edge
+        return abs($c['red'] - $bg['red']) < 28 && abs($c['green'] - $bg['green']) < 28
+            && abs($c['blue'] - $bg['blue']) < 28 && $c['alpha'] < 100;
+    };
+    $rowEmpty = function (int $y) use ($w, $isBg): bool { for ($x = 0; $x < $w; $x += 2) if (!$isBg($x, $y)) return false; return true; };
+    $colEmpty = function (int $x, int $y0, int $y1) use ($isBg): bool { for ($y = $y0; $y <= $y1; $y += 2) if (!$isBg($x, $y)) return false; return true; };
+
+    $top = 0; while ($top < $h - 1 && $rowEmpty($top)) $top++;
+    $bottom = $h - 1; while ($bottom > $top && $rowEmpty($bottom)) $bottom--;
+    $left = 0; while ($left < $w - 1 && $colEmpty($left, $top, $bottom)) $left++;
+    $right = $w - 1; while ($right > $left && $colEmpty($right, $top, $bottom)) $right--;
+
+    $cw = $right - $left + 1; $ch = $bottom - $top + 1;
+    $pad = (int) round($ch * 0.08);
+    $left = max(0, $left - $pad); $top = max(0, $top - $pad);
+    $cw = min($w - $left, $cw + 2 * $pad); $ch = min($h - $top, $ch + 2 * $pad);
+    $scale = $ch > $maxHeight ? $maxHeight / $ch : 1;
+    if ($cw >= $w * 0.97 && $ch >= $h * 0.97 && $scale === 1) { imagedestroy($im); return false; } // nothing to do
+
+    $nw = max(1, (int) round($cw * $scale)); $nh = max(1, (int) round($ch * $scale));
+    $out = imagecreatetruecolor($nw, $nh);
+    imagealphablending($out, false); imagesavealpha($out, true);
+    imagefill($out, 0, 0, imagecolorallocatealpha($out, 0, 0, 0, 127));
+    imagecopyresampled($out, $im, 0, 0, $left, $top, $nw, $nh, $cw, $ch);
+    $ok = $ext === 'png' ? imagepng($out, $path, 9)
+        : ($ext === 'webp' ? imagewebp($out, $path, 90) : imagejpeg($out, $path, 92));
+    imagedestroy($im); imagedestroy($out);
+    return (bool) $ok;
+}
+
+/**
  * Handle a single uploaded file with an extension whitelist + size limit.
  * Returns the saved filename (not full path) on success, or throws.
  * Filename scheme matches multer's: `${Date.now()}-${sanitized}`.

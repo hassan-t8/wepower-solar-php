@@ -657,3 +657,6 @@ table.adm-table { width:100%; border-collapse:collapse; font-size:.855rem; }
 /* ...except while working or just saved */
 .adm-main .btn:disabled:has(.adm-spinner), .adm-main .btn:disabled:has(.btn-spinner) { background:var(--green-600); color:#fff; border-color:var(--green-600); cursor:progress; }
 .adm-main .btn.is-saved, .adm-main .btn.is-saved:disabled { background:var(--green-50); color:var(--green-700); border-color:var(--green-200); cursor:default; }
+
+/* an uploaded logo on an off-white background blends into the white sidebar/login card */
+.adm-logo img, .adm-login-logo img { mix-blend-mode:multiply; }

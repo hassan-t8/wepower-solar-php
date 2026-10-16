@@ -151,6 +151,7 @@
         const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data.error || 'Upload failed');
         logoPreview.src = data.url;
+        document.querySelectorAll('.adm-logo img').forEach((img) => { img.src = data.url; });
         logoStatusText.textContent = 'Current logo';
         logoFileInput.value = '';
         ok = true;

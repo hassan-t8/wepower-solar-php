@@ -38,7 +38,7 @@ $logo       = setting('company_logo', $brand['logo']);
 // header/footer size, so pages show a trimmed copy of the same artwork. $logo (full
 // image) is still used for social previews and structured data. An uploaded custom
 // logo is shown as-is.
-$logoDisplay = $logo === '/assets/images/logo.png' ? asset('/assets/images/logo-wordmark.png') : $logo;
+$logoDisplay = displayLogoUrl();
 $companyName = setting('company_name', $brand['name']);
 // Location (Admin → Settings → Location & Call Button); blank falls back to config/site.php.
 $mapLink  = setting('company_map_link') ?: $brand['mapLink'];

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/settings.php'; // displayLogoUrl()
 if (isAdminLoggedIn()) { header('Location: /admin/dashboard'); exit; }
 ?>
 <!DOCTYPE html>
@@ -19,7 +20,7 @@ if (isAdminLoggedIn()) { header('Location: /admin/dashboard'); exit; }
 <div class="adm-login-page">
   <div class="adm-login-card">
     <div class="adm-login-logo">
-      <img src="<?= h(asset('/assets/images/logo-wordmark.png')) ?>" alt="WePower Solar">
+      <img src="<?= h(displayLogoUrl()) ?>" alt="WePower Solar">
       <h2>Admin Panel</h2>
       <p>Sign in to manage your website</p>
     </div>
