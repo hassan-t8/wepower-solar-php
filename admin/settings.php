@@ -3,6 +3,7 @@ $adminPageTitle = 'Settings';
 $adminActive = 'settings';
 $adminPageScripts = ['settings.js'];
 require_once __DIR__ . '/includes/admin-header.php';
+require_once __DIR__ . '/../config/site.php';   // default map link/embed shown as placeholders
 
 $rows = fetchAll('SELECT `key`, value FROM site_settings');
 $s = [];
@@ -79,6 +80,33 @@ $smtpPassMasked = !empty($s['smtp_pass']) ? '••••••••' : '';
         <div class="field">
           <label>Pre-filled Message</label>
           <textarea name="whatsapp_message" style="min-height:72px;resize:vertical" placeholder="Hi WePower! I'm interested in solar solutions."><?= h($s['whatsapp_message'] ?? '') ?></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="adm-settings-card">
+    <form class="settings-section-form" data-keys="company_map_link,company_map_embed,company_call_number">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px;flex-wrap:wrap">
+        <h4 style="margin-bottom:0"><i class="bi bi-geo-alt-fill" style="margin-right:8px;color:var(--green-600)"></i>Location &amp; Call Button</h4>
+        <button type="submit" class="btn btn-primary btn-sm" disabled><i class="bi bi-check-lg"></i> Save Location &amp; Call</button>
+      </div>
+      <p style="color:var(--gray-500);font-size:.88rem;margin-bottom:20px">The location pin in the footer and every “Get Directions” button open the Google Maps link. The map on the home page uses the embed. The green call button sits above the WhatsApp button. Leave a field blank to use the default.</p>
+      <div class="adm-settings-grid">
+        <div class="field" style="grid-column:span 2">
+          <label>Google Maps Link</label>
+          <input type="url" name="company_map_link" value="<?= h($s['company_map_link'] ?? '') ?>" placeholder="<?= h($brand['mapLink']) ?>">
+          <small style="color:var(--gray-400);font-size:.8rem;margin-top:4px;display:block">Google Maps → your business → Share → Copy link.</small>
+        </div>
+        <div class="field" style="grid-column:span 2">
+          <label>Map Embed <span style="color:var(--gray-400);font-weight:400">(map shown on the home page)</span></label>
+          <textarea name="company_map_embed" style="min-height:72px;resize:vertical;font-size:.82rem" placeholder="Paste the &lt;iframe …&gt; code or the https://www.google.com/maps/embed?… link"><?= h($s['company_map_embed'] ?? '') ?></textarea>
+          <small style="color:var(--gray-400);font-size:.8rem;margin-top:4px;display:block">Google Maps → Share → Embed a map → Copy HTML, then paste it here.</small>
+        </div>
+        <div class="field">
+          <label>Call Button Number</label>
+          <input type="tel" name="company_call_number" value="<?= h($s['company_call_number'] ?? '') ?>" placeholder="Blank = Phone 1 (<?= h($s['company_phone1'] ?? '') ?>)">
+          <small style="color:var(--gray-400);font-size:.8rem;margin-top:4px;display:block">Visitors tap it to call this number directly.</small>
         </div>
       </div>
     </form>

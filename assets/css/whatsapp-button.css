@@ -55,7 +55,7 @@
   border: 6px solid transparent;
   border-left-color: #111827;
 }
-.wa-btn:hover .wa-tip {
+.wa-btn:hover .wa-tip, .call-btn:hover .wa-tip {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
 }
@@ -63,4 +63,18 @@
 @media (max-width: 600px) {
   .wa-btn { bottom: 20px; right: 14px; width: 52px; height: 52px; font-size: 1.55rem; }
   .wa-tip { display: none; }
+}
+
+/* Direct call button — sits above the WhatsApp button */
+.call-btn {
+  position: fixed; bottom: 98px; right: 32px; z-index: 900;
+  width: 50px; height: 50px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--green-600, #16a34a); color: #fff; font-size: 1.3rem;
+  box-shadow: 0 4px 18px rgba(22,163,74,.4); text-decoration: none;
+  transition: transform .2s var(--ease), box-shadow .2s;
+}
+.call-btn:hover { transform: scale(1.1); color: #fff; box-shadow: 0 6px 26px rgba(22,163,74,.55); }
+@media (max-width: 600px) {
+  .call-btn { bottom: 84px; right: 15px; }
 }

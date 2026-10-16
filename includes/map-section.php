@@ -37,12 +37,12 @@ $mapPhones = array_values(array_filter([
           <p><?= h(t('contact.hoursWeek')) ?> <strong><?= h(t('contact.hoursWeekVal')) ?></strong><br>
              <?= h(t('contact.hoursSun')) ?> <strong><?= h(t('contact.hoursSunVal')) ?></strong></p>
         </div>
-        <a class="btn btn-outline" href="<?= h($brand['mapLink']) ?>" target="_blank" rel="noopener">
+        <a class="btn btn-outline" href="<?= h($mapLink) ?>" target="_blank" rel="noopener">
           <?= h(t('home.getDirections')) ?> <i class="bi bi-arrow-up-right"></i>
         </a>
       </div>
       <div class="office-map">
-        <iframe title="WePower Office Location" src="<?= h($brand['mapEmbed']) ?>"
+        <iframe title="WePower Office Location" src="<?= h($mapEmbed) ?>"
           width="100%" height="100%" style="border:0;display:block" allowfullscreen loading="lazy"
           referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>

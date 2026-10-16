@@ -67,7 +67,10 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
-        if (!res.ok) throw new Error('Save failed');
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'Save failed');
+        // The server may tidy a value (e.g. keeps only the link from pasted map HTML).
+        Object.entries(data.values || {}).forEach(([k, v]) => { if (form.elements[k]) form.elements[k].value = v; });
         keys.forEach((k) => { initial[k] = fieldValue(form, k); });
         showAlert('success', 'Settings saved!');
       } catch (err) {

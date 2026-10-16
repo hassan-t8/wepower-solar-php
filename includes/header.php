@@ -40,6 +40,9 @@ $logo       = setting('company_logo', $brand['logo']);
 // logo is shown as-is.
 $logoDisplay = $logo === '/assets/images/logo.png' ? asset('/assets/images/logo-wordmark.png') : $logo;
 $companyName = setting('company_name', $brand['name']);
+// Location (Admin → Settings → Location & Call Button); blank falls back to config/site.php.
+$mapLink  = setting('company_map_link') ?: $brand['mapLink'];
+$mapEmbed = setting('company_map_embed') ?: $brand['mapEmbed'];
 
 // Visitor page-view tracking (public pages only — this file is never
 // included from api/*.php or admin/*, so no path filtering is needed).

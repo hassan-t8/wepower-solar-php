@@ -16,6 +16,7 @@ $igUrl      = setting('social_instagram');
 $liUrl      = setting('social_linkedin');
 $ytUrl      = setting('social_youtube');
 $whatsapp   = setting('company_whatsapp');
+$callNumber = setting('company_call_number') ?: $phone1;
 $whatsappMsg = setting('whatsapp_message');
 $promoUrl   = setting('promo_video_url');
 $promoOn    = setting('promo_video_enabled') === 'true';
@@ -57,6 +58,7 @@ if ($schemaSameAs) $schema['sameAs'] = $schemaSameAs;
         <?php if ($fbUrl): ?><a href="<?= h($fbUrl) ?>" target="_blank" rel="noreferrer" aria-label="Facebook"><i class="bi bi-facebook"></i></a><?php endif; ?>
         <?php if ($igUrl): ?><a href="<?= h($igUrl) ?>" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="bi bi-instagram"></i></a><?php endif; ?>
         <?php if ($ytUrl): ?><a href="<?= h($ytUrl) ?>" target="_blank" rel="noreferrer" aria-label="YouTube"><i class="bi bi-youtube"></i></a><?php endif; ?>
+        <a href="<?= h($mapLink) ?>" target="_blank" rel="noreferrer" aria-label="<?= h(t('home.location')) ?>" title="<?= h(t('home.location')) ?>"><i class="bi bi-geo-alt-fill"></i></a>
       </div>
     </div>
 
@@ -88,6 +90,13 @@ if ($schemaSameAs) $schema['sameAs'] = $schemaSameAs;
 </footer>
 
 <?php include __DIR__ . '/modal-apply.php'; ?>
+
+<?php if ($callNumber): ?>
+<a href="tel:<?= h(preg_replace('/[^\d+]/', '', $callNumber)) ?>" class="call-btn" aria-label="<?= h(t('home.callUs')) ?>">
+  <i class="bi bi-telephone-fill"></i>
+  <span class="wa-tip"><?= h(t('home.callUs')) ?> · <?= h($callNumber) ?></span>
+</a>
+<?php endif; ?>
 
 <?php if ($whatsapp):
   $digits = preg_replace('/\D/', '', $whatsapp);

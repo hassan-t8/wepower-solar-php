@@ -38,7 +38,7 @@ $phones = implode(' / ', array_filter([
           <div>
             <div style="font-size:.82rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px"><?= h(t('contact.officeAddress')) ?></div>
             <div style="color:var(--gray-800);font-weight:500;line-height:1.5"><?= h($contactAddress) ?></div>
-            <a class="contact-directions" href="<?= h($brand['mapLink']) ?>" target="_blank" rel="noopener"><?= h(t('home.getDirections')) ?> <i class="bi bi-arrow-up-right"></i></a>
+            <a class="contact-directions" href="<?= h($mapLink) ?>" target="_blank" rel="noopener"><?= h(t('home.getDirections')) ?> <i class="bi bi-arrow-up-right"></i></a>
           </div>
         </div>
 

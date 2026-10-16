@@ -136,10 +136,39 @@ $process = [
 ];
 
 $products = [
-    ['icon' => 'bi-grid-3x3-gap', 'title' => 'Tier-1 Solar Panels', 'desc' => 'Premium monocrystalline panels with 25+ year warranties.'],
-    ['icon' => 'bi-cpu', 'title' => 'Hybrid Inverters', 'desc' => 'High-efficiency on-grid & hybrid inverters with smart monitoring.'],
+    ['icon' => 'bi-grid-3x3-gap', 'title' => 'Tier-1 Solar Panels', 'desc' => 'Grade A N-type bifacial panels from Canadian Solar, LONGi, Jinko & JA Solar.'],
+    ['icon' => 'bi-cpu', 'title' => 'Hybrid Inverters', 'desc' => 'On-grid & hybrid inverters from Growatt, GoodWe, Solis & Inverex with smart monitoring.'],
     ['icon' => 'bi-bricks', 'title' => 'Mounting Structures', 'desc' => 'Galvanized & aluminium structures for wind & load resistance.'],
     ['icon' => 'bi-battery-charging', 'title' => 'Battery Solutions', 'desc' => 'Lithium & lead-acid battery banks for backup & off-grid.'],
+];
+
+// Brands we install — shown under Products & Technology (home) and on Services.
+$brandGroups = [
+    [
+        'key' => 'panels',
+        'photo' => '/assets/images/solar-panel.webp',
+        'items' => [
+            ['name' => 'Canadian Solar', 'logo' => '/assets/images/brands/canadian-solar.png'],
+            ['name' => 'LONGi', 'logo' => '/assets/images/brands/longi.png'],
+            ['name' => 'Jinko Solar', 'logo' => '/assets/images/brands/jinko-solar.png'],
+            ['name' => 'JA Solar', 'logo' => '/assets/images/brands/ja-solar.svg'],
+        ],
+    ],
+    [
+        'key' => 'inverters',
+        'photo' => '/assets/images/brands/inverter-photo.webp',
+        'photoRtl' => '/assets/images/brands/inverter-photo-rtl.webp',   // unit on the left for Urdu (text sits right)
+        'photoPos' => 'right center',   // keep the unit in view when the card is narrow (flipped for Urdu)
+        // CC BY 4.0 — attribution is required wherever the photo is shown.
+        'credit' => 'Photo: Zátonyi Sándor (ifj.), CC BY 4.0',
+        'creditUrl' => 'https://commons.wikimedia.org/wiki/File:Growatt_MOD_4000TL3-X_inverter.jpg',
+        'items' => [
+            ['name' => 'Growatt', 'logo' => '/assets/images/brands/growatt.png'],
+            ['name' => 'GoodWe', 'logo' => '/assets/images/brands/goodwe.svg'],
+            ['name' => 'Solis', 'logo' => '/assets/images/brands/solis.png'],
+            ['name' => 'Inverex', 'logo' => '/assets/images/brands/inverex.png'],
+        ],
+    ],
 ];
 
 // Centralized FAQ — was duplicated verbatim across 3 React files in the

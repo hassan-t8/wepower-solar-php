@@ -95,6 +95,8 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
+<?php include __DIR__ . '/includes/brands.php'; ?>
+
 <?php include __DIR__ . '/includes/map-section.php'; ?>
 
 <section class="t1-cta">
@@ -103,7 +105,7 @@ require_once __DIR__ . '/includes/header.php';
       <h2><?= h(t('home.ctaTitle')) ?></h2>
       <p><?= h(t('home.ctaSub')) ?></p>
       <div class="t1-actions" style="justify-content:center">
-        <button type="button" class="btn btn-white btn-lg" data-open-apply-modal><i class="bi bi-send"></i> <?= h(t('common.applyNow')) ?></button>
+        <button type="button" class="btn btn-white btn-lg" data-open-apply-modal><i class="bi bi-send"></i> <?= h(t('common.getQuote')) ?></button>
         <a href="/contact" class="btn btn-ghost-light btn-lg"><i class="bi bi-telephone"></i> <?= h(t('common.talkToExpert')) ?></a>
       </div>
     </div>

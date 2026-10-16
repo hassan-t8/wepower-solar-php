@@ -18,6 +18,7 @@ const PUBLIC_SETTING_KEYS = [
     'company_instagram', 'company_logo',
     'social_facebook', 'social_instagram', 'social_linkedin', 'social_youtube',
     'company_whatsapp', 'whatsapp_message',
+    'company_map_link', 'company_map_embed', 'company_call_number',
     'promo_video_url', 'promo_video_enabled',
 ];
 
@@ -27,6 +28,7 @@ const ADMIN_SETTABLE_KEYS = [
     'company_address', 'company_phone1', 'company_phone2', 'company_email', 'company_instagram',
     'social_facebook', 'social_instagram', 'social_linkedin', 'social_youtube',
     'company_whatsapp', 'whatsapp_message',
+    'company_map_link', 'company_map_embed', 'company_call_number',
     'promo_video_url', 'promo_video_enabled',
     'smtp_host', 'smtp_port', 'smtp_user', 'smtp_pass', 'smtp_from_name', 'smtp_secure',
     'admin_notification_emails',

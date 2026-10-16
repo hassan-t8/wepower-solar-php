@@ -64,6 +64,8 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
+<?php include __DIR__ . '/includes/brands.php'; ?>
+
 <section style="background:linear-gradient(135deg,var(--dark),var(--dark-2));padding:80px 0">
   <div class="container" style="text-align:center">
     <h2 style="color:#fff;margin-bottom:12px"><?= h(t('services.ctaTitle')) ?></h2>

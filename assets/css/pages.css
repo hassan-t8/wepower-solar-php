@@ -271,3 +271,33 @@
 .roadmap-item { padding:16px 20px; background:var(--gray-50); border-radius:var(--radius); border:1px solid var(--gray-200); border-left:3px solid var(--green-500); }
 .contact-directions { display:inline-flex; align-items:center; gap:6px; margin-top:6px; font-size:.88rem; font-weight:600; color:var(--green-700); }
 .contact-directions:hover { color:var(--green-800); text-decoration:underline; }
+
+/* ---- Brands we install (home + services) ---------------------------------- */
+.brands-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:28px; }
+.brand-card { background:#fff; border:1px solid var(--gray-200); border-radius:var(--radius-xl, 20px); overflow:hidden; box-shadow:0 10px 30px rgba(15,23,42,.06); display:flex; flex-direction:column; }
+.brand-media { position:relative; height:230px; overflow:hidden; background:var(--gray-100); }
+.brand-media img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s var(--ease, ease); }
+.brand-card:hover .brand-media img { transform:scale(1.04); }
+.brand-media::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,23,42,0) 22%, rgba(15,23,42,.55) 58%, rgba(15,23,42,.9) 100%); pointer-events:none; }
+.brand-media-txt { position:absolute; left:0; right:0; bottom:0; z-index:1; padding:20px 24px; }
+.brand-media-txt h3 { color:#fff; font-size:1.45rem; margin:0 0 10px; }
+.brand-specs { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
+.brand-specs li { font-size:.76rem; font-weight:700; letter-spacing:.2px; color:#fff; padding:5px 11px; border-radius:999px; background:rgba(34,197,94,.9); }
+.brand-credit { position:absolute; top:10px; right:12px; z-index:1; font-size:.66rem; color:rgba(255,255,255,.85); background:rgba(15,23,42,.45); padding:2px 8px; border-radius:6px; }
+.brand-credit:hover { color:#fff; }
+.brand-logos { list-style:none; margin:0; padding:22px; display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:14px; }
+.brand-logos li { height:84px; display:flex; align-items:center; justify-content:center; padding:14px 18px; background:#fff; border:1px solid var(--gray-200); border-radius:var(--radius); transition:border-color .2s, box-shadow .2s, transform .2s; }
+.brand-logos li:hover { border-color:var(--green-500); box-shadow:0 6px 18px rgba(22,163,74,.12); transform:translateY(-2px); }
+.brand-logos img { max-width:100%; max-height:44px; width:auto; height:auto; object-fit:contain; }
+@media (max-width:860px) {
+  .brands-grid { grid-template-columns:1fr; gap:22px; }
+  .brand-media { height:270px; }
+}
+@media (max-width:600px) {
+  .brand-media { height:210px; }
+}
+@media (max-width:420px) {
+  .brand-logos { padding:16px; gap:10px; }
+  .brand-logos li { height:70px; padding:10px 12px; }
+  .brand-logos img { max-height:36px; }
+}
