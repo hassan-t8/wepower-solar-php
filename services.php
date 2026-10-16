@@ -56,7 +56,7 @@ require_once __DIR__ . '/includes/header.php';
           <div style="width:40px;height:40px;border-radius:50%;background:var(--green-600);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;margin-bottom:14px">
             <?= (int)$p['n'] ?>
           </div>
-          <h4 style="margin-bottom:6px"><?= h($p['title']) ?></h4>
+          <h3 style="margin-bottom:6px;font-size:1rem"><?= h($p['title']) ?></h3>
           <p style="color:var(--gray-500);font-size:.88rem"><?= h($p['desc']) ?></p>
         </div>
       <?php endforeach; ?>

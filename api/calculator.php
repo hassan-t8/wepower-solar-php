@@ -17,7 +17,17 @@ $phone = clean($input['phone'] ?? '');
 $city = clean($input['city'] ?? '');
 $propertyType = clean($input['property_type'] ?? '');
 $numPeople = (int) ($input['num_people'] ?? 0);
-$appliances = is_array($input['appliances'] ?? null) ? $input['appliances'] : [];
+// Keep only well-formed appliance rows: plain-text name, numbers in sane ranges.
+$appliances = [];
+foreach (array_slice(is_array($input['appliances'] ?? null) ? $input['appliances'] : [], 0, 60) as $a) {
+    if (!is_array($a)) continue;
+    $appName = mb_substr(clean($a['name'] ?? ''), 0, 80);
+    if ($appName === '') continue;
+    $qty = max(0, min(1000, (int) ($a['quantity'] ?? 0)));
+    $power = max(0, min(1000000, (float) ($a['power'] ?? 0)));
+    $hours = max(0, min(24, (float) ($a['hours'] ?? 0)));
+    $appliances[] = ['name' => $appName, 'quantity' => $qty, 'power' => $power, 'hours' => $hours, 'total' => $qty * $power];
+}
 $totalLoadW = (float) ($input['total_load_w'] ?? 0);
 $recommendedKva = (float) ($input['recommended_kva'] ?? 0);
 $estimatedBill = (float) ($input['estimated_bill'] ?? 0);

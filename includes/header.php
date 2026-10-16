@@ -72,6 +72,13 @@ maybeNotifyDailyVisitors(); // first page view of the day posts yesterday's visi
 <meta property="og:url" content="<?= h($canonical) ?>">
 <meta property="og:locale" content="<?= $LANG_CODE === 'ur' ? 'ur_PK' : 'en_US' ?>">
 <meta property="og:locale:alternate" content="<?= $LANG_CODE === 'ur' ? 'en_US' : 'ur_PK' ?>">
+<meta property="og:site_name" content="<?= h($companyName) ?>">
+
+<!-- Twitter / X link preview -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="<?= h($pageTitle) ?>">
+<meta name="twitter:description" content="<?= h($pageDescription) ?>">
+<meta name="twitter:image" content="<?= h($siteUrl . $logo) ?>">
 
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">

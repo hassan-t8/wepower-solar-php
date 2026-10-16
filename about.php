@@ -47,16 +47,16 @@ require_once __DIR__ . '/includes/header.php';
     </div>
     <div class="val-cards">
       <div class="val-card">
-        <h4><?= h(t('about.visionTitle')) ?></h4>
+        <h3><?= h(t('about.visionTitle')) ?></h3>
         <p><?= h($company['vision']) ?></p>
       </div>
       <div class="val-card">
-        <h4><?= h(t('about.missionTitle')) ?></h4>
+        <h3><?= h(t('about.missionTitle')) ?></h3>
         <p><?= h($company['mission']) ?></p>
       </div>
       <?php foreach ($company['values'] as $v): ?>
         <div class="val-card">
-          <h4><?= h($v['title']) ?></h4>
+          <h3><?= h($v['title']) ?></h3>
           <p><?= h($v['desc']) ?></p>
         </div>
       <?php endforeach; ?>
@@ -92,13 +92,13 @@ require_once __DIR__ . '/includes/header.php';
     <div class="val-cards">
       <?php foreach ($whyFeatures as $f): ?>
         <div class="val-card">
-          <h4><?= h($f['title']) ?></h4>
+          <h3><?= h($f['title']) ?></h3>
           <p><?= h($f['desc']) ?></p>
         </div>
       <?php endforeach; ?>
       <?php foreach ($whyChoose as $w): ?>
         <div class="val-card">
-          <h4><?= h(t('about.trackRecord')) ?></h4>
+          <h3><?= h(t('about.trackRecord')) ?></h3>
           <p><?= h($w) ?></p>
         </div>
       <?php endforeach; ?>
@@ -127,7 +127,7 @@ require_once __DIR__ . '/includes/header.php';
           <?php foreach ($roadmap as $r): ?>
             <div class="roadmap-item">
               <div>
-                <h4 style="font-size:1rem;margin-bottom:4px"><?= h($r['title']) ?></h4>
+                <h3 style="font-size:1rem;margin-bottom:4px"><?= h($r['title']) ?></h3>
                 <p style="color:var(--gray-500);font-size:.88rem"><?= h($r['desc']) ?></p>
               </div>
             </div>

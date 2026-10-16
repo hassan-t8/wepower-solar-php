@@ -58,6 +58,25 @@ function admLink(array $n, string $active): void {
 <link rel="stylesheet" href="<?= h(asset('/assets/css/admin.css')) ?>">
 <link rel="stylesheet" href="<?= h(asset('/assets/css/toast.css')) ?>">
 <script>
+  // Forged-request protection: every same-site request that changes data carries the
+  // session token (checked by requireCsrf() in includes/auth.php).
+  (function () {
+    var token = <?= json_encode(csrfToken()) ?>;
+    var nativeFetch = window.fetch.bind(window);
+    window.fetch = function (input, init) {
+      init = init || {};
+      var url = typeof input === 'string' ? input : (input && input.url) || '';
+      var method = String(init.method || (input && input.method) || 'GET').toUpperCase();
+      var sameSite = false;
+      try { sameSite = new URL(url, location.href).origin === location.origin; } catch (e) {}
+      if (sameSite && method !== 'GET' && method !== 'HEAD') {
+        var headers = new Headers(init.headers || (input instanceof Request ? input.headers : undefined));
+        headers.set('X-CSRF-Token', token);
+        init = Object.assign({}, init, { headers: headers });
+      }
+      return nativeFetch(input, init);
+    };
+  })();
   // Push setup for this browser (push-register.js); public values only.
   window.ADM_PUSH = <?= json_encode(['configured' => isPushConfigured(), 'canRegister' => canRegisterPush(), 'firebase' => firebaseWebConfig()], JSON_UNESCAPED_SLASHES) ?>;
 </script>

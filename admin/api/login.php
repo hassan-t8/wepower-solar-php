@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../includes/auth.php';
 require_once __DIR__ . '/../../includes/helpers.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') jsonResponse(['error' => 'Method not allowed'], 405);
+if (!isSameOriginRequest()) jsonResponse(['error' => 'Security check failed. Please reload the page.'], 403);
 
 if (isLoginRateLimited()) {
     jsonResponse(['error' => 'Too many login attempts. Please try again later.'], 429);

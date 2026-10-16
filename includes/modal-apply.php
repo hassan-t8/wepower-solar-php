@@ -29,16 +29,16 @@
 
         <form id="applyForm" novalidate data-validate>
           <div class="form-row">
-            <div class="field"><label><?= h(t('apply.fullName')) ?></label><input type="text" name="name" required placeholder="<?= h(t('apply.fullNamePh')) ?>"></div>
-            <div class="field"><label><?= h(t('apply.phone')) ?></label><input type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" required placeholder="<?= h(t('apply.phonePh')) ?>"></div>
+            <div class="field"><label for="apply-name"><?= h(t('apply.fullName')) ?></label><input id="apply-name" type="text" name="name" required placeholder="<?= h(t('apply.fullNamePh')) ?>"></div>
+            <div class="field"><label for="apply-phone"><?= h(t('apply.phone')) ?></label><input id="apply-phone" type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" required placeholder="<?= h(t('apply.phonePh')) ?>"></div>
           </div>
           <div class="form-row">
-            <div class="field"><label><?= h(t('apply.email')) ?></label><input type="email" name="email" maxlength="254" autocomplete="email" data-email required placeholder="<?= h(t('apply.emailPh')) ?>"></div>
-            <div class="field"><label><?= h(t('apply.city')) ?></label><input type="text" name="city" placeholder="<?= h(t('apply.cityPh')) ?>"></div>
+            <div class="field"><label for="apply-email"><?= h(t('apply.email')) ?></label><input id="apply-email" type="email" name="email" maxlength="254" autocomplete="email" data-email required placeholder="<?= h(t('apply.emailPh')) ?>"></div>
+            <div class="field"><label for="apply-city"><?= h(t('apply.city')) ?></label><input id="apply-city" type="text" name="city" placeholder="<?= h(t('apply.cityPh')) ?>"></div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label><?= h(t('apply.service')) ?></label>
+              <label for="applyServiceSelect"><?= h(t('apply.service')) ?></label>
               <select name="service_type" id="applyServiceSelect">
                 <option value=""><?= h(t('apply.selectService')) ?></option>
                 <?php foreach ($services as $s): ?>
@@ -47,8 +47,8 @@
               </select>
             </div>
             <div class="field">
-              <label><?= h(t('apply.propertyType')) ?></label>
-              <select name="property_type">
+              <label for="apply-property-type"><?= h(t('apply.propertyType')) ?></label>
+              <select id="apply-property-type" name="property_type">
                 <option value=""><?= h(t('apply.selectOption')) ?></option>
                 <option><?= h(t('apply.propHome')) ?></option>
                 <option><?= h(t('apply.propCommercial')) ?></option>
@@ -58,8 +58,8 @@
             </div>
           </div>
           <div class="field">
-            <label><?= h(t('apply.notes')) ?></label>
-            <textarea name="notes" placeholder="<?= h(t('apply.notesPh')) ?>"></textarea>
+            <label for="apply-notes"><?= h(t('apply.notes')) ?></label>
+            <textarea id="apply-notes" name="notes" placeholder="<?= h(t('apply.notesPh')) ?>"></textarea>
           </div>
 
           <div class="apply-error" id="applyError" hidden><i class="bi bi-exclamation-triangle"></i> <span></span></div>

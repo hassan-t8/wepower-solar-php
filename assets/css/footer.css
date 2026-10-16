@@ -8,7 +8,7 @@
   display:flex; align-items:center; justify-content:center; color:#cbd5e1; transition:.25s var(--ease);
 }
 .ftr-social a:hover { background:var(--green-600); color:#fff; transform:translateY(-3px); }
-.ftr-col h5 { color:#fff; font-size:1rem; margin-bottom:18px; }
+.ftr-col h5, .ftr-col .ftr-title { color:#fff; font-size:1rem; margin-bottom:18px; letter-spacing:0; }
 .ftr-col ul { display:flex; flex-direction:column; gap:11px; }
 .ftr-col a { font-size:.92rem; color:var(--gray-400); }
 .ftr-col a:hover { color:var(--green-400); }

@@ -3,7 +3,8 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/helpers.php';
 
 // Logging out stops push on this device: drop its token (sent by admin-common.js) first.
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isAdminLoggedIn()) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isAdminLoggedIn() && isSameOriginRequest()
+    && hash_equals(csrfToken(), (string) ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? ''))) {
     $input = json_decode(file_get_contents('php://input'), true) ?? [];
     $token = (string) ($input['push_token'] ?? '');
     if ($token !== '') {

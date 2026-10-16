@@ -103,7 +103,7 @@
   background:var(--green-50); display:flex; align-items:center; justify-content:center;
   color:var(--green-600); font-size:1.3rem; margin-bottom:14px;
 }
-.val-card h4 { margin-bottom:6px; font-size:1rem; }
+.val-card h3, .val-card h4 { margin-bottom:6px; font-size:1rem; }
 .val-card p { color:var(--gray-500); font-size:.9rem; }
 
 /* Careers */
@@ -147,7 +147,8 @@
   background:linear-gradient(135deg,var(--green-700),var(--green-600));
   border-radius:var(--radius-lg); padding:28px; color:#fff; position:sticky; top:100px;
 }
-.calc-summary h3 { color:#fff; margin-bottom:20px; }
+.calc-summary h3, .calc-summary h2 { color:#fff; margin-bottom:20px; }
+.calc-h { font-size:clamp(1.25rem,2.5vw,1.6rem); }
 .calc-metric { margin-bottom:20px; }
 .calc-metric-label { font-size:.8rem; opacity:.8; margin-bottom:4px; }
 .calc-metric-val { font-size:2rem; font-weight:700; color:#fff; line-height:1; }

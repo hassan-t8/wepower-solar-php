@@ -55,7 +55,7 @@ require_once __DIR__ . '/includes/header.php';
       <div class="t1-feats">
         <?php foreach ($whyFeatures as $f): ?>
           <div class="t1-feat">
-            <div><h4><?= h($f['title']) ?></h4><p><?= h($f['desc']) ?></p></div>
+            <div><h3><?= h($f['title']) ?></h3><p><?= h($f['desc']) ?></p></div>
           </div>
         <?php endforeach; ?>
       </div>
@@ -88,7 +88,7 @@ require_once __DIR__ . '/includes/header.php';
     <div class="t1-products">
       <?php foreach ($products as $p): ?>
         <div class="t1-product">
-          <h4><?= h($p['title']) ?></h4><p><?= h($p['desc']) ?></p>
+          <h3><?= h($p['title']) ?></h3><p><?= h($p['desc']) ?></p>
         </div>
       <?php endforeach; ?>
     </div>

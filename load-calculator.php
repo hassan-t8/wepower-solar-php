@@ -23,11 +23,11 @@ require_once __DIR__ . '/includes/header.php';
 
       <div>
         <div class="calc-panel" style="margin-bottom:28px">
-          <h3 style="margin-bottom:18px"><i class="bi bi-plus-circle-fill" style="color:var(--green-600);margin-right:8px"></i><?= h(t('calc.addTitle')) ?></h3>
+          <h2 class="calc-h" style="margin-bottom:18px"><i class="bi bi-plus-circle-fill" style="color:var(--green-600);margin-right:8px"></i><?= h(t('calc.addTitle')) ?></h2>
           <form id="addApplianceForm">
             <div class="form-row">
               <div class="field">
-                <label><?= h(t('calc.appliance')) ?></label>
+                <label for="presetSelect"><?= h(t('calc.appliance')) ?></label>
                 <select id="presetSelect">
                   <option value=""><?= h(t('calc.selectPreset')) ?></option>
                   <?php foreach ($appliancePresets as $p): ?>
@@ -36,21 +36,21 @@ require_once __DIR__ . '/includes/header.php';
                 </select>
               </div>
               <div class="field">
-                <label><?= h(t('calc.customName')) ?></label>
+                <label for="nameInput"><?= h(t('calc.customName')) ?></label>
                 <input type="text" id="nameInput" placeholder="<?= h(t('calc.customNamePh')) ?>">
               </div>
             </div>
             <div class="calc-add-row">
               <div class="field">
-                <label><?= h(t('calc.watts')) ?></label>
+                <label for="powerInput"><?= h(t('calc.watts')) ?></label>
                 <input type="number" id="powerInput" min="1" required placeholder="<?= h(t('calc.wattsPh')) ?>">
               </div>
               <div class="field">
-                <label><?= h(t('calc.qty')) ?></label>
+                <label for="qtyInput"><?= h(t('calc.qty')) ?></label>
                 <input type="number" id="qtyInput" min="1" max="100" value="1">
               </div>
               <div class="field">
-                <label><?= h(t('calc.hoursDay')) ?></label>
+                <label for="hoursInput"><?= h(t('calc.hoursDay')) ?></label>
                 <input type="number" id="hoursInput" min="0.5" max="24" step="0.5" value="4">
               </div>
             </div>
@@ -61,7 +61,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <div class="calc-panel" id="applianceListPanel" hidden>
-          <h3 style="margin-bottom:18px"><?= h(t('calc.yourAppliances')) ?></h3>
+          <h2 class="calc-h" style="margin-bottom:18px"><?= h(t('calc.yourAppliances')) ?></h2>
           <div class="appliance-table-head">
             <span><?= h(t('calc.thAppliance')) ?></span><span><?= h(t('calc.thWatts')) ?></span><span><?= h(t('calc.thQty')) ?></span><span><?= h(t('calc.thHrs')) ?></span><span></span>
           </div>
@@ -78,16 +78,16 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <div class="calc-panel" id="saveResultsPanel" style="margin-top:28px" hidden>
-          <h3 style="margin-bottom:6px"><?= h(t('calc.saveTitle')) ?></h3>
+          <h2 class="calc-h" style="margin-bottom:6px"><?= h(t('calc.saveTitle')) ?></h2>
           <p class="muted" style="font-size:.9rem;margin-bottom:20px"><?= h(t('calc.saveSub')) ?></p>
           <form id="saveResultsForm" novalidate data-validate>
             <div class="form-row">
-              <div class="field"><label><?= h(t('calc.name')) ?></label><input type="text" name="name" placeholder="<?= h(t('calc.namePh')) ?>"></div>
-              <div class="field"><label><?= h(t('contact.phoneLabel')) ?></label><input type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" placeholder="<?= h(t('calc.phonePh')) ?>"></div>
+              <div class="field"><label for="calc-name"><?= h(t('calc.name')) ?></label><input id="calc-name" type="text" name="name" placeholder="<?= h(t('calc.namePh')) ?>"></div>
+              <div class="field"><label for="calc-phone"><?= h(t('contact.phoneLabel')) ?></label><input id="calc-phone" type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" placeholder="<?= h(t('calc.phonePh')) ?>"></div>
             </div>
             <div class="form-row">
-              <div class="field"><label><?= h(t('contact.email')) ?></label><input type="email" name="email" maxlength="254" autocomplete="email" data-email placeholder="<?= h(t('calc.emailPh')) ?>"></div>
-              <div class="field"><label><?= h(t('calc.city')) ?></label><input type="text" name="city" placeholder="<?= h(t('calc.cityPh')) ?>"></div>
+              <div class="field"><label for="calc-email"><?= h(t('contact.email')) ?></label><input id="calc-email" type="email" name="email" maxlength="254" autocomplete="email" data-email placeholder="<?= h(t('calc.emailPh')) ?>"></div>
+              <div class="field"><label for="calc-city"><?= h(t('calc.city')) ?></label><input id="calc-city" type="text" name="city" placeholder="<?= h(t('calc.cityPh')) ?>"></div>
             </div>
             <div class="form-error" id="calcError" hidden><span></span></div>
             <div id="calcSuccess" style="background:var(--green-50);color:var(--green-700);border:1px solid var(--green-200);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.9rem" hidden>
@@ -101,7 +101,7 @@ require_once __DIR__ . '/includes/header.php';
       </div>
 
       <div class="calc-summary">
-        <h3><i class="bi bi-calculator" style="margin-right:10px"></i><?= h(t('calc.summaryTitle')) ?></h3>
+        <h2 class="calc-h"><i class="bi bi-calculator" style="margin-right:10px"></i><?= h(t('calc.summaryTitle')) ?></h2>
         <div id="summaryEmpty">
           <p style="opacity:.75;font-size:.9rem;margin-top:8px"><?= h(t('calc.summaryEmpty')) ?></p>
         </div>

@@ -21,7 +21,7 @@ initAdminList({
     { render: (r, esc) => esc(r.city || '—') },
     { render: (r, esc) => esc(r.property_type || '—') },
     { render: (r) => `<span style="font-weight:600;color:var(--green-700)">${Number(r.total_load_w || 0).toLocaleString()}</span>` },
-    { render: (r) => `<span style="font-weight:700">${r.recommended_kva}</span>` },
+    { render: (r, esc) => `<span style="font-weight:700">${esc(r.recommended_kva)}</span>` },
     { render: (r) => Number(r.estimated_bill || 0).toLocaleString() },
   ],
   detailTitle: (r) => `Calculation #${r.id}`,
@@ -33,22 +33,22 @@ initAdminList({
     { label: 'Property', render: (r, esc) => esc(r.property_type || '—') },
     { label: 'People', render: (r, esc) => esc(r.num_people || '—') },
   ],
-  detailExtra: (r) => {
+  detailExtra: (r, esc) => {
     let apps = [];
     try { apps = JSON.parse(r.appliances_json || '[]'); } catch (e) {}
     const metrics = `
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;background:var(--green-50);border-radius:var(--radius);padding:18px;margin-bottom:20px">
         <div style="text-align:center"><div style="font-size:.75rem;color:var(--green-700);font-weight:600;margin-bottom:4px">TOTAL LOAD</div><div style="font-size:1.4rem;font-weight:700">${Number(r.total_load_w || 0).toLocaleString()} W</div></div>
-        <div style="text-align:center"><div style="font-size:.75rem;color:var(--green-700);font-weight:600;margin-bottom:4px">REC. SYSTEM</div><div style="font-size:1.4rem;font-weight:700">${r.recommended_kva} KVA</div></div>
+        <div style="text-align:center"><div style="font-size:.75rem;color:var(--green-700);font-weight:600;margin-bottom:4px">REC. SYSTEM</div><div style="font-size:1.4rem;font-weight:700">${esc(r.recommended_kva)} KVA</div></div>
         <div style="text-align:center"><div style="font-size:.75rem;color:var(--green-700);font-weight:600;margin-bottom:4px">EST. BILL</div><div style="font-size:1.4rem;font-weight:700">Rs.${Number(r.estimated_bill || 0).toLocaleString()}</div></div>
       </div>`;
-    if (!apps.length) return metrics;
+    if (!Array.isArray(apps) || !apps.length) return metrics;
     const rows = apps.map((a) => `
       <tr>
-        <td style="padding:7px 10px;border-bottom:1px solid var(--gray-100)">${a.name}</td>
-        <td style="padding:7px 10px;border-bottom:1px solid var(--gray-100)">${a.quantity}</td>
-        <td style="padding:7px 10px;border-bottom:1px solid var(--gray-100)">${a.power}W</td>
-        <td style="padding:7px 10px;border-bottom:1px solid var(--gray-100)">${a.hours}h</td>
+        <td style="padding:7px 10px;border-bottom:1px solid var(--gray-100)">${esc(a.name)}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid var(--gray-100)">${esc(a.quantity)}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid var(--gray-100)">${esc(a.power)}W</td>
+        <td style="padding:7px 10px;border-bottom:1px solid var(--gray-100)">${esc(a.hours)}h</td>
         <td style="padding:7px 10px;border-bottom:1px solid var(--gray-100);font-weight:600">${Number(a.total || 0).toLocaleString()}W</td>
       </tr>`).join('');
     return metrics + `

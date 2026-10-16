@@ -63,17 +63,17 @@ if ($schemaSameAs) $schema['sameAs'] = $schemaSameAs;
     </div>
 
     <div class="ftr-col">
-      <h5><?= h(t('footer.quickLinks')) ?></h5>
+      <h2 class="ftr-title"><?= h(t('footer.quickLinks')) ?></h2>
       <ul><?php foreach ($nav as $n): ?><li><a href="<?= h($n['to']) ?>"><?= h($n['label']) ?></a></li><?php endforeach; ?></ul>
     </div>
 
     <div class="ftr-col">
-      <h5><?= h(t('footer.services')) ?></h5>
+      <h2 class="ftr-title"><?= h(t('footer.services')) ?></h2>
       <ul><?php foreach (array_slice($services, 0, 5) as $s): ?><li><a href="/services#<?= h($s['id']) ?>"><?= h($s['title']) ?></a></li><?php endforeach; ?></ul>
     </div>
 
     <div class="ftr-col">
-      <h5><?= h(t('footer.getInTouch')) ?></h5>
+      <h2 class="ftr-title"><?= h(t('footer.getInTouch')) ?></h2>
       <div class="ftr-contact"><i class="bi bi-geo-alt-fill"></i><span><?= h($address) ?></span></div>
       <div class="ftr-contact">
         <i class="bi bi-telephone-fill"></i>

@@ -33,7 +33,7 @@ $whyJoin = t('careers.whyItems');
       <?php foreach ($whyJoin as $item): ?>
         <div class="val-card">
           <div class="val-card-ico"><i class="bi <?= h($item['icon']) ?>"></i></div>
-          <h4><?= h($item['title']) ?></h4>
+          <h3><?= h($item['title']) ?></h3>
           <p><?= h($item['desc']) ?></p>
         </div>
       <?php endforeach; ?>

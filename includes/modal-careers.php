@@ -34,13 +34,13 @@
         <p class="cm-sub"><?= h(t('careersModal.sub')) ?></p>
         <form id="careersForm" novalidate data-validate>
           <div class="form-row">
-            <div class="field"><label><?= h(t('careersModal.fullName')) ?></label><input type="text" name="full_name" required placeholder="<?= h(t('careersModal.fullNamePh')) ?>"></div>
-            <div class="field"><label><?= h(t('careersModal.phone')) ?></label><input type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" required placeholder="<?= h(t('careersModal.phonePh')) ?>"></div>
+            <div class="field"><label for="cm-full-name"><?= h(t('careersModal.fullName')) ?></label><input id="cm-full-name" type="text" name="full_name" required placeholder="<?= h(t('careersModal.fullNamePh')) ?>"></div>
+            <div class="field"><label for="cm-phone"><?= h(t('careersModal.phone')) ?></label><input id="cm-phone" type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" required placeholder="<?= h(t('careersModal.phonePh')) ?>"></div>
           </div>
           <div class="form-row">
-            <div class="field"><label><?= h(t('careersModal.email')) ?></label><input type="email" name="email" maxlength="254" autocomplete="email" data-email required placeholder="<?= h(t('careersModal.emailPh')) ?>"></div>
+            <div class="field"><label for="cm-email"><?= h(t('careersModal.email')) ?></label><input id="cm-email" type="email" name="email" maxlength="254" autocomplete="email" data-email required placeholder="<?= h(t('careersModal.emailPh')) ?>"></div>
             <div class="field">
-              <label><?= h(t('careersModal.position')) ?></label>
+              <label for="cmPositionSelect"><?= h(t('careersModal.position')) ?></label>
               <select name="position" id="cmPositionSelect" required>
                 <option value=""><?= h(t('careersModal.selectPosition')) ?></option>
                 <?php foreach ($jobs as $j): ?>
@@ -51,12 +51,12 @@
             </div>
           </div>
           <div class="form-row">
-            <div class="field"><label><?= h(t('careersModal.experience')) ?></label><input type="number" name="experience_years" min="0" max="40" placeholder="<?= h(t('careersModal.experiencePh')) ?>"></div>
-            <div class="field"><label><?= h(t('careersModal.education')) ?></label><input type="text" name="education" placeholder="<?= h(t('careersModal.educationPh')) ?>"></div>
+            <div class="field"><label for="cm-experience-years"><?= h(t('careersModal.experience')) ?></label><input id="cm-experience-years" type="number" name="experience_years" min="0" max="40" placeholder="<?= h(t('careersModal.experiencePh')) ?>"></div>
+            <div class="field"><label for="cm-education"><?= h(t('careersModal.education')) ?></label><input id="cm-education" type="text" name="education" placeholder="<?= h(t('careersModal.educationPh')) ?>"></div>
           </div>
           <div class="field">
-            <label><?= h(t('careersModal.resume')) ?> <span class="field-hint"><?= h(t('careersModal.resumeHint')) ?></span></label>
-            <input type="file" name="resume" accept=".pdf,.doc,.docx">
+            <label for="cm-resume"><?= h(t('careersModal.resume')) ?> <span class="field-hint"><?= h(t('careersModal.resumeHint')) ?></span></label>
+            <input id="cm-resume" type="file" name="resume" accept=".pdf,.doc,.docx">
           </div>
           <div class="cm-error" id="careersError" hidden><i class="bi bi-exclamation-triangle"></i> <span></span></div>
           <button type="submit" class="btn btn-primary btn-block btn-lg">

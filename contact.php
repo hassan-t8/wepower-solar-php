@@ -31,7 +31,7 @@ $phones = implode(' / ', array_filter([
     <div class="info-grid contact-grid">
 
       <div class="contact-info-col">
-        <h3 style="margin-bottom:24px"><?= h(t('contact.infoTitle')) ?></h3>
+        <h2 style="margin-bottom:24px;font-size:clamp(1.25rem,2.5vw,1.6rem)"><?= h(t('contact.infoTitle')) ?></h2>
 
         <div style="display:flex;gap:16px;align-items:start;margin-bottom:28px">
           <div style="width:46px;height:46px;border-radius:14px;background:var(--green-50);display:flex;align-items:center;justify-content:center;color:var(--green-600);font-size:1.15rem;flex-shrink:0;border:1px solid var(--green-200)"><i class="bi bi-geo-alt-fill"></i></div>
@@ -67,7 +67,7 @@ $phones = implode(' / ', array_filter([
         </div>
 
         <div class="contact-hours" style="background:var(--green-50);border:1px solid var(--green-200);border-radius:var(--radius-lg);padding:22px 24px;margin-top:8px">
-          <h4 style="color:var(--green-700);margin-bottom:12px;font-size:1rem"><i class="bi bi-clock" style="margin-right:8px"></i><?= h(t('contact.hoursTitle')) ?></h4>
+          <h3 style="color:var(--green-700);margin-bottom:12px;font-size:1rem"><i class="bi bi-clock" style="margin-right:8px"></i><?= h(t('contact.hoursTitle')) ?></h3>
           <div style="color:var(--gray-700);font-size:.9rem;line-height:2">
             <div><?= h(t('contact.hoursWeek')) ?> <strong><?= h(t('contact.hoursWeekVal')) ?></strong></div>
             <div><?= h(t('contact.hoursSun')) ?> <strong><?= h(t('contact.hoursSunVal')) ?></strong></div>
@@ -82,11 +82,11 @@ $phones = implode(' / ', array_filter([
               <h3 style="margin-bottom:6px"><?= h(t('contact.formTitle')) ?></h3>
               <p class="muted" style="margin-bottom:24px;font-size:.9rem"><?= h(t('contact.formSub')) ?></p>
               <div class="form-row">
-                <div class="field"><label><?= h(t('contact.fullName')) ?></label><input type="text" name="name" required placeholder="<?= h(t('contact.fullNamePh')) ?>"></div>
-                <div class="field"><label><?= h(t('contact.phoneLabel')) ?></label><input type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" placeholder="3xx xxxxxxx"></div>
+                <div class="field"><label for="contact-name"><?= h(t('contact.fullName')) ?></label><input id="contact-name" type="text" name="name" required placeholder="<?= h(t('contact.fullNamePh')) ?>"></div>
+                <div class="field"><label for="contact-phone"><?= h(t('contact.phoneLabel')) ?></label><input id="contact-phone" type="tel" name="phone" data-phone inputmode="numeric" autocomplete="tel-national" placeholder="3xx xxxxxxx"></div>
               </div>
-              <div class="field"><label><?= h(t('contact.emailReq')) ?></label><input type="email" name="email" maxlength="254" autocomplete="email" data-email required placeholder="you@email.com"></div>
-              <div class="field"><label><?= h(t('contact.messageReq')) ?></label><textarea name="message" required placeholder="<?= h(t('contact.messagePh')) ?>" style="min-height:90px"></textarea></div>
+              <div class="field"><label for="contact-email"><?= h(t('contact.emailReq')) ?></label><input id="contact-email" type="email" name="email" maxlength="254" autocomplete="email" data-email required placeholder="you@email.com"></div>
+              <div class="field"><label for="contact-message"><?= h(t('contact.messageReq')) ?></label><textarea id="contact-message" name="message" required placeholder="<?= h(t('contact.messagePh')) ?>" style="min-height:90px"></textarea></div>
 
               <div class="form-error" id="contactError" hidden><span></span></div>
 

@@ -41,8 +41,12 @@ try {
             __DIR__ . '/../uploads/resumes'
         );
     }
-} catch (Throwable $e) {
+} catch (RuntimeException $e) {
+    // handleUpload() only throws short, visitor-friendly messages ("File is too large." etc.)
     jsonResponse(['error' => $e->getMessage()], 400);
+} catch (Throwable $e) {
+    error_log('[careers.php upload] ' . $e->getMessage());
+    jsonResponse(['error' => 'Could not upload your CV. Please try again.'], 400);
 }
 
 try {
@@ -85,5 +89,5 @@ try {
     jsonResponse(['success' => true, 'id' => $id, 'message' => 'Application submitted successfully!']);
 } catch (Throwable $e) {
     error_log('[careers.php] ' . $e->getMessage());
-    jsonResponse(['error' => $e->getMessage() ?: 'Server error.'], 500);
+    jsonResponse(['error' => 'Something went wrong. Please try again in a moment.'], 500);
 }
